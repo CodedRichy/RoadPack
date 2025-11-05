@@ -1,16 +1,56 @@
-# convoy_app
+# 🛣️ RoadPack
 
-A new Flutter project.
+![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter\&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase\&logoColor=black)
+![Google Maps](https://img.shields.io/badge/Maps%20API-4285F4?logo=googlemaps\&logoColor=white)
+![Platform](https://img.shields.io/badge/Platform-Android-green)
+![License](https://img.shields.io/badge/License-MIT-blue)
 
-## Getting Started
+**RoadPack** is a real-time convoy tracking and coordination app built for **bikers and car enthusiasts**.
+It keeps every member of the ride connected — view everyone’s location on a shared live map, organize convoys, and never lose the pack again.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Key Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+* 📍 **Live Convoy Map:** See every rider or car in real-time
+* 🔑 **Phone OTP Login:** Quick and secure sign-in
+* 🧭 **Convoy Controls:** Create, join, and manage group rides
+* ⚡ **Instant Updates:** Real-time sync powered by Firebase
+* 🏁 **Session Tracking:** Start and end convoys with one tap
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 💡 Why RoadPack
+
+RoadPack solves what existing apps like WhatsApp and Google Maps don’t —
+a **unified interface** for connected rides, real-time coordination, and group navigation.
+
+Built for:
+
+* Motorcycle clubs
+* Car meetups and rallies
+* Road trip groups
+* Convoy logistics
+
+---
+
+## 🧠 Powered By
+
+* Flutter
+* Firebase (Auth + Firestore)
+* Google Maps SDK
+
+---
+
+## 👨‍💻 Developer
+
+**Rishi Praseeth**
+Founder & Lead Developer
+
+---
+
+## 📜 License
+
+Licensed under the [MIT License](LICENSE).
+© 2025 RoadPack. All rights reserved.
