@@ -50,7 +50,11 @@ Founder & Lead Developer
 
 ---
 
-## 📜 License
+### ⚖️ Legal Notice
 
-Licensed under the [MIT License](LICENSE).
-© 2025 RoadPack. All rights reserved.
+© 2025 **Rishi Praseeth** — All Rights Reserved.
+
+This repository and its contents are proprietary to the author.
+Viewing the code does **not** grant permission to copy, modify, distribute, or reuse any part of it.
+For collaborations, partnerships, or licensing inquiries, contact the author.
+
