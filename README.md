@@ -50,7 +50,7 @@ Founder & Lead Developer
 
 ---
 
-### ⚖️ Legal Notice
+## ⚖️ Legal Notice
 
 © 2025 **Rishi Praseeth** — All Rights Reserved.
 
