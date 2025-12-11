@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'ConvoyApp',
+      title: 'RoadPack',
       home: const PlaceholderScreen(),
     );
   }
@@ -25,7 +25,7 @@ class PlaceholderScreen extends StatelessWidget {
     return const Scaffold(
       body: Center(
         child: Text(
-          'ConvoyApp Starting...',
+          'RoadPack Starting...',
           style: TextStyle(fontSize: 24),
         ),
       ),
