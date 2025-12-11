@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.convoy_app"
+    namespace = "com.roadpack.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
