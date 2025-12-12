@@ -4,7 +4,6 @@
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase\&logoColor=black)
 ![Google Maps](https://img.shields.io/badge/Maps%20API-4285F4?logo=googlemaps\&logoColor=white)
 ![Platform](https://img.shields.io/badge/Platform-Android-green)
-![License](https://img.shields.io/badge/License-MIT-blue)
 
 **RoadPack** is a real-time convoy tracking and coordination app built for **bikers and car enthusiasts**.
 It keeps every member of the ride connected — view everyone’s location on a shared live map, organize convoys, and never lose the pack again.
