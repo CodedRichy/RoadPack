@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:convoy_app/screens/splash_screen.dart';
+import 'package:convoy_app/theme/app_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,23 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'RoadPack',
-      home: const PlaceholderScreen(),
-    );
-  }
-}
-
-class PlaceholderScreen extends StatelessWidget {
-  const PlaceholderScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          'RoadPack Starting...',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      theme: AppTheme.darkTheme,
+      home: const SplashScreen(),
     );
   }
 }
