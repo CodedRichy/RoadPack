@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Stay connected with your convoy',
+                'Stay connected with your pack.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: 48),
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Stay connected with your convoy',
+                      'Stay connected with your pack',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const SizedBox(height: 24),

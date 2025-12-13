@@ -188,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 100), // Space for BottomNavBar
+                  const SizedBox(height: 50), // Space for BottomNavBar
                 ],
               ),
             ),
