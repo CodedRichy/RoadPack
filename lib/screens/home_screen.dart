@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
     // Card Mode properties
     // Height: 60% of screen in normal mode, full screen in expanded
-    final double mapHeight = _isFullScreen ? screenHeight : screenHeight * 0.80;
+    final double mapHeight = _isFullScreen ? screenHeight : screenHeight * 0.90;
     
     // Margins: 16 horizontal/20 vertical in normal mode (card look), 0 in expanded
     // final double mapMarginHorizontal = _isFullScreen ? 0 : 16; // Unused
