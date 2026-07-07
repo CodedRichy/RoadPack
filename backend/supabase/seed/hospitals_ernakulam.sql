@@ -1,0 +1,6 @@
+-- Hospital seed data for Ernakulam district (pilot)
+-- To be populated with manually verified data from NHA + state health dept
+-- Fields: name, lat/lon, address, phone, type, trauma_level, has_emergency
+--
+-- Verification status: PENDING
+-- Target: all trauma-capable facilities in Ernakulam district
