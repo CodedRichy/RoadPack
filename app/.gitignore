@@ -43,30 +43,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# Supabase
-backend/supabase/.temp/
-backend/supabase/.branches/
-
-# Node / Deno
-node_modules/
-.env
-.env.local
-.env.*.local
-
-# Flutter (app subdirectory)
-app/.dart_tool/
-app/.flutter-plugins-dependencies
-app/build/
-app/.packages
-app/.pub-cache/
-app/.pub/
-app/coverage/
-
-# Generated
-*.g.dart
-*.freezed.dart
-
-# OS
-Thumbs.db
-desktop.ini
