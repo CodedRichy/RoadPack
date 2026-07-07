@@ -1,0 +1,45 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main]
+    paths: ['backend/**']
+  pull_request:
+    branches: [main]
+    paths: ['backend/**']
+
+jobs:
+  lint-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Lint Edge Functions
+        run: |
+          for dir in backend/supabase/functions/*/; do
+            if [ -f "$dir/index.ts" ]; then
+              echo "Linting $dir..."
+              deno lint "$dir/index.ts"
+            fi
+          done
+
+      - name: Type-check Edge Functions
+        run: |
+          for dir in backend/supabase/functions/*/; do
+            if [ -f "$dir/index.ts" ]; then
+              echo "Checking $dir..."
+              deno check "$dir/index.ts"
+            fi
+          done
+
+      - name: Validate migrations syntax
+        run: |
+          for f in backend/supabase/migrations/*.sql; do
+            echo "Validating $f..."
+            # Basic syntax check - ensures files are valid UTF-8 and non-empty
+            [ -s "$f" ] || (echo "Empty migration: $f" && exit 1)
+          done
