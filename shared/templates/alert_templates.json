@@ -1,0 +1,32 @@
+{
+  "_comment": "DLT-registered SMS templates. Variable placeholders match DLT format. Do not change template structure without re-registering on DLT.",
+  "emergency_push": {
+    "title": "EMERGENCY ALERT - RoadPack",
+    "body": "{name} may have been in an accident.\n\nLocation: {address}\nMap: {map_url}\nTime: {timestamp}\nSpeed: {speed} km/h\nNearest hospital: {hospital_name}, {hospital_distance}, {hospital_phone}\n\nCall 112 for emergency services.\nCall {name}: {victim_phone}\nReply OK to confirm you've seen this."
+  },
+  "emergency_sms": {
+    "template": "ROADPACK ALERT: {name} accident at {address}. Map: {map_url}. Hospital: {hospital_name} {hospital_phone}. Call 112. Call {name}: {victim_phone}. Reply OK.",
+    "dlt_template_id": "PENDING_REGISTRATION"
+  },
+  "emergency_voice_tts": {
+    "script_en": "This is an emergency alert from RoadPack. {name} may have been in an accident at {address}. Their last known position was {landmark}. Please check on them or call 112. Press 1 to confirm you have received this message.",
+    "script_hi": "Yeh RoadPack se ek emergency alert hai. {name} ka {address} par accident hua ho sakta hai. Kripya unhe check karein ya 112 par call karein. Is message ko confirm karne ke liye 1 dabayen.",
+    "script_ml": "Ithu RoadPack il ninnum ulla oru emergency alert aanu. {name} kku {address} il accident undaayirikaam. Dayavayi avarude sthithi ariyukayo 112 il call cheyyukayo cheyyuka. Ee message sthireekarikkan 1 press cheyyuka."
+  },
+  "non_arrival_user_checkin": {
+    "title": "Everything okay?",
+    "body": "You usually arrive at {destination} by {expected_time}. It's {current_time}. Tap to let us know you're fine."
+  },
+  "non_arrival_circle_alert": {
+    "title": "{name} hasn't arrived",
+    "body": "{name} usually reaches {destination} by {expected_time}. They haven't arrived and didn't respond to our check-in."
+  },
+  "arrival_sms": {
+    "template": "RoadPack: {name} reached {destination} at {time}.",
+    "dlt_template_id": "PENDING_REGISTRATION"
+  },
+  "lost_contact": {
+    "title": "Lost contact with {name}",
+    "body": "We lost contact with {name} at {last_location} ({time_ago} ago). Their phone may be off or out of range."
+  }
+}
