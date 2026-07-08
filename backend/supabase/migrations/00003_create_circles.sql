@@ -29,17 +29,17 @@ CREATE INDEX idx_circle_members_user ON circle_members(user_id);
 CREATE FUNCTION get_user_circle_ids(uid TEXT)
 RETURNS SETOF UUID AS $$
   SELECT circle_id FROM circle_members WHERE user_id = uid
-$$ LANGUAGE sql SECURITY DEFINER STABLE;
+$$ LANGUAGE sql SECURITY DEFINER STABLE SET search_path = public;
 
 CREATE FUNCTION is_circle_member(uid TEXT, cid UUID)
 RETURNS BOOLEAN AS $$
   SELECT EXISTS (SELECT 1 FROM circle_members WHERE user_id = uid AND circle_id = cid)
-$$ LANGUAGE sql SECURITY DEFINER STABLE;
+$$ LANGUAGE sql SECURITY DEFINER STABLE SET search_path = public;
 
 CREATE FUNCTION is_circle_admin(uid TEXT, cid UUID)
 RETURNS BOOLEAN AS $$
   SELECT EXISTS (SELECT 1 FROM circle_members WHERE user_id = uid AND circle_id = cid AND role = 'admin')
-$$ LANGUAGE sql SECURITY DEFINER STABLE;
+$$ LANGUAGE sql SECURITY DEFINER STABLE SET search_path = public;
 
 CREATE FUNCTION shares_circle_with(viewer TEXT, target TEXT)
 RETURNS BOOLEAN AS $$
@@ -48,7 +48,7 @@ RETURNS BOOLEAN AS $$
     JOIN circle_members cm2 ON cm1.circle_id = cm2.circle_id
     WHERE cm1.user_id = viewer AND cm2.user_id = target
   )
-$$ LANGUAGE sql SECURITY DEFINER STABLE;
+$$ LANGUAGE sql SECURITY DEFINER STABLE SET search_path = public;
 
 -- Circles RLS
 
@@ -58,7 +58,7 @@ CREATE POLICY circles_select ON circles FOR SELECT
   USING (id IN (SELECT get_user_circle_ids(requesting_user_id())));
 
 CREATE POLICY circles_insert ON circles FOR INSERT
-  WITH CHECK (requesting_user_id() IS NOT NULL);
+  WITH CHECK (requesting_user_id() IS NOT NULL AND created_by = requesting_user_id());
 
 CREATE POLICY circles_update ON circles FOR UPDATE
   USING (is_circle_admin(requesting_user_id(), id));
@@ -75,7 +75,7 @@ CREATE POLICY circle_members_select ON circle_members FOR SELECT
 
 CREATE POLICY circle_members_insert ON circle_members FOR INSERT
   WITH CHECK (
-    user_id = requesting_user_id()
+    (user_id = requesting_user_id() AND role IN ('member', 'observer'))
     OR is_circle_admin(requesting_user_id(), circle_id)
   );
 
@@ -87,3 +87,20 @@ CREATE POLICY circle_members_delete ON circle_members FOR DELETE
     user_id = requesting_user_id()
     OR is_circle_admin(requesting_user_id(), circle_id)
   );
+
+-- Prevent members from self-promoting their role via UPDATE (no WITH CHECK exists
+-- above, so a member could otherwise set their own role to 'admin')
+
+CREATE FUNCTION prevent_role_self_promotion()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.role != OLD.role AND NOT is_circle_admin(requesting_user_id(), NEW.circle_id) THEN
+    RAISE EXCEPTION 'Only circle admins can change member roles';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+
+CREATE TRIGGER check_role_change
+  BEFORE UPDATE ON circle_members
+  FOR EACH ROW EXECUTE FUNCTION prevent_role_self_promotion();

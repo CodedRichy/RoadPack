@@ -21,7 +21,6 @@ CREATE TABLE users (
     vehicle_reg       VARCHAR(20),
     phone_mount       VARCHAR(20),
     crash_sensitivity VARCHAR(10) DEFAULT 'medium',
-    is_minor          BOOLEAN GENERATED ALWAYS AS (date_of_birth > CURRENT_DATE - INTERVAL '18 years') STORED,
     created_at        TIMESTAMPTZ DEFAULT now(),
     last_seen_at      TIMESTAMPTZ
 );
