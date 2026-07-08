@@ -26,3 +26,22 @@ CREATE POLICY consents_update ON consents FOR UPDATE
   USING (user_id = requesting_user_id());
 
 -- No DELETE: consent history is permanent (audit trail)
+
+-- Restrict updates to revoked_at only (consent audit trail integrity)
+CREATE FUNCTION consents_restrict_update()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.consent_type != OLD.consent_type
+     OR NEW.granted_by IS DISTINCT FROM OLD.granted_by
+     OR NEW.method IS DISTINCT FROM OLD.method
+     OR NEW.granted_at != OLD.granted_at
+     OR NEW.version IS DISTINCT FROM OLD.version THEN
+    RAISE EXCEPTION 'Only revoked_at may be updated on consent records';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SET search_path = public;
+
+CREATE TRIGGER check_consent_update
+  BEFORE UPDATE ON consents
+  FOR EACH ROW EXECUTE FUNCTION consents_restrict_update();

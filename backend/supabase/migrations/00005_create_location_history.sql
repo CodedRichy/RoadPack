@@ -9,7 +9,7 @@ RETURNS BOOLEAN AS $$
     JOIN circles c ON c.id = cm1.circle_id
     WHERE cm1.user_id = viewer
       AND cm2.user_id = target
-      AND COALESCE((c.settings->>'location_sharing')::BOOLEAN, true)
+      AND COALESCE((c.settings->>'location_sharing')::BOOLEAN, false)
   )
 $$ LANGUAGE sql SECURITY DEFINER STABLE SET search_path = public;
 
@@ -70,3 +70,10 @@ CREATE POLICY location_history_insert ON location_history FOR INSERT
 -- DELETE for retention cleanup only
 CREATE POLICY location_history_delete ON location_history FOR DELETE
   USING (user_id = requesting_user_id());
+
+-- Monthly partition maintenance via pg_cron
+SELECT cron.schedule(
+  'maintain-location-partitions',
+  '0 0 1 * *',
+  'SELECT create_location_partitions(3)'
+);
