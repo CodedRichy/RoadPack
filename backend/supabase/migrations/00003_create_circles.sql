@@ -91,9 +91,12 @@ CREATE POLICY circle_members_delete ON circle_members FOR DELETE
 -- Prevent members from self-promoting their role via UPDATE (no WITH CHECK exists
 -- above, so a member could otherwise set their own role to 'admin')
 
-CREATE FUNCTION prevent_role_self_promotion()
+CREATE FUNCTION prevent_membership_tampering()
 RETURNS TRIGGER AS $$
 BEGIN
+  IF NEW.circle_id != OLD.circle_id OR NEW.user_id != OLD.user_id THEN
+    RAISE EXCEPTION 'Cannot change membership identity; delete and re-create instead';
+  END IF;
   IF NEW.role != OLD.role AND NOT is_circle_admin(requesting_user_id(), NEW.circle_id) THEN
     RAISE EXCEPTION 'Only circle admins can change member roles';
   END IF;
@@ -101,6 +104,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
-CREATE TRIGGER check_role_change
+CREATE TRIGGER check_membership_update
   BEFORE UPDATE ON circle_members
-  FOR EACH ROW EXECUTE FUNCTION prevent_role_self_promotion();
+  FOR EACH ROW EXECUTE FUNCTION prevent_membership_tampering();
