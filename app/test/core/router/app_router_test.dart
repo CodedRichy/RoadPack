@@ -59,5 +59,14 @@ void main() {
       );
       expect(result, isNull);
     });
+
+    test('authenticated + onboarded + onboarding route -> /home', () {
+      final result = authRedirect(
+        isAuthenticated: true,
+        isOnboarded: true,
+        location: '/onboarding',
+      );
+      expect(result, '/home');
+    });
   });
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../models/auth_state.dart';
 import '../providers/clerk_auth_provider.dart';
 import '../widgets/phone_input.dart';
@@ -24,6 +25,14 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(clerkAuthProvider, (prev, next) {
+      final status = next.valueOrNull?.status;
+      if (status == AuthStatus.codeSent) {
+        context.go('/verify');
+      }
+      // Authenticated users are handled by the router's redirect logic.
+    });
+
     final authState =
         ref.watch(clerkAuthProvider).valueOrNull ?? const AuthState();
     final isLoading = authState.status == AuthStatus.identifierEntered;

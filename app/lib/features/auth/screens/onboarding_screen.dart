@@ -83,9 +83,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         final name = _nameController.text.trim();
         if (name.length < 2) return;
         setState(() => _isLoading = true);
-        await ref.read(userProfileProvider.notifier).updateName(name);
-        setState(() => _isLoading = false);
-        _nextPage();
+        try {
+          await ref.read(userProfileProvider.notifier).updateName(name);
+          _nextPage();
+        } catch (e) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to save. Please try again.'),
+              ),
+            );
+          }
+        } finally {
+          if (mounted) setState(() => _isLoading = false);
+        }
       },
       isLoading: _isLoading,
       child: TextField(
@@ -107,11 +118,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       onNext: () async {
         if (_selectedDob == null) return;
         setState(() => _isLoading = true);
-        await ref
-            .read(userProfileProvider.notifier)
-            .updateDateOfBirth(_selectedDob!);
-        setState(() => _isLoading = false);
-        _nextPage();
+        try {
+          await ref
+              .read(userProfileProvider.notifier)
+              .updateDateOfBirth(_selectedDob!);
+          _nextPage();
+        } catch (e) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to save. Please try again.'),
+              ),
+            );
+          }
+        } finally {
+          if (mounted) setState(() => _isLoading = false);
+        }
       },
       isLoading: _isLoading,
       child: Center(
@@ -152,11 +174,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         setState(() => _isLoading = true);
         final type = _vehicleType == 'none' ? null : _vehicleType;
         final reg = _vehicleRegController.text.trim();
-        await ref
-            .read(userProfileProvider.notifier)
-            .updateVehicle(type, reg.isEmpty ? null : reg);
-        setState(() => _isLoading = false);
-        _nextPage();
+        try {
+          await ref
+              .read(userProfileProvider.notifier)
+              .updateVehicle(type, reg.isEmpty ? null : reg);
+          _nextPage();
+        } catch (e) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to save. Please try again.'),
+              ),
+            );
+          }
+        } finally {
+          if (mounted) setState(() => _isLoading = false);
+        }
       },
       isLoading: _isLoading,
       child: Column(
@@ -211,15 +244,26 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         final relation = _contactRelationController.text.trim();
         if (name.isEmpty || phone.isEmpty) return;
         setState(() => _isLoading = true);
-        await ref
-            .read(userProfileProvider.notifier)
-            .addEmergencyContact(
-              name: name,
-              phone: phone,
-              relationship: relation,
+        try {
+          await ref
+              .read(userProfileProvider.notifier)
+              .addEmergencyContact(
+                name: name,
+                phone: phone,
+                relationship: relation,
+              );
+          _finishOnboarding();
+        } catch (e) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to save. Please try again.'),
+              ),
             );
-        setState(() => _isLoading = false);
-        _finishOnboarding();
+          }
+        } finally {
+          if (mounted) setState(() => _isLoading = false);
+        }
       },
       nextLabel: 'Finish',
       isLoading: _isLoading,

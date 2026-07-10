@@ -104,7 +104,7 @@ class ClerkAuthNotifier extends AsyncNotifier<AuthState> {
       state = AsyncData(
         AuthState(status: AuthStatus.authenticated, userId: _service.userId),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       state = AsyncData(state.value!.copyWith(errorMessage: e.toString()));
     }
   }

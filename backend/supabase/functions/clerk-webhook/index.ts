@@ -74,7 +74,7 @@ serve(async (req) => {
   )
 
   const userId = event.data.id
-  const phone = event.data.phone_numbers?.[0]?.phone_number ?? ''
+  const phone = event.data.phone_numbers?.[0]?.phone_number ?? userId
   const firstName = event.data.first_name ?? ''
   const lastName = event.data.last_name ?? ''
   const name = [firstName, lastName].filter(Boolean).join(' ') || phone || 'User'

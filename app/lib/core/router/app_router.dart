@@ -24,6 +24,7 @@ String? authRedirect({
   if (isAuthenticated && !isOnboarded && !isOnboardingRoute) {
     return '/onboarding';
   }
+  if (isAuthenticated && isOnboarded && isOnboardingRoute) return '/home';
   return null;
 }
 
