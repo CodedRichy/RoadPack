@@ -1,1 +1,3 @@
-﻿// Circles Models barrel
+// Circles Models barrel
+export 'circle.dart';
+export 'circle_member.dart';
