@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -20,7 +22,7 @@ final authenticatedSupabaseProvider = Provider<SupabaseClient?>((ref) {
 
   final service = ref.read(clerkServiceProvider);
 
-  return SupabaseClient(
+  final client = SupabaseClient(
     AppConstants.supabaseUrl,
     AppConstants.supabaseAnonKey,
     accessToken: () async {
@@ -29,4 +31,11 @@ final authenticatedSupabaseProvider = Provider<SupabaseClient?>((ref) {
       return token;
     },
   );
+  // Each build spins up its own isolate/http/realtime resources — dispose
+  // them when this provider rebuilds (e.g. on sign-out) or is torn down, or
+  // they leak.
+  ref.onDispose(() {
+    unawaited(client.dispose());
+  });
+  return client;
 });
