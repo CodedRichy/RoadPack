@@ -15,6 +15,7 @@ class JoinCircleScreen extends ConsumerStatefulWidget {
 
 class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
   Circle? _preview;
+  int? _memberCount;
   String? _errorText;
   bool _isLoading = false;
   bool _isJoining = false;
@@ -24,15 +25,20 @@ class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
       _isLoading = true;
       _errorText = null;
       _preview = null;
+      _memberCount = null;
     });
 
     try {
-      final circle =
-          await ref.read(circleActionsProvider).lookupInviteCode(code);
+      final actions = ref.read(circleActionsProvider);
+      final circle = await actions.lookupInviteCode(code);
       if (circle == null) {
         setState(() => _errorText = 'Invalid code');
       } else {
-        setState(() => _preview = circle);
+        final count = await actions.memberCount(circle.id);
+        setState(() {
+          _preview = circle;
+          _memberCount = count;
+        });
       }
     } catch (e) {
       setState(() => _errorText = 'Something went wrong');
@@ -99,6 +105,13 @@ class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
                         _preview!.type.displayName,
                         style: theme.textTheme.bodyMedium,
                       ),
+                      if (_memberCount != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          '$_memberCount member${_memberCount == 1 ? '' : 's'}',
+                          style: theme.textTheme.bodySmall,
+                        ),
+                      ],
                     ],
                   ),
                 ),

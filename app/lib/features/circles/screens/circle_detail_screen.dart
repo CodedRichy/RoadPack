@@ -89,34 +89,43 @@ class CircleDetailScreen extends ConsumerWidget {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
-              ...detail.members.map((member) => MemberTile(
-                    member: member,
-                    isCurrentUser: member.userId == currentUserId,
-                    isAdmin: isAdmin,
-                    isEc: false,
-                    onLeave: member.userId == currentUserId
-                        ? () => _confirmLeave(context, ref, circle.id,
-                            circle.isFamily)
-                        : null,
-                    onPromote: isAdmin && !member.isAdmin
-                        ? () => _updateRole(ref, circle.id, member.userId,
-                            CircleRole.admin)
-                        : null,
-                    onDemote: isAdmin && member.isAdmin &&
-                            member.userId != currentUserId
-                        ? () => _updateRole(ref, circle.id, member.userId,
-                            CircleRole.member)
-                        : null,
-                    onRemove: isAdmin && member.userId != currentUserId
-                        ? () => _removeMember(ref, circle.id, member.userId,
-                            circle.isFamily)
-                        : null,
-                    onToggleEc: !circle.isFamily && isAdmin &&
-                            member.userId != currentUserId
-                        ? () => _toggleEc(ref, circle.id, member.userId,
-                            member.userName ?? '', true)
-                        : null,
-                  )),
+              ...detail.members.map((member) {
+                // A member of a FAMILY circle is always synced as an
+                // emergency contact. For non-family circles we don't yet
+                // have a query that tells us per-member EC status, so we
+                // conservatively report false.
+                // TODO(circles): add a dedicated fetchMemberEcStatus query
+                // so non-family EC status can be reflected here.
+                final memberIsEc = circle.isFamily;
+                return MemberTile(
+                  member: member,
+                  isCurrentUser: member.userId == currentUserId,
+                  isAdmin: isAdmin,
+                  isEc: memberIsEc,
+                  onLeave: member.userId == currentUserId
+                      ? () => _confirmLeave(context, ref, circle.id,
+                          circle.isFamily)
+                      : null,
+                  onPromote: isAdmin && !member.isAdmin
+                      ? () => _updateRole(context, ref, circle.id,
+                          member.userId, CircleRole.admin)
+                      : null,
+                  onDemote: isAdmin && member.isAdmin &&
+                          member.userId != currentUserId
+                      ? () => _updateRole(context, ref, circle.id,
+                          member.userId, CircleRole.member)
+                      : null,
+                  onRemove: isAdmin && member.userId != currentUserId
+                      ? () => _removeMember(context, ref, circle.id,
+                          member.userId, circle.isFamily)
+                      : null,
+                  onToggleEc: !circle.isFamily && isAdmin &&
+                          member.userId != currentUserId
+                      ? () => _toggleEc(context, ref, circle.id,
+                          member.userId, member.userName ?? '', !memberIsEc)
+                      : null,
+                );
+              }),
               if (detail.observers.isNotEmpty) ...[
                 const SizedBox(height: 24),
                 Text(
@@ -137,7 +146,7 @@ class CircleDetailScreen extends ConsumerWidget {
                           ? IconButton(
                               icon: const Icon(Icons.remove_circle_outline),
                               onPressed: () =>
-                                  _removeObserver(ref, obs.id),
+                                  _removeObserver(context, ref, obs.id),
                             )
                           : const Chip(label: Text('SMS')),
                     )),
@@ -158,8 +167,8 @@ class CircleDetailScreen extends ConsumerWidget {
   }
 
   String _maskPhone(String phone) {
-    if (phone.length < 4) return phone;
-    return '${phone.substring(0, phone.length - 4)}****${phone.substring(phone.length - 4)}';
+    if (phone.length <= 4) return '****';
+    return '${'*' * (phone.length - 4)}${phone.substring(phone.length - 4)}';
   }
 
   Future<void> _confirmLeave(
@@ -239,64 +248,108 @@ class CircleDetailScreen extends ConsumerWidget {
     }
   }
 
-  void _updateRole(
+  Future<void> _updateRole(
+    BuildContext context,
     WidgetRef ref,
     String circleId,
     String userId,
     CircleRole role,
-  ) {
-    ref.read(circleActionsProvider).updateRole(
-          circleId: circleId,
-          userId: userId,
-          role: role,
+  ) async {
+    try {
+      await ref.read(circleActionsProvider).updateRole(
+            circleId: circleId,
+            userId: userId,
+            role: role,
+          );
+      ref.invalidate(circleDetailProvider(circleId));
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Failed to update role. Please try again.')),
         );
-    ref.invalidate(circleDetailProvider(circleId));
+      }
+    }
   }
 
-  void _removeMember(
+  Future<void> _removeMember(
+    BuildContext context,
     WidgetRef ref,
     String circleId,
     String userId,
     bool isFamily,
-  ) {
-    ref.read(circleActionsProvider).removeMember(
-          circleId: circleId,
-          userId: userId,
-          isFamily: isFamily,
+  ) async {
+    try {
+      await ref.read(circleActionsProvider).removeMember(
+            circleId: circleId,
+            userId: userId,
+            isFamily: isFamily,
+          );
+      ref.invalidate(circleDetailProvider(circleId));
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Failed to remove member. Please try again.')),
         );
-    ref.invalidate(circleDetailProvider(circleId));
+      }
+    }
   }
 
-  void _removeObserver(WidgetRef ref, String ecId) {
-    ref.read(circleActionsProvider).removeObserver(ecId: ecId);
-    ref.invalidate(circleDetailProvider(circleId));
+  Future<void> _removeObserver(
+    BuildContext context,
+    WidgetRef ref,
+    String ecId,
+  ) async {
+    try {
+      await ref.read(circleActionsProvider).removeObserver(ecId: ecId);
+      ref.invalidate(circleDetailProvider(circleId));
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Failed to remove observer. Please try again.')),
+        );
+      }
+    }
   }
 
-  void _toggleEc(
+  Future<void> _toggleEc(
+    BuildContext context,
     WidgetRef ref,
     String circleId,
     String targetUserId,
     String targetName,
     bool enable,
-  ) {
-    ref.read(circleActionsProvider).toggleEc(
-          circleId: circleId,
-          targetUserId: targetUserId,
-          targetName: targetName,
-          enable: enable,
+  ) async {
+    try {
+      await ref.read(circleActionsProvider).toggleEc(
+            circleId: circleId,
+            targetUserId: targetUserId,
+            targetName: targetName,
+            enable: enable,
+          );
+      ref.invalidate(circleDetailProvider(circleId));
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text(
+                  'Failed to update emergency contact. Please try again.')),
         );
-    ref.invalidate(circleDetailProvider(circleId));
+      }
+    }
   }
 
-  void _showAddObserver(
+  Future<void> _showAddObserver(
     BuildContext context,
     WidgetRef ref,
     String circleId,
-  ) {
+  ) async {
     final nameCtrl = TextEditingController();
     final phoneCtrl = TextEditingController();
 
-    showModalBottomSheet(
+    await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (ctx) => Padding(
@@ -356,5 +409,8 @@ class CircleDetailScreen extends ConsumerWidget {
         ),
       ),
     );
+
+    nameCtrl.dispose();
+    phoneCtrl.dispose();
   }
 }

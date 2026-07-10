@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../auth/providers/clerk_auth_provider.dart';
 import '../models/circle.dart';
@@ -69,7 +70,14 @@ class CircleActions {
       }
     }
 
-    await repo.joinCircle(circleId: circle.id, userId: userId);
+    try {
+      await repo.joinCircle(circleId: circle.id, userId: userId);
+    } on PostgrestException catch (e) {
+      if (e.code == '23505') {
+        throw StateError('You are already a member of this circle');
+      }
+      rethrow;
+    }
 
     if (circle.isFamily) {
       final members = await repo.fetchMembers(circle.id);
@@ -210,6 +218,13 @@ class CircleActions {
     if (repo == null) throw StateError('Not authenticated');
     final newCode = CircleRepository.generateInviteCode();
     await repo.regenerateInviteCode(circleId: circleId, newCode: newCode);
+    await _ref.read(circlesProvider.notifier).refresh();
     return newCode;
+  }
+
+  Future<int> memberCount(String circleId) async {
+    final repo = _repo;
+    if (repo == null) return 0;
+    return repo.memberCount(circleId);
   }
 }

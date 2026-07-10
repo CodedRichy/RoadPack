@@ -46,10 +46,12 @@ final circleDetailProvider =
   }
 
   final circles = ref.read(circlesProvider).valueOrNull ?? [];
-  final circle = circles.firstWhere(
-    (c) => c.id == circleId,
-    orElse: () => throw StateError('Circle not found'),
-  );
+  Circle circle;
+  try {
+    circle = circles.firstWhere((c) => c.id == circleId);
+  } catch (_) {
+    circle = await repo.fetchCircle(circleId);
+  }
 
   final members = await repo.fetchMembers(circleId);
   final observers = await repo.fetchObservers(circleId);

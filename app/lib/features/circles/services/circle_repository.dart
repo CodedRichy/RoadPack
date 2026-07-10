@@ -71,6 +71,15 @@ class CircleRepository {
     throw StateError('Failed to generate unique invite code after 3 attempts');
   }
 
+  Future<Circle> fetchCircle(String circleId) async {
+    final data = await _client
+        .from('circles')
+        .select()
+        .eq('id', circleId)
+        .single();
+    return Circle.fromJson(data);
+  }
+
   Future<Circle?> findByInviteCode(String code) async {
     final row = await _client
         .from('circles')
