@@ -25,6 +25,7 @@ dependencies:
 
   # Auth
   clerk_flutter: ^0.0.16-beta
+  clerk_auth: ^0.0.16-beta
   google_sign_in: ^6.2.2
 
   # Local storage
