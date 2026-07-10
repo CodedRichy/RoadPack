@@ -24,7 +24,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(clerkAuthProvider).valueOrNull ?? const AuthState();
+    final authState =
+        ref.watch(clerkAuthProvider).valueOrNull ?? const AuthState();
     final isLoading = authState.status == AuthStatus.identifierEntered;
 
     return Scaffold(
@@ -78,14 +79,17 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               Center(
                 child: TextButton(
                   onPressed: () => setState(() => _useEmail = !_useEmail),
-                  child: Text(_useEmail ? 'Use phone instead' : 'Use email instead'),
+                  child: Text(
+                    _useEmail ? 'Use phone instead' : 'Use email instead',
+                  ),
                 ),
               ),
               const Spacer(),
               const Divider(),
               const SizedBox(height: 16),
               SocialSignInButton(
-                onPressed: () => ref.read(clerkAuthProvider.notifier).signInWithGoogle(),
+                onPressed: () =>
+                    ref.read(clerkAuthProvider.notifier).signInWithGoogle(),
                 isLoading: isLoading,
               ),
               const SizedBox(height: 24),

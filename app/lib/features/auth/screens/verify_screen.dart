@@ -9,7 +9,8 @@ class VerifyScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(clerkAuthProvider).valueOrNull ?? const AuthState();
+    final authState =
+        ref.watch(clerkAuthProvider).valueOrNull ?? const AuthState();
     final isVerifying = authState.status == AuthStatus.verifying;
     final identifier = authState.phone ?? authState.email ?? '';
 
