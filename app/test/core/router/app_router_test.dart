@@ -68,5 +68,38 @@ void main() {
       );
       expect(result, '/home');
     });
+
+    test('unauthenticated user on /circles redirects to /sign-in', () {
+      expect(
+        authRedirect(
+          isAuthenticated: false,
+          isOnboarded: false,
+          location: '/circles',
+        ),
+        '/sign-in',
+      );
+    });
+
+    test('authenticated onboarded user on /circles stays', () {
+      expect(
+        authRedirect(
+          isAuthenticated: true,
+          isOnboarded: true,
+          location: '/circles',
+        ),
+        isNull,
+      );
+    });
+
+    test('authenticated non-onboarded user on /circles redirects to /onboarding', () {
+      expect(
+        authRedirect(
+          isAuthenticated: true,
+          isOnboarded: false,
+          location: '/circles',
+        ),
+        '/onboarding',
+      );
+    });
   });
 }

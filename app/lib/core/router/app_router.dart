@@ -7,6 +7,10 @@ import '../../features/auth/providers/user_profile_provider.dart';
 import '../../features/auth/screens/onboarding_screen.dart';
 import '../../features/auth/screens/sign_in_screen.dart';
 import '../../features/auth/screens/verify_screen.dart';
+import '../../features/circles/screens/circles_list_screen.dart';
+import '../../features/circles/screens/create_circle_screen.dart';
+import '../../features/circles/screens/join_circle_screen.dart';
+import '../../features/circles/screens/circle_detail_screen.dart';
 
 String? authRedirect({
   required bool isAuthenticated,
@@ -70,6 +74,25 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/home',
         builder: (context, state) =>
             const Scaffold(body: Center(child: Text('RoadPack v2'))),
+      ),
+      GoRoute(
+        path: '/circles',
+        builder: (context, state) => const CirclesListScreen(),
+      ),
+      GoRoute(
+        path: '/circles/new',
+        builder: (context, state) => const CreateCircleScreen(),
+      ),
+      GoRoute(
+        path: '/circles/join',
+        builder: (context, state) => const JoinCircleScreen(),
+      ),
+      GoRoute(
+        path: '/circles/:id',
+        builder: (context, state) {
+          final circleId = state.pathParameters['id']!;
+          return CircleDetailScreen(circleId: circleId);
+        },
       ),
     ],
   );
