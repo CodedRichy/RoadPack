@@ -16,10 +16,5 @@ Future<void> main() async {
     await container.read(clerkServiceProvider).initialize();
   }
 
-  runApp(
-    UncontrolledProviderScope(
-      container: container,
-      child: const App(),
-    ),
-  );
+  runApp(UncontrolledProviderScope(container: container, child: const App()));
 }

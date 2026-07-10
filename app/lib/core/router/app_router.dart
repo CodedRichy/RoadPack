@@ -67,9 +67,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/home',
-        builder: (context, state) => const Scaffold(
-          body: Center(child: Text('RoadPack v2')),
-        ),
+        builder: (context, state) =>
+            const Scaffold(body: Center(child: Text('RoadPack v2'))),
       ),
     ],
   );

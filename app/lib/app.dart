@@ -21,11 +21,7 @@ class App extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('hi'),
-        Locale('ml'),
-      ],
+      supportedLocales: const [Locale('en'), Locale('hi'), Locale('ml')],
     );
   }
 }
