@@ -55,7 +55,7 @@ class CircleRepository {
         await _client.from('circle_members').insert({
           'circle_id': row['id'],
           'user_id': userId,
-          'role': 'admin',
+          'role': CircleRole.admin.value,
           'accepted_at': DateTime.now().toIso8601String(),
         });
 
@@ -98,7 +98,7 @@ class CircleRepository {
     await _client.from('circle_members').insert({
       'circle_id': circleId,
       'user_id': userId,
-      'role': 'member',
+      'role': CircleRole.member.value,
       'accepted_at': DateTime.now().toIso8601String(),
     });
   }
@@ -270,9 +270,10 @@ class CircleRepository {
 
   Future<bool> hasExistingFamilyCircle(String userId) async {
     final data = await _client
-        .from('circles')
-        .select()
-        .eq('type', 'family')
+        .from('circle_members')
+        .select('circles!inner(id)')
+        .eq('user_id', userId)
+        .eq('circles.type', 'family')
         .limit(1);
     return data.isNotEmpty;
   }
