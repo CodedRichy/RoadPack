@@ -35,7 +35,7 @@ serve(async (req) => {
       failed: 'failed',
     }
 
-    const mappedStatus = statusMap[call_status] ?? 'failed'
+    const mappedStatus = statusMap[String(call_status)] ?? 'failed'
 
     // Find active call alerts for this phone
     const { data: contacts } = await supabase
