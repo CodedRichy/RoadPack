@@ -1,1 +1,1 @@
-﻿// Live map Providers barrel
+// Live map Providers barrel

@@ -1,1 +1,1 @@
-﻿// Settings Screens barrel
+// Settings Screens barrel

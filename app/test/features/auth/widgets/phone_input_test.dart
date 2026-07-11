@@ -7,9 +7,7 @@ void main() {
     testWidgets('shows +91 prefix', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: PhoneInput(onSubmit: (_) {}),
-          ),
+          home: Scaffold(body: PhoneInput(onSubmit: (_) {})),
         ),
       );
       expect(find.text('+91'), findsOneWidget);

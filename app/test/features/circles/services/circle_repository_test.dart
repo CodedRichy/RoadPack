@@ -50,16 +50,18 @@ void main() {
     // circle_member_test.dart.
     test(
       'fetchCircles returns parsed list',
-      skip: 'mocktail cannot mock Supabase\'s Future-implementing fluent '
+      skip:
+          'mocktail cannot mock Supabase\'s Future-implementing fluent '
           'builder chain -- see NOTE above',
       () async {
-      final qb = MockSupabaseQueryBuilder();
-      final fb = MockPostgrestFilterBuilder();
-      final tb = MockPostgrestTransformBuilder();
-      when(() => mockClient.from('circles')).thenAnswer((_) => qb);
-      when(() => qb.select()).thenAnswer((_) => fb);
-      when(() => fb.order('created_at')).thenAnswer((_) => tb);
-      when(() => tb.then(any(), onError: any(named: 'onError'))).thenAnswer((_) async => [
+        final qb = MockSupabaseQueryBuilder();
+        final fb = MockPostgrestFilterBuilder();
+        final tb = MockPostgrestTransformBuilder();
+        when(() => mockClient.from('circles')).thenAnswer((_) => qb);
+        when(() => qb.select()).thenAnswer((_) => fb);
+        when(() => fb.order('created_at')).thenAnswer((_) => tb);
+        when(() => tb.then(any(), onError: any(named: 'onError'))).thenAnswer(
+          (_) async => [
             {
               'id': 'c1',
               'name': 'Family',
@@ -71,27 +73,31 @@ void main() {
               'created_at': '2026-07-11T10:00:00Z',
               'expires_at': null,
             },
-          ]);
+          ],
+        );
 
-      final circles = await repo.fetchCircles();
-      expect(circles, hasLength(1));
-      expect(circles.first.name, 'Family');
-      expect(circles.first.type, CircleType.family);
-    });
+        final circles = await repo.fetchCircles();
+        expect(circles, hasLength(1));
+        expect(circles.first.name, 'Family');
+        expect(circles.first.type, CircleType.family);
+      },
+    );
 
     test(
       'hasExistingFamilyCircle returns true when family circle exists',
-      skip: 'mocktail cannot mock Supabase\'s Future-implementing fluent '
+      skip:
+          'mocktail cannot mock Supabase\'s Future-implementing fluent '
           'builder chain -- see NOTE above',
       () async {
-      final qb = MockSupabaseQueryBuilder();
-      final fb = MockPostgrestFilterBuilder();
-      final tb = MockPostgrestTransformBuilder();
-      when(() => mockClient.from('circles')).thenAnswer((_) => qb);
-      when(() => qb.select()).thenAnswer((_) => fb);
-      when(() => fb.eq('type', 'family')).thenAnswer((_) => fb);
-      when(() => fb.limit(1)).thenAnswer((_) => tb);
-      when(() => tb.then(any(), onError: any(named: 'onError'))).thenAnswer((_) async => [
+        final qb = MockSupabaseQueryBuilder();
+        final fb = MockPostgrestFilterBuilder();
+        final tb = MockPostgrestTransformBuilder();
+        when(() => mockClient.from('circles')).thenAnswer((_) => qb);
+        when(() => qb.select()).thenAnswer((_) => fb);
+        when(() => fb.eq('type', 'family')).thenAnswer((_) => fb);
+        when(() => fb.limit(1)).thenAnswer((_) => tb);
+        when(() => tb.then(any(), onError: any(named: 'onError'))).thenAnswer(
+          (_) async => [
             {
               'id': 'c1',
               'name': 'My Family',
@@ -103,11 +109,13 @@ void main() {
               'created_at': '2026-07-11T10:00:00Z',
               'expires_at': null,
             },
-          ]);
+          ],
+        );
 
-      final exists = await repo.hasExistingFamilyCircle('u1');
-      expect(exists, isTrue);
-    });
+        final exists = await repo.hasExistingFamilyCircle('u1');
+        expect(exists, isTrue);
+      },
+    );
 
     test('generateInviteCode returns 6 alphanumeric chars', () {
       final code = CircleRepository.generateInviteCode();

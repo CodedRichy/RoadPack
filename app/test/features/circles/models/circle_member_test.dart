@@ -31,10 +31,7 @@ void main() {
     });
 
     test('fromJson handles missing users join', () {
-      final member = CircleMember.fromJson({
-        ...json,
-        'users': null,
-      });
+      final member = CircleMember.fromJson({...json, 'users': null});
       expect(member.userName, isNull);
     });
   });

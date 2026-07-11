@@ -57,9 +57,9 @@ class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
       if (mounted) context.go('/circles/${circle.id}');
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _isJoining = false);
@@ -76,10 +76,7 @@ class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Enter invite code',
-              style: theme.textTheme.headlineSmall,
-            ),
+            Text('Enter invite code', style: theme.textTheme.headlineSmall),
             const SizedBox(height: 24),
             InviteCodeInput(
               onCompleted: _onCodeCompleted,
@@ -96,10 +93,7 @@ class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      Text(
-                        _preview!.name,
-                        style: theme.textTheme.titleLarge,
-                      ),
+                      Text(_preview!.name, style: theme.textTheme.titleLarge),
                       const SizedBox(height: 4),
                       Text(
                         _preview!.type.displayName,

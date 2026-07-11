@@ -1,1 +1,1 @@
-﻿// Tracking Providers barrel
+// Tracking Providers barrel

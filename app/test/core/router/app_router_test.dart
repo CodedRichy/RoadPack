@@ -91,15 +91,18 @@ void main() {
       );
     });
 
-    test('authenticated non-onboarded user on /circles redirects to /onboarding', () {
-      expect(
-        authRedirect(
-          isAuthenticated: true,
-          isOnboarded: false,
-          location: '/circles',
-        ),
-        '/onboarding',
-      );
-    });
+    test(
+      'authenticated non-onboarded user on /circles redirects to /onboarding',
+      () {
+        expect(
+          authRedirect(
+            isAuthenticated: true,
+            isOnboarded: false,
+            location: '/circles',
+          ),
+          '/onboarding',
+        );
+      },
+    );
   });
 }

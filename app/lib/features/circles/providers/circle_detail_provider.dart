@@ -38,8 +38,10 @@ class CircleDetail {
   }
 }
 
-final circleDetailProvider =
-    FutureProvider.family<CircleDetail, String>((ref, circleId) async {
+final circleDetailProvider = FutureProvider.family<CircleDetail, String>((
+  ref,
+  circleId,
+) async {
   final repo = ref.watch(circleRepositoryProvider);
   if (repo == null) {
     throw StateError('Not authenticated');
@@ -56,9 +58,5 @@ final circleDetailProvider =
   final members = await repo.fetchMembers(circleId);
   final observers = await repo.fetchObservers(circleId);
 
-  return CircleDetail(
-    circle: circle,
-    members: members,
-    observers: observers,
-  );
+  return CircleDetail(circle: circle, members: members, observers: observers);
 });

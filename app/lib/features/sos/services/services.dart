@@ -1,1 +1,1 @@
-﻿// Sos Services barrel
+export 'sos_service.dart';

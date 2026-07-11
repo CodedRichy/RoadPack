@@ -11,6 +11,7 @@ import '../../features/circles/screens/circles_list_screen.dart';
 import '../../features/circles/screens/create_circle_screen.dart';
 import '../../features/circles/screens/join_circle_screen.dart';
 import '../../features/circles/screens/circle_detail_screen.dart';
+import '../../features/alerts/screens/alert_detail_screen.dart';
 
 String? authRedirect({
   required bool isAuthenticated,
@@ -92,6 +93,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           final circleId = state.pathParameters['id']!;
           return CircleDetailScreen(circleId: circleId);
+        },
+      ),
+      GoRoute(
+        path: '/alerts/:id',
+        builder: (context, state) {
+          final incidentId = state.pathParameters['id']!;
+          return AlertDetailScreen(incidentId: incidentId);
         },
       ),
     ],

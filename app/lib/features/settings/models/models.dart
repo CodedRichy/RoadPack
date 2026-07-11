@@ -1,1 +1,1 @@
-﻿// Settings Models barrel
+// Settings Models barrel

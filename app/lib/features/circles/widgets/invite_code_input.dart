@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class InviteCodeInput extends StatefulWidget {
-  const InviteCodeInput({
-    super.key,
-    required this.onCompleted,
-    this.errorText,
-  });
+  const InviteCodeInput({super.key, required this.onCompleted, this.errorText});
 
   final ValueChanged<String> onCompleted;
   final String? errorText;

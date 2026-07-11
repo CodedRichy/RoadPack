@@ -1,1 +1,1 @@
-﻿// Tracking Widgets barrel
+// Tracking Widgets barrel

@@ -7,9 +7,7 @@ import 'package:roadpack/features/circles/widgets/invite_code_input.dart';
 void main() {
   testWidgets('JoinCircleScreen shows invite code input', (tester) async {
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(home: JoinCircleScreen()),
-      ),
+      const ProviderScope(child: MaterialApp(home: JoinCircleScreen())),
     );
     await tester.pumpAndSettle();
 

@@ -1,1 +1,1 @@
-﻿// Settings Widgets barrel
+// Settings Widgets barrel

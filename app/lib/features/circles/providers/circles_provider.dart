@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/circle.dart';
 import '../services/circle_repository.dart';
 
-final circlesProvider =
-    AsyncNotifierProvider<CirclesNotifier, List<Circle>>(CirclesNotifier.new);
+final circlesProvider = AsyncNotifierProvider<CirclesNotifier, List<Circle>>(
+  CirclesNotifier.new,
+);
 
 class CirclesNotifier extends AsyncNotifier<List<Circle>> {
   @override

@@ -3,14 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:roadpack/features/circles/widgets/invite_code_input.dart';
 
 void main() {
-  testWidgets('InviteCodeInput calls onCompleted after 6 chars', (tester) async {
+  testWidgets('InviteCodeInput calls onCompleted after 6 chars', (
+    tester,
+  ) async {
     String? result;
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: InviteCodeInput(
-            onCompleted: (code) => result = code,
-          ),
+          body: InviteCodeInput(onCompleted: (code) => result = code),
         ),
       ),
     );
@@ -30,10 +30,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: InviteCodeInput(
-            onCompleted: (_) {},
-            errorText: 'Invalid code',
-          ),
+          body: InviteCodeInput(onCompleted: (_) {}, errorText: 'Invalid code'),
         ),
       ),
     );

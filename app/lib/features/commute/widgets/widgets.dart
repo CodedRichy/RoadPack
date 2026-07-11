@@ -1,1 +1,1 @@
-﻿// Commute Widgets barrel
+// Commute Widgets barrel

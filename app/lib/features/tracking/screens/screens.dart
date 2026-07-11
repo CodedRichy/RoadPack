@@ -1,1 +1,1 @@
-﻿// Tracking Screens barrel
+// Tracking Screens barrel

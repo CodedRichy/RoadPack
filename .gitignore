@@ -76,3 +76,6 @@ docs/superpowers/
 # OS
 Thumbs.db
 desktop.ini
+
+# HCR local cache
+.hcr/

@@ -1,1 +1,1 @@
-﻿// Live map Screens barrel
+// Live map Screens barrel
