@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import '../providers/user_profile_provider.dart';
 import '../widgets/onboarding_step.dart';
 
@@ -21,6 +22,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   String _vehicleType = 'none';
   final _vehicleRegController = TextEditingController();
   bool _isLoading = false;
+  LocationPermission _locationPermission = LocationPermission.denied;
 
   // `ref` is not safe to read from `initState` on a `ConsumerStatefulWidget`
   // in the way the original plan assumed, so the one-time seed of the name
@@ -69,6 +71,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             _buildNamePage(),
             _buildDobPage(),
             _buildVehiclePage(),
+            _buildLocationPage(),
             _buildEmergencyContactPage(),
           ],
         ),
@@ -226,6 +229,69 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ),
           ],
         ],
+      ),
+    );
+  }
+
+  Widget _buildLocationPage() {
+    final granted = _locationPermission == LocationPermission.always ||
+        _locationPermission == LocationPermission.whileInUse;
+
+    return OnboardingStep(
+      title: 'Location access',
+      subtitle: 'Required for crash detection and SOS alerts. '
+          'Your location is shared only during emergencies.',
+      showSkip: true,
+      onSkip: _nextPage,
+      onNext: () async {
+        if (granted) {
+          _nextPage();
+          return;
+        }
+
+        var permission = await Geolocator.checkPermission();
+        if (permission == LocationPermission.denied) {
+          permission = await Geolocator.requestPermission();
+        }
+
+        if (permission == LocationPermission.deniedForever) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Location denied permanently. Enable in device settings.',
+                ),
+              ),
+            );
+          }
+        }
+
+        setState(() => _locationPermission = permission);
+
+        if (permission == LocationPermission.always ||
+            permission == LocationPermission.whileInUse) {
+          _nextPage();
+        }
+      },
+      nextLabel: granted ? 'Continue' : 'Allow location',
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              granted ? Icons.check_circle : Icons.location_on,
+              size: 64,
+              color: granted
+                  ? Colors.green
+                  : Theme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              granted ? 'Location access granted' : 'Tap below to enable',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { verifyClerkJwt } from '../_shared/jwt.ts'
 
 serve(async (req) => {
   if (req.method !== 'POST') {
@@ -14,13 +15,12 @@ serve(async (req) => {
     })
   }
 
-  // Extract user_id from JWT
+  // Verify JWT and extract user_id
   const token = authHeader.slice(7)
   let userId: string
   try {
-    const payload = JSON.parse(atob(token.split('.')[1]))
-    userId = payload.sub
-    if (!userId) throw new Error('no sub claim')
+    const { sub } = await verifyClerkJwt(token)
+    userId = sub
   } catch {
     return new Response(JSON.stringify({ error: 'Invalid token' }), {
       status: 401,

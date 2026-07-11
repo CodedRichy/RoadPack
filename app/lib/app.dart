@@ -9,6 +9,7 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(pushNotificationServiceProvider);
     final router = ref.watch(appRouterProvider);
 
     return MaterialApp.router(
