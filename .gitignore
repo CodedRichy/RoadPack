@@ -67,6 +67,12 @@ app/coverage/
 *.g.dart
 *.freezed.dart
 
+# Hot reload cache
+.hcr/
+
+# Superpowers plans/specs (generated)
+docs/superpowers/
+
 # OS
 Thumbs.db
 desktop.ini
