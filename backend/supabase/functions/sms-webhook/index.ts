@@ -11,19 +11,22 @@ serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
   )
 
-  const body = await req.json()
+  let body: Record<string, unknown>
+  try {
+    body = await req.json()
+  } catch {
+    return new Response(JSON.stringify({ error: 'Invalid JSON' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
 
   // Delivery receipt: { provider_id, status, delivered_at }
   if (body.type === 'delivery_receipt') {
     const { provider_id, status } = body
-    const updateData: Record<string, unknown> = { status }
-    if (status === 'delivered') {
-      updateData.delivered_at = new Date().toISOString()
-    }
-
-    // Match by error field storing provider_id (set during send)
-    // In production, store provider_id in a dedicated column or in error metadata
-    // For mock: provider_id is logged but not stored, so this is a no-op
+    // Phase 1: mock providers don't store provider_id on alert rows,
+    // so we can't correlate delivery receipts to specific alerts yet.
+    // When real SMS providers are integrated, match by provider_id column.
     console.log(`[sms-webhook] Delivery receipt: ${provider_id} -> ${status}`)
 
     return new Response(JSON.stringify({ status: 'ok' }), {
