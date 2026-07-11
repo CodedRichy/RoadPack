@@ -28,7 +28,17 @@ serve(async (req) => {
     })
   }
 
-  const { incident_id } = await req.json()
+  let incident_id: string
+  try {
+    const body = await req.json()
+    incident_id = body.incident_id
+  } catch {
+    return new Response(JSON.stringify({ error: 'Invalid JSON' }), {
+      status: 422,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
   if (!incident_id) {
     return new Response(JSON.stringify({ error: 'Missing incident_id' }), {
       status: 422,
@@ -41,10 +51,25 @@ serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
   )
 
-  // Find this user's contact IDs
+  // Verify incident exists and get victim's user_id
+  const { data: incident } = await supabase
+    .from('incidents')
+    .select('user_id')
+    .eq('id', incident_id)
+    .single()
+
+  if (!incident) {
+    return new Response(JSON.stringify({ error: 'Incident not found' }), {
+      status: 404,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
+  // Find this user's contact IDs scoped to incident's victim
   const { data: contacts } = await supabase
     .from('emergency_contacts')
     .select('id')
+    .eq('user_id', incident.user_id)
     .eq('app_user_id', userId)
 
   if (!contacts || contacts.length === 0) {

@@ -27,7 +27,17 @@ serve(async (req) => {
     })
   }
 
-  const { incident_id } = await req.json()
+  let incident_id: string
+  try {
+    const body = await req.json()
+    incident_id = body.incident_id
+  } catch {
+    return new Response(JSON.stringify({ error: 'Invalid JSON' }), {
+      status: 422,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
   if (!incident_id) {
     return new Response(JSON.stringify({ error: 'Missing incident_id' }), {
       status: 422,
