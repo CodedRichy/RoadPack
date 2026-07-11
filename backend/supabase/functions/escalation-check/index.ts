@@ -91,7 +91,7 @@ serve(async (req) => {
               incident_id: incident.id,
               contacts,
               user_profile: profile ?? { name: 'Unknown', phone: '' },
-              location: { lat: 0, lng: 0 },
+              location: { lat: null, lng: null },
             }),
           }).catch((err) => console.error('Retry cascade failed:', err))
 
@@ -155,7 +155,7 @@ serve(async (req) => {
             incident_id: incident.id,
             contacts: newContacts,
             user_profile: profile ?? { name: 'Unknown', phone: '' },
-            location: { lat: 0, lng: 0 },
+            location: { lat: null, lng: null },
           }),
         }).catch((err) => console.error('Escalation cascade failed:', err))
       }
