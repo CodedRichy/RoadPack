@@ -17,13 +17,16 @@ serve(async (req) => {
   const supabase = createClient(supabaseUrl, serviceRoleKey)
   const results = { escalated: 0, retried: 0, finalized: 0 }
 
-  // 1. Cascade retry: dispatched incidents with no alert rows after 60s
+  // 1. Cascade retry: dispatched incidents with no alert rows after 60s,
+  // but not yet old enough to be handled by the 10-min escalation block.
   const sixtySecondsAgo = new Date(Date.now() - 60_000).toISOString()
+  const tenMinutesAgo = new Date(Date.now() - 10 * 60_000).toISOString()
   const { data: stuckIncidents } = await supabase
     .from('incidents')
     .select('id, user_id')
     .eq('status', 'dispatched')
     .lt('created_at', sixtySecondsAgo)
+    .gte('created_at', tenMinutesAgo)
 
   if (stuckIncidents) {
     for (const incident of stuckIncidents) {
@@ -66,11 +69,16 @@ serve(async (req) => {
           .single()
 
         if (contacts && contacts.length > 0) {
-          // Increment retry count
+          // Upsert cascade_jobs row with incremented retry count.
+          // A plain update() would silently match zero rows when no
+          // cascade_jobs row exists yet, leaving retry_count stuck at 0
+          // forever. Upsert guarantees the row exists and increments.
           await supabase
             .from('cascade_jobs')
-            .update({ retry_count: retryCount + 1 })
-            .eq('incident_id', incident.id)
+            .upsert(
+              { incident_id: incident.id, retry_count: retryCount + 1 },
+              { onConflict: 'incident_id' },
+            )
 
           // Re-invoke cascade
           fetch(`${supabaseUrl}/functions/v1/alert-cascade`, {
@@ -94,7 +102,6 @@ serve(async (req) => {
   }
 
   // 2. Escalation: dispatched + no ack + >10 min
-  const tenMinutesAgo = new Date(Date.now() - 10 * 60_000).toISOString()
   const { data: unackedIncidents } = await supabase
     .from('incidents')
     .select('id, user_id')
