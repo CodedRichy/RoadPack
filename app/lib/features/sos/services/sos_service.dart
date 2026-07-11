@@ -23,9 +23,15 @@ class SosService {
 
   Future<Position?> _captureLocation() async {
     try {
-      final permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied ||
+            permission == LocationPermission.deniedForever) {
+          return null;
+        }
+      }
+      if (permission == LocationPermission.deniedForever) {
         return null;
       }
       return await Geolocator.getCurrentPosition(
@@ -48,8 +54,8 @@ class SosService {
 
     final packet = {
       'type': 'sos',
-      'lat': position?.latitude ?? 0.0,
-      'lng': position?.longitude ?? 0.0,
+      'lat': position?.latitude,
+      'lng': position?.longitude,
       'speed': position?.speed,
       'heading': position?.heading,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
