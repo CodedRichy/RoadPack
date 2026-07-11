@@ -7,7 +7,7 @@ import '../../../core/constants/app_constants.dart';
 import '../../auth/services/clerk_service.dart';
 
 final alertServiceProvider = Provider<AlertService?>((ref) {
-  final clerkService = ref.read(clerkServiceProvider);
+  final clerkService = ref.watch(clerkServiceProvider);
   if (!clerkService.isSignedIn) return null;
   return AlertService(clerkService);
 });

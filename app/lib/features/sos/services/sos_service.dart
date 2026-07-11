@@ -11,7 +11,7 @@ import '../models/event_types.dart';
 import '../models/incident.dart';
 
 final sosServiceProvider = Provider<SosService?>((ref) {
-  final clerkService = ref.read(clerkServiceProvider);
+  final clerkService = ref.watch(clerkServiceProvider);
   if (!clerkService.isSignedIn) return null;
   return SosService(clerkService);
 });
