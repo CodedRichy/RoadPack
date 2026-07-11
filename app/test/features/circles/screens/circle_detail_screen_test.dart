@@ -35,18 +35,17 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          circleDetailProvider('c1')
-              .overrideWith((ref) async => testDetail),
+          circleDetailProvider('c1').overrideWith((ref) async => testDetail),
           clerkAuthProvider.overrideWith(
-            () => _FakeAuthNotifier(const AuthState(
-              status: AuthStatus.authenticated,
-              userId: 'user_1',
-            )),
+            () => _FakeAuthNotifier(
+              const AuthState(
+                status: AuthStatus.authenticated,
+                userId: 'user_1',
+              ),
+            ),
           ),
         ],
-        child: const MaterialApp(
-          home: CircleDetailScreen(circleId: 'c1'),
-        ),
+        child: const MaterialApp(home: CircleDetailScreen(circleId: 'c1')),
       ),
     );
     await tester.pumpAndSettle();

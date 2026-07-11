@@ -1,1 +1,1 @@
-﻿// Settings Providers barrel
+// Settings Providers barrel

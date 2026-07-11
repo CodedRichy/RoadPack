@@ -11,8 +11,7 @@ class CreateCircleScreen extends ConsumerStatefulWidget {
   const CreateCircleScreen({super.key});
 
   @override
-  ConsumerState<CreateCircleScreen> createState() =>
-      _CreateCircleScreenState();
+  ConsumerState<CreateCircleScreen> createState() => _CreateCircleScreenState();
 }
 
 class _CreateCircleScreenState extends ConsumerState<CreateCircleScreen> {
@@ -55,7 +54,9 @@ class _CreateCircleScreenState extends ConsumerState<CreateCircleScreen> {
 
     setState(() => _isLoading = true);
     try {
-      final circle = await ref.read(circleActionsProvider).createCircle(
+      final circle = await ref
+          .read(circleActionsProvider)
+          .createCircle(
             name: name,
             type: type,
             maxMembers: _maxMembersForType(type),
@@ -66,9 +67,9 @@ class _CreateCircleScreenState extends ConsumerState<CreateCircleScreen> {
       if (mounted) context.go('/circles/${circle.id}');
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);

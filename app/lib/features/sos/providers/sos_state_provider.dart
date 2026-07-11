@@ -6,8 +6,7 @@ import '../../../core/constants/app_constants.dart';
 import '../models/sos_state.dart';
 import '../services/sos_service.dart';
 
-final sosStateProvider =
-    StateNotifierProvider<SosStateNotifier, SosState>(
+final sosStateProvider = StateNotifierProvider<SosStateNotifier, SosState>(
   (ref) => SosStateNotifier(ref),
 );
 

@@ -7,9 +7,7 @@ import 'package:roadpack/features/circles/widgets/circle_type_picker.dart';
 void main() {
   testWidgets('CreateCircleScreen shows type picker', (tester) async {
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(home: CreateCircleScreen()),
-      ),
+      const ProviderScope(child: MaterialApp(home: CreateCircleScreen())),
     );
     await tester.pumpAndSettle();
 
@@ -20,9 +18,7 @@ void main() {
 
   testWidgets('selecting type pre-fills name field', (tester) async {
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(home: CreateCircleScreen()),
-      ),
+      const ProviderScope(child: MaterialApp(home: CreateCircleScreen())),
     );
     await tester.pumpAndSettle();
 

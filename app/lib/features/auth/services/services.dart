@@ -1,2 +1,2 @@
-﻿// Auth Services barrel
+// Auth Services barrel
 export 'clerk_service.dart';

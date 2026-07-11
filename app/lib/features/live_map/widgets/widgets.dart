@@ -1,1 +1,1 @@
-﻿// Live map Widgets barrel
+// Live map Widgets barrel

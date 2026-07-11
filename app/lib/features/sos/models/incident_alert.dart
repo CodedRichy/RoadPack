@@ -27,9 +27,7 @@ class IncidentAlert with _$IncidentAlert {
       channel: AlertChannel.values.firstWhere(
         (e) => e.value == json['channel'],
       ),
-      status: AlertStatus.values.firstWhere(
-        (e) => e.value == json['status'],
-      ),
+      status: AlertStatus.values.firstWhere((e) => e.value == json['status']),
       sentAt: json['sent_at'] != null
           ? DateTime.parse(json['sent_at'] as String)
           : null,

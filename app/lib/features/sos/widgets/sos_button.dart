@@ -39,9 +39,7 @@ class _SosButtonState extends ConsumerState<SosButton> {
 
   @override
   Widget build(BuildContext context) {
-    final sosStatus = ref.watch(
-      sosStateProvider.select((s) => s.status),
-    );
+    final sosStatus = ref.watch(sosStateProvider.select((s) => s.status));
 
     if (sosStatus != SosStatus.idle) return const SizedBox.shrink();
 
@@ -66,12 +64,14 @@ class _SosButtonState extends ConsumerState<SosButton> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.sos, color: Colors.white, size: 32),
-              Text('SOS',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  )),
+              Text(
+                'SOS',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
+              ),
             ],
           ),
         ),

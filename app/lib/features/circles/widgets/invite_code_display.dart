@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class InviteCodeDisplay extends StatelessWidget {
-  const InviteCodeDisplay({
-    super.key,
-    required this.code,
-    this.onShare,
-  });
+  const InviteCodeDisplay({super.key, required this.code, this.onShare});
 
   final String code;
   final VoidCallback? onShare;

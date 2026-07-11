@@ -43,8 +43,9 @@ void main() {
     });
 
     test('build fetches circles from repository', () async {
-      when(() => mockRepo.fetchCircles())
-          .thenAnswer((_) async => [_testCircle]);
+      when(
+        () => mockRepo.fetchCircles(),
+      ).thenAnswer((_) async => [_testCircle]);
 
       final sub = container.listen(circlesProvider, (_, __) {});
       await container.read(circlesProvider.future);
@@ -54,8 +55,9 @@ void main() {
     });
 
     test('refresh re-fetches circles', () async {
-      when(() => mockRepo.fetchCircles())
-          .thenAnswer((_) async => [_testCircle]);
+      when(
+        () => mockRepo.fetchCircles(),
+      ).thenAnswer((_) async => [_testCircle]);
 
       await container.read(circlesProvider.future);
       await container.read(circlesProvider.notifier).refresh();

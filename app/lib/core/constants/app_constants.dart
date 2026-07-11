@@ -1,8 +1,12 @@
 abstract final class AppConstants {
   static const String appName = 'RoadPack';
   static const String supabaseUrl = String.fromEnvironment('SUPABASE_URL');
-  static const String supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
-  static const String clerkPublishableKey = String.fromEnvironment('CLERK_PUBLISHABLE_KEY');
+  static const String supabaseAnonKey = String.fromEnvironment(
+    'SUPABASE_ANON_KEY',
+  );
+  static const String clerkPublishableKey = String.fromEnvironment(
+    'CLERK_PUBLISHABLE_KEY',
+  );
   static const Duration locationUpdateInterval = Duration(seconds: 5);
   static const Duration sosCountdownDuration = Duration(seconds: 5);
   static const Duration crashCountdownDuration = Duration(seconds: 30);

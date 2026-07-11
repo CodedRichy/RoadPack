@@ -43,9 +43,7 @@ class CircleCard extends StatelessWidget {
           ),
         ),
         title: Text(circle.name),
-        subtitle: Text(
-          '${circle.type.displayName} -- $memberCount members',
-        ),
+        subtitle: Text('${circle.type.displayName} -- $memberCount members'),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

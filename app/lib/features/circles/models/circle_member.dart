@@ -44,8 +44,7 @@ class CircleMember with _$CircleMember {
       circleId: json['circle_id'] as String,
       userId: json['user_id'] as String,
       role: CircleRole.fromString(json['role'] as String),
-      permissions:
-          (json['permissions'] as Map<String, dynamic>?) ?? const {},
+      permissions: (json['permissions'] as Map<String, dynamic>?) ?? const {},
       acceptedAt: json['accepted_at'] != null
           ? DateTime.parse(json['accepted_at'] as String)
           : null,

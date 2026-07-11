@@ -28,9 +28,7 @@ class Incident with _$Incident {
     return Incident(
       id: json['id'] as String,
       userId: json['user_id'] as String,
-      type: IncidentType.values.firstWhere(
-        (e) => e.value == json['type'],
-      ),
+      type: IncidentType.values.firstWhere((e) => e.value == json['type']),
       severity: json['severity'] != null
           ? IncidentSeverity.values.firstWhere(
               (e) => e.value == json['severity'],

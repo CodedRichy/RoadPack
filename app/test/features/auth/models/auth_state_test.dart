@@ -14,7 +14,10 @@ void main() {
 
     test('copyWith updates status', () {
       const state = AuthState();
-      final updated = state.copyWith(status: AuthStatus.authenticated, userId: 'user_abc');
+      final updated = state.copyWith(
+        status: AuthStatus.authenticated,
+        userId: 'user_abc',
+      );
       expect(updated.status, AuthStatus.authenticated);
       expect(updated.userId, 'user_abc');
     });
@@ -27,7 +30,10 @@ void main() {
 
     test('isAuthenticated convenience getter', () {
       const idle = AuthState();
-      const authed = AuthState(status: AuthStatus.authenticated, userId: 'user_1');
+      const authed = AuthState(
+        status: AuthStatus.authenticated,
+        userId: 'user_1',
+      );
       expect(idle.isAuthenticated, isFalse);
       expect(authed.isAuthenticated, isTrue);
     });

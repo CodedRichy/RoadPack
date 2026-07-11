@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/circle.dart';
 
 class CircleTypePicker extends StatelessWidget {
-  const CircleTypePicker({
-    super.key,
-    required this.onSelected,
-    this.selected,
-  });
+  const CircleTypePicker({super.key, required this.onSelected, this.selected});
 
   final ValueChanged<CircleType> onSelected;
   final CircleType? selected;

@@ -18,8 +18,7 @@ class CircleDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final detailAsync = ref.watch(circleDetailProvider(circleId));
-    final currentUserId =
-        ref.watch(clerkAuthProvider).valueOrNull?.userId;
+    final currentUserId = ref.watch(clerkAuthProvider).valueOrNull?.userId;
 
     return detailAsync.when(
       loading: () => Scaffold(
@@ -44,8 +43,9 @@ class CircleDetailScreen extends ConsumerWidget {
       ),
       data: (detail) {
         final circle = detail.circle;
-        final isAdmin = detail.members
-            .any((m) => m.userId == currentUserId && m.isAdmin);
+        final isAdmin = detail.members.any(
+          (m) => m.userId == currentUserId && m.isAdmin,
+        );
 
         return Scaffold(
           appBar: AppBar(
@@ -103,26 +103,55 @@ class CircleDetailScreen extends ConsumerWidget {
                   isAdmin: isAdmin,
                   isEc: memberIsEc,
                   onLeave: member.userId == currentUserId
-                      ? () => _confirmLeave(context, ref, circle.id,
-                          circle.isFamily)
+                      ? () => _confirmLeave(
+                          context,
+                          ref,
+                          circle.id,
+                          circle.isFamily,
+                        )
                       : null,
                   onPromote: isAdmin && !member.isAdmin
-                      ? () => _updateRole(context, ref, circle.id,
-                          member.userId, CircleRole.admin)
+                      ? () => _updateRole(
+                          context,
+                          ref,
+                          circle.id,
+                          member.userId,
+                          CircleRole.admin,
+                        )
                       : null,
-                  onDemote: isAdmin && member.isAdmin &&
+                  onDemote:
+                      isAdmin &&
+                          member.isAdmin &&
                           member.userId != currentUserId
-                      ? () => _updateRole(context, ref, circle.id,
-                          member.userId, CircleRole.member)
+                      ? () => _updateRole(
+                          context,
+                          ref,
+                          circle.id,
+                          member.userId,
+                          CircleRole.member,
+                        )
                       : null,
                   onRemove: isAdmin && member.userId != currentUserId
-                      ? () => _removeMember(context, ref, circle.id,
-                          member.userId, circle.isFamily)
+                      ? () => _removeMember(
+                          context,
+                          ref,
+                          circle.id,
+                          member.userId,
+                          circle.isFamily,
+                        )
                       : null,
-                  onToggleEc: !circle.isFamily && isAdmin &&
+                  onToggleEc:
+                      !circle.isFamily &&
+                          isAdmin &&
                           member.userId != currentUserId
-                      ? () => _toggleEc(context, ref, circle.id,
-                          member.userId, member.userName ?? '', !memberIsEc)
+                      ? () => _toggleEc(
+                          context,
+                          ref,
+                          circle.id,
+                          member.userId,
+                          member.userName ?? '',
+                          !memberIsEc,
+                        )
                       : null,
                 );
               }),
@@ -133,23 +162,27 @@ class CircleDetailScreen extends ConsumerWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8),
-                ...detail.observers.map((obs) => ListTile(
-                      leading: CircleAvatar(
-                        child: Icon(Icons.phone,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSecondaryContainer),
+                ...detail.observers.map(
+                  (obs) => ListTile(
+                    leading: CircleAvatar(
+                      child: Icon(
+                        Icons.phone,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSecondaryContainer,
                       ),
-                      title: Text(obs.name),
-                      subtitle: Text(_maskPhone(obs.phone)),
-                      trailing: isAdmin
-                          ? IconButton(
-                              icon: const Icon(Icons.remove_circle_outline),
-                              onPressed: () =>
-                                  _removeObserver(context, ref, obs.id),
-                            )
-                          : const Chip(label: Text('SMS')),
-                    )),
+                    ),
+                    title: Text(obs.name),
+                    subtitle: Text(_maskPhone(obs.phone)),
+                    trailing: isAdmin
+                        ? IconButton(
+                            icon: const Icon(Icons.remove_circle_outline),
+                            onPressed: () =>
+                                _removeObserver(context, ref, obs.id),
+                          )
+                        : const Chip(label: Text('SMS')),
+                  ),
+                ),
               ],
               if (isAdmin) ...[
                 const SizedBox(height: 16),
@@ -181,9 +214,11 @@ class CircleDetailScreen extends ConsumerWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Leave circle?'),
-        content: Text(isFamily
-            ? 'Leaving will remove all emergency contact links from this circle.'
-            : 'Are you sure you want to leave?'),
+        content: Text(
+          isFamily
+              ? 'Leaving will remove all emergency contact links from this circle.'
+              : 'Are you sure you want to leave?',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
@@ -256,17 +291,16 @@ class CircleDetailScreen extends ConsumerWidget {
     CircleRole role,
   ) async {
     try {
-      await ref.read(circleActionsProvider).updateRole(
-            circleId: circleId,
-            userId: userId,
-            role: role,
-          );
+      await ref
+          .read(circleActionsProvider)
+          .updateRole(circleId: circleId, userId: userId, role: role);
       ref.invalidate(circleDetailProvider(circleId));
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('Failed to update role. Please try again.')),
+            content: Text('Failed to update role. Please try again.'),
+          ),
         );
       }
     }
@@ -280,17 +314,16 @@ class CircleDetailScreen extends ConsumerWidget {
     bool isFamily,
   ) async {
     try {
-      await ref.read(circleActionsProvider).removeMember(
-            circleId: circleId,
-            userId: userId,
-            isFamily: isFamily,
-          );
+      await ref
+          .read(circleActionsProvider)
+          .removeMember(circleId: circleId, userId: userId, isFamily: isFamily);
       ref.invalidate(circleDetailProvider(circleId));
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('Failed to remove member. Please try again.')),
+            content: Text('Failed to remove member. Please try again.'),
+          ),
         );
       }
     }
@@ -308,7 +341,8 @@ class CircleDetailScreen extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('Failed to remove observer. Please try again.')),
+            content: Text('Failed to remove observer. Please try again.'),
+          ),
         );
       }
     }
@@ -323,7 +357,9 @@ class CircleDetailScreen extends ConsumerWidget {
     bool enable,
   ) async {
     try {
-      await ref.read(circleActionsProvider).toggleEc(
+      await ref
+          .read(circleActionsProvider)
+          .toggleEc(
             circleId: circleId,
             targetUserId: targetUserId,
             targetName: targetName,
@@ -334,8 +370,10 @@ class CircleDetailScreen extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text(
-                  'Failed to update emergency contact. Please try again.')),
+            content: Text(
+              'Failed to update emergency contact. Please try again.',
+            ),
+          ),
         );
       }
     }
@@ -363,8 +401,7 @@ class CircleDetailScreen extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Add Observer',
-                style: Theme.of(ctx).textTheme.titleLarge),
+            Text('Add Observer', style: Theme.of(ctx).textTheme.titleLarge),
             const SizedBox(height: 8),
             Text(
               'Observers receive SMS alerts but don\'t need the app.',
@@ -395,11 +432,9 @@ class CircleDetailScreen extends ConsumerWidget {
                 final name = nameCtrl.text.trim();
                 final phone = '+91${phoneCtrl.text.trim()}';
                 if (name.isEmpty || phoneCtrl.text.trim().length < 10) return;
-                await ref.read(circleActionsProvider).addObserver(
-                      circleId: circleId,
-                      name: name,
-                      phone: phone,
-                    );
+                await ref
+                    .read(circleActionsProvider)
+                    .addObserver(circleId: circleId, name: name, phone: phone);
                 ref.invalidate(circleDetailProvider(circleId));
                 if (ctx.mounted) Navigator.pop(ctx);
               },

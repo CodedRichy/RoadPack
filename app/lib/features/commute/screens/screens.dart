@@ -1,1 +1,1 @@
-﻿// Commute Screens barrel
+// Commute Screens barrel

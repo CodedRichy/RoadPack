@@ -1,1 +1,1 @@
-﻿// Live map Models barrel
+// Live map Models barrel

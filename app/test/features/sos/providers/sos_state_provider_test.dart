@@ -58,10 +58,12 @@ void main() {
     });
 
     test('resolve calls service and transitions to resolved', () async {
-      when(() => mockService.dispatchSos())
-          .thenAnswer((_) async => testIncident);
-      when(() => mockService.resolveIncident('inc_123'))
-          .thenAnswer((_) async {});
+      when(
+        () => mockService.dispatchSos(),
+      ).thenAnswer((_) async => testIncident);
+      when(
+        () => mockService.resolveIncident('inc_123'),
+      ).thenAnswer((_) async {});
 
       final notifier = container.read(sosStateProvider.notifier);
       // Simulate dispatched state

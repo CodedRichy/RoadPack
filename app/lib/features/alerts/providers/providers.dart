@@ -1,2 +1,2 @@
-﻿// Alerts Providers barrel
+// Alerts Providers barrel
 export 'alerts_provider.dart';

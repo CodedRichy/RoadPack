@@ -1,1 +1,1 @@
-﻿// Emergency profile Models barrel
+// Emergency profile Models barrel

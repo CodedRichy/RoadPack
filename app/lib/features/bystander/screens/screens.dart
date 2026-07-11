@@ -1,1 +1,1 @@
-﻿// Bystander Screens barrel
+// Bystander Screens barrel

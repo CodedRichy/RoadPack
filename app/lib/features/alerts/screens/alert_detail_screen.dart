@@ -37,7 +37,9 @@ class AlertDetailScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 16),
-            Text('Location: ${alert.lat.toStringAsFixed(4)}, ${alert.lng.toStringAsFixed(4)}'),
+            Text(
+              'Location: ${alert.lat.toStringAsFixed(4)}, ${alert.lng.toStringAsFixed(4)}',
+            ),
             const SizedBox(height: 8),
             Text('Time: ${alert.receivedAt}'),
             const SizedBox(height: 24),
@@ -60,13 +62,16 @@ class AlertDetailScreen extends ConsumerWidget {
                           .markAcknowledged(incidentId);
                     } catch (e) {
                       if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
-                        );
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text('Error: $e')));
                       }
                     }
                   },
-                  child: const Text('ACKNOWLEDGE', style: TextStyle(fontSize: 18)),
+                  child: const Text(
+                    'ACKNOWLEDGE',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ),
             if (alert.acknowledged)
@@ -95,7 +100,8 @@ class AlertDetailScreen extends ConsumerWidget {
               label: const Text('Open in Maps'),
               onPressed: () => launchUrl(
                 Uri.parse(
-                    'https://maps.google.com/?q=${alert.lat},${alert.lng}'),
+                  'https://maps.google.com/?q=${alert.lat},${alert.lng}',
+                ),
               ),
             ),
           ],

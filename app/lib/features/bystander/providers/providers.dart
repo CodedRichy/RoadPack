@@ -1,1 +1,1 @@
-﻿// Bystander Providers barrel
+// Bystander Providers barrel

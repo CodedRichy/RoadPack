@@ -2,13 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_state.freezed.dart';
 
-enum AuthStatus {
-  idle,
-  identifierEntered,
-  codeSent,
-  verifying,
-  authenticated,
-}
+enum AuthStatus { idle, identifierEntered, codeSent, verifying, authenticated }
 
 @freezed
 class AuthState with _$AuthState {

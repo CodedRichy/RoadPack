@@ -4,8 +4,8 @@ import '../models/alert_notification.dart';
 
 final alertsProvider =
     StateNotifierProvider<AlertsNotifier, List<AlertNotification>>(
-  (ref) => AlertsNotifier(),
-);
+      (ref) => AlertsNotifier(),
+    );
 
 class AlertsNotifier extends StateNotifier<List<AlertNotification>> {
   AlertsNotifier() : super([]);
@@ -17,10 +17,7 @@ class AlertsNotifier extends StateNotifier<List<AlertNotification>> {
   void markAcknowledged(String incidentId) {
     state = [
       for (final a in state)
-        if (a.incidentId == incidentId)
-          a.copyWith(acknowledged: true)
-        else
-          a,
+        if (a.incidentId == incidentId) a.copyWith(acknowledged: true) else a,
     ];
   }
 }

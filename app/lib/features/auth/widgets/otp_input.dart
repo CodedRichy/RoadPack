@@ -79,7 +79,10 @@ class _OtpInputState extends State<OtpInput> {
           const SizedBox(height: 8),
           Text(
             widget.errorText!,
-            style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 12),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.error,
+              fontSize: 12,
+            ),
           ),
         ],
       ],

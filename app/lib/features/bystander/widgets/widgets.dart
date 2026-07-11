@@ -1,1 +1,1 @@
-﻿// Bystander Widgets barrel
+// Bystander Widgets barrel

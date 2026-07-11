@@ -26,10 +26,7 @@ class CircleRepository {
   }
 
   Future<List<Circle>> fetchCircles() async {
-    final data = await _client
-        .from('circles')
-        .select()
-        .order('created_at');
+    final data = await _client.from('circles').select().order('created_at');
     return data.map((row) => Circle.fromJson(row)).toList();
   }
 
@@ -43,14 +40,18 @@ class CircleRepository {
     String inviteCode = generateInviteCode();
     for (var attempt = 0; attempt < 3; attempt++) {
       try {
-        final row = await _client.from('circles').insert({
-          'name': name,
-          'type': type.value,
-          'created_by': userId,
-          'invite_code': inviteCode,
-          'max_members': maxMembers,
-          'expires_at': expiresAt?.toIso8601String(),
-        }).select().single();
+        final row = await _client
+            .from('circles')
+            .insert({
+              'name': name,
+              'type': type.value,
+              'created_by': userId,
+              'invite_code': inviteCode,
+              'max_members': maxMembers,
+              'expires_at': expiresAt?.toIso8601String(),
+            })
+            .select()
+            .single();
 
         await _client.from('circle_members').insert({
           'circle_id': row['id'],

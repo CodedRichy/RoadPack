@@ -69,11 +69,7 @@ class MemberTile extends StatelessWidget {
           ),
           if (isEc) ...[
             const SizedBox(width: 4),
-            Icon(
-              Icons.shield,
-              size: 16,
-              color: theme.colorScheme.primary,
-            ),
+            Icon(Icons.shield, size: 16, color: theme.colorScheme.primary),
           ],
         ],
       ),
@@ -85,19 +81,34 @@ class MemberTile extends StatelessWidget {
     final items = <PopupMenuEntry<String>>[];
 
     if (isCurrentUser) {
-      items.add(const PopupMenuItem(value: 'leave', child: Text('Leave circle')));
+      items.add(
+        const PopupMenuItem(value: 'leave', child: Text('Leave circle')),
+      );
     } else if (isAdmin) {
       if (member.isAdmin) {
-        items.add(const PopupMenuItem(value: 'demote', child: Text('Demote to member')));
+        items.add(
+          const PopupMenuItem(value: 'demote', child: Text('Demote to member')),
+        );
       } else {
-        items.add(const PopupMenuItem(value: 'promote', child: Text('Promote to admin')));
+        items.add(
+          const PopupMenuItem(
+            value: 'promote',
+            child: Text('Promote to admin'),
+          ),
+        );
       }
       items.add(const PopupMenuItem(value: 'remove', child: Text('Remove')));
       if (onToggleEc != null) {
-        items.add(PopupMenuItem(
-          value: 'ec',
-          child: Text(isEc ? 'Remove as emergency contact' : 'Mark as emergency contact'),
-        ));
+        items.add(
+          PopupMenuItem(
+            value: 'ec',
+            child: Text(
+              isEc
+                  ? 'Remove as emergency contact'
+                  : 'Mark as emergency contact',
+            ),
+          ),
+        );
       }
     }
 

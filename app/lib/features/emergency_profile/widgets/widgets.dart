@@ -1,1 +1,1 @@
-﻿// Emergency profile Widgets barrel
+// Emergency profile Widgets barrel

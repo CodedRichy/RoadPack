@@ -1,2 +1,2 @@
-﻿// Alerts Widgets barrel
+// Alerts Widgets barrel
 export 'alert_card.dart';

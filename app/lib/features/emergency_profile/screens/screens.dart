@@ -1,1 +1,1 @@
-﻿// Emergency profile Screens barrel
+// Emergency profile Screens barrel

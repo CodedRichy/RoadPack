@@ -1,2 +1,2 @@
-﻿// Alerts Services barrel
+// Alerts Services barrel
 export 'alert_service.dart';

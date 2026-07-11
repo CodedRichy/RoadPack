@@ -1,1 +1,1 @@
-﻿// Bystander Models barrel
+// Bystander Models barrel

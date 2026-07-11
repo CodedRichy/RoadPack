@@ -80,41 +80,47 @@ void main() {
       expect(service.userId, isNull);
     });
 
-    test('startPhoneSignIn calls attemptSignIn with phoneCode strategy', () async {
-      when(
-        () => mockAuth.attemptSignIn(
-          strategy: any(named: 'strategy'),
-          identifier: any(named: 'identifier'),
-        ),
-      ).thenAnswer((_) async {});
+    test(
+      'startPhoneSignIn calls attemptSignIn with phoneCode strategy',
+      () async {
+        when(
+          () => mockAuth.attemptSignIn(
+            strategy: any(named: 'strategy'),
+            identifier: any(named: 'identifier'),
+          ),
+        ).thenAnswer((_) async {});
 
-      await service.startPhoneSignIn('+911234567890');
+        await service.startPhoneSignIn('+911234567890');
 
-      verify(
-        () => mockAuth.attemptSignIn(
-          strategy: clerk.Strategy.phoneCode,
-          identifier: '+911234567890',
-        ),
-      ).called(1);
-    });
+        verify(
+          () => mockAuth.attemptSignIn(
+            strategy: clerk.Strategy.phoneCode,
+            identifier: '+911234567890',
+          ),
+        ).called(1);
+      },
+    );
 
-    test('startEmailSignIn calls attemptSignIn with emailCode strategy', () async {
-      when(
-        () => mockAuth.attemptSignIn(
-          strategy: any(named: 'strategy'),
-          identifier: any(named: 'identifier'),
-        ),
-      ).thenAnswer((_) async {});
+    test(
+      'startEmailSignIn calls attemptSignIn with emailCode strategy',
+      () async {
+        when(
+          () => mockAuth.attemptSignIn(
+            strategy: any(named: 'strategy'),
+            identifier: any(named: 'identifier'),
+          ),
+        ).thenAnswer((_) async {});
 
-      await service.startEmailSignIn('a@b.com');
+        await service.startEmailSignIn('a@b.com');
 
-      verify(
-        () => mockAuth.attemptSignIn(
-          strategy: clerk.Strategy.emailCode,
-          identifier: 'a@b.com',
-        ),
-      ).called(1);
-    });
+        verify(
+          () => mockAuth.attemptSignIn(
+            strategy: clerk.Strategy.emailCode,
+            identifier: 'a@b.com',
+          ),
+        ).called(1);
+      },
+    );
 
     test('verifyCode returns false when no sign-in is in progress', () async {
       final result = await service.verifyCode('123456');
@@ -257,23 +263,26 @@ void main() {
       expect(token, isNull);
     });
 
-    test('signOut delegates to Auth.signOut and clears pending sign-in', () async {
-      when(
-        () => mockAuth.attemptSignIn(
-          strategy: any(named: 'strategy'),
-          identifier: any(named: 'identifier'),
-        ),
-      ).thenAnswer((_) async {});
-      when(() => mockAuth.signOut()).thenAnswer((_) async {});
+    test(
+      'signOut delegates to Auth.signOut and clears pending sign-in',
+      () async {
+        when(
+          () => mockAuth.attemptSignIn(
+            strategy: any(named: 'strategy'),
+            identifier: any(named: 'identifier'),
+          ),
+        ).thenAnswer((_) async {});
+        when(() => mockAuth.signOut()).thenAnswer((_) async {});
 
-      await service.startPhoneSignIn('+911234567890');
-      await service.signOut();
+        await service.startPhoneSignIn('+911234567890');
+        await service.signOut();
 
-      verify(() => mockAuth.signOut()).called(1);
+        verify(() => mockAuth.signOut()).called(1);
 
-      // pending sign-in was cleared, so verifyCode now has nothing to do
-      final result = await service.verifyCode('123456');
-      expect(result, isFalse);
-    });
+        // pending sign-in was cleared, so verifyCode now has nothing to do
+        final result = await service.verifyCode('123456');
+        expect(result, isFalse);
+      },
+    );
   });
 }

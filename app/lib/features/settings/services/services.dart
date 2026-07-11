@@ -1,1 +1,1 @@
-﻿// Settings Services barrel
+// Settings Services barrel

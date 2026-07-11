@@ -181,11 +181,7 @@ class CircleActions {
   }) async {
     final repo = _repo;
     if (repo == null) return;
-    await repo.updateMemberRole(
-      circleId: circleId,
-      userId: userId,
-      role: role,
-    );
+    await repo.updateMemberRole(circleId: circleId, userId: userId, role: role);
   }
 
   Future<void> toggleEc({
