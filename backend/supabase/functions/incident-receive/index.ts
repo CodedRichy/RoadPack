@@ -53,11 +53,6 @@ serve(async (req) => {
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!
   const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 
-  // Client with user's JWT for RLS-scoped reads
-  const userClient = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
-    global: { headers: { Authorization: authHeader } },
-  })
-
   // Service client for writes that bypass RLS
   const serviceClient = createClient(supabaseUrl, serviceRoleKey)
 
@@ -104,6 +99,7 @@ serve(async (req) => {
     .not('status', 'in', '("cancelled","resolved")')
 
   if (countError) {
+    console.error('incidents count query failed:', countError.message)
     return new Response(JSON.stringify({ error: 'DB error' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
@@ -132,6 +128,7 @@ serve(async (req) => {
     .single()
 
   if (insertError || !incident) {
+    console.error('incident insert failed:', insertError?.message)
     return new Response(JSON.stringify({ error: 'Failed to create incident' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
@@ -149,6 +146,7 @@ serve(async (req) => {
     .order('priority')
 
   if (contactsError) {
+    console.error('contacts fetch failed:', contactsError.message)
     return new Response(JSON.stringify({ error: 'Failed to fetch contacts' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
@@ -170,23 +168,27 @@ serve(async (req) => {
     .single()
 
   // Insert cascade_jobs row
-  await serviceClient.from('cascade_jobs').insert({ incident_id: incidentId })
+  const { error: jobError } = await serviceClient.from('cascade_jobs').insert({ incident_id: incidentId })
+  if (jobError) console.error('cascade_jobs insert failed:', incidentId, jobError.message)
 
   // Fire-and-forget: invoke alert-cascade
   const cascadeUrl = `${supabaseUrl}/functions/v1/alert-cascade`
-  fetch(cascadeUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${serviceRoleKey}`,
-    },
-    body: JSON.stringify({
-      incident_id: incidentId,
-      contacts,
-      user_profile: profile ?? { name: 'Unknown', phone: '' },
-      location: { lat: packet.lat, lng: packet.lng },
-    }),
-  }).catch((err) => console.error('Failed to invoke alert-cascade:', err))
+  // @ts-ignore — EdgeRuntime is a Supabase-specific global
+  EdgeRuntime.waitUntil(
+    fetch(cascadeUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${serviceRoleKey}`,
+      },
+      body: JSON.stringify({
+        incident_id: incidentId,
+        contacts,
+        user_profile: profile ?? { name: 'Unknown', phone: '' },
+        location: { lat: packet.lat, lng: packet.lng },
+      }),
+    }).catch((err) => console.error('Failed to invoke alert-cascade:', err))
+  )
 
   return new Response(
     JSON.stringify({ incident_id: incidentId, status: 'dispatched' }),
