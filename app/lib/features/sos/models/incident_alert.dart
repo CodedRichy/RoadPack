@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'event_types.dart';
+
 part 'incident_alert.freezed.dart';
 
 @freezed
@@ -8,8 +10,8 @@ class IncidentAlert with _$IncidentAlert {
     required String id,
     required String incidentId,
     String? contactId,
-    required String channel,
-    required String status,
+    required AlertChannel channel,
+    required AlertStatus status,
     DateTime? sentAt,
     DateTime? deliveredAt,
     DateTime? acknowledgedAt,
@@ -22,8 +24,12 @@ class IncidentAlert with _$IncidentAlert {
       id: json['id'] as String,
       incidentId: json['incident_id'] as String,
       contactId: json['contact_id'] as String?,
-      channel: json['channel'] as String,
-      status: json['status'] as String,
+      channel: AlertChannel.values.firstWhere(
+        (e) => e.value == json['channel'],
+      ),
+      status: AlertStatus.values.firstWhere(
+        (e) => e.value == json['status'],
+      ),
       sentAt: json['sent_at'] != null
           ? DateTime.parse(json['sent_at'] as String)
           : null,
