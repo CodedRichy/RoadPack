@@ -37,7 +37,7 @@ serve(async (req) => {
   // Inbound SMS reply: { sender_phone, message }
   if (body.type === 'inbound_sms') {
     const { sender_phone, message } = body
-    const normalizedMessage = (message ?? '').trim().toUpperCase()
+    const normalizedMessage = String(message ?? '').trim().toUpperCase()
 
     if (normalizedMessage !== 'OK') {
       return new Response(JSON.stringify({ status: 'ignored' }), {
