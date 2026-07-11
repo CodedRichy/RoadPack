@@ -48,10 +48,7 @@ class SosStateNotifier extends StateNotifier<SosState> {
     if (!state.canCancel) return;
     _countdownTimer?.cancel();
     _countdownTimer = null;
-    state = state.copyWith(
-      status: SosStatus.cancelled,
-      countdownRemaining: AppConstants.sosCountdownDuration.inSeconds,
-    );
+    state = const SosState();
   }
 
   void reset() {

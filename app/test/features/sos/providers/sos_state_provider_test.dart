@@ -49,7 +49,7 @@ void main() {
       notifier.cancel();
 
       final state = container.read(sosStateProvider);
-      expect(state.status, SosStatus.cancelled);
+      expect(state.status, SosStatus.idle);
     });
 
     test('cancel from idle is no-op', () {
