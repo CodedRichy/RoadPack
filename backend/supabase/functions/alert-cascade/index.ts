@@ -21,6 +21,21 @@ function delay(ms: number): Promise<void> {
 }
 
 serve(async (req) => {
+  try {
+    return await handleRequest(req)
+  } catch (err) {
+    console.error('alert-cascade: unhandled error', err)
+    return new Response(
+      JSON.stringify({
+        error: 'Internal server error',
+        message: err instanceof Error ? err.message : String(err),
+      }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } },
+    )
+  }
+})
+
+async function handleRequest(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
     return new Response('Method not allowed', { status: 405 })
   }
@@ -140,4 +155,4 @@ serve(async (req) => {
     JSON.stringify({ status: 'completed', incident_id }),
     { headers: { 'Content-Type': 'application/json' } },
   )
-})
+}
