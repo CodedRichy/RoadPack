@@ -173,10 +173,32 @@ serve(async (req) => {
     .is('first_ack_at', null)
     .lt('created_at', twentyMinutesAgo)
 
-  if (finalIncidents) {
+  if (finalIncidents && finalIncidents.length > 0) {
+    // Skip incidents whose cascade job was already finalized, so the
+    // "Call 112" log line doesn't fire on every cron tick forever.
+    const { data: completedJobs } = await supabase
+      .from('cascade_jobs')
+      .select('incident_id')
+      .in('incident_id', finalIncidents.map((i) => i.id))
+      .not('completed_at', 'is', null)
+
+    const alreadyFinalizedIds = new Set(
+      (completedJobs ?? []).map((j: { incident_id: string }) => j.incident_id),
+    )
+
     for (const incident of finalIncidents) {
+      if (alreadyFinalizedIds.has(incident.id)) continue
+
       // Log final state — in production, push "Call 112 now" to all contacts
       console.log(`[escalation-check] FINAL: incident ${incident.id} — 20 min, no ack. Call 112.`)
+
+      // Mark the cascade job as completed so this incident stops being
+      // picked up by future runs and spamming the same log line.
+      await supabase
+        .from('cascade_jobs')
+        .update({ completed_at: new Date().toISOString() })
+        .eq('incident_id', incident.id)
+
       results.finalized++
     }
   }
