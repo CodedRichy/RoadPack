@@ -12,6 +12,8 @@ import '../../features/circles/screens/create_circle_screen.dart';
 import '../../features/circles/screens/join_circle_screen.dart';
 import '../../features/circles/screens/circle_detail_screen.dart';
 import '../../features/alerts/screens/alert_detail_screen.dart';
+import '../../features/tracking/screens/routes_screen.dart';
+import '../../features/tracking/screens/trip_history_screen.dart';
 
 String? authRedirect({
   required bool isAuthenticated,
@@ -101,6 +103,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           final incidentId = state.pathParameters['id']!;
           return AlertDetailScreen(incidentId: incidentId);
         },
+      ),
+      GoRoute(
+        path: '/routes',
+        builder: (context, state) => const RoutesScreen(),
+      ),
+      GoRoute(
+        path: '/trips',
+        builder: (context, state) => const TripHistoryScreen(),
       ),
     ],
   );
