@@ -79,8 +79,12 @@ void main() {
       await tester.tap(find.text('Continue'));
       await tester.pumpAndSettle();
 
-      // Vehicle page -> emergency contact page.
+      // Vehicle page -> location page.
       await tester.tap(find.text('Continue'));
+      await tester.pumpAndSettle();
+
+      // Location page -> emergency contact page (skip).
+      await tester.tap(find.text('Skip for now'));
       await tester.pumpAndSettle();
 
       expect(find.text('Emergency contact'), findsOneWidget);
