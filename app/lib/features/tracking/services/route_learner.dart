@@ -49,9 +49,8 @@ class RouteLearner {
       final newDestLng =
           (match.destLng * match.tripCount + trip.destLng!) / updatedCount;
 
-      final tripDurationMin = trip.endTime != null
-          ? trip.endTime!.difference(trip.startTime).inMinutes
-          : null;
+      final tripDurationMin =
+          trip.endTime?.difference(trip.startTime).inMinutes;
       final int? newDuration;
       if (tripDurationMin != null && match.typicalDurationMin != null) {
         newDuration =
@@ -106,9 +105,8 @@ class RouteLearner {
 
     // No match — create new candidate
     final dayOfWeek = trip.startTime.weekday;
-    final tripDurationMin = trip.endTime != null
-        ? trip.endTime!.difference(trip.startTime).inMinutes
-        : null;
+    final tripDurationMin =
+        trip.endTime?.difference(trip.startTime).inMinutes;
     final startMin = trip.startTime.hour * 60 + trip.startTime.minute;
     final startStr =
         '${(startMin ~/ 60).toString().padLeft(2, '0')}:${(startMin % 60).toString().padLeft(2, '0')}';

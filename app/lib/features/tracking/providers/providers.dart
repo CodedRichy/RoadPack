@@ -1,1 +1,2 @@
-// Tracking Providers barrel
+export '../services/tracking_service.dart'
+    show trackingServiceProvider, trackingDatabaseProvider;
