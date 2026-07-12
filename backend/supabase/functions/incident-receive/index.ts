@@ -10,13 +10,21 @@ interface IncidentPacket {
   heading: number | null
   ts: number
   battery: number | null
+  confidence?: number
+  severity?: string
+  peak_g?: number
+  sensor_window?: Record<string, unknown>
+  phone_mount?: string
 }
 
 function validatePacket(body: unknown): { valid: boolean; error?: string; packet?: IncidentPacket } {
   if (!body || typeof body !== 'object') return { valid: false, error: 'Missing body' }
   const p = body as Record<string, unknown>
 
-  if (p.type !== 'sos') return { valid: false, error: 'type must be sos' }
+  const validTypes = ['sos', 'crash_detected']
+  if (typeof p.type !== 'string' || !validTypes.includes(p.type)) {
+    return { valid: false, error: `type must be one of: ${validTypes.join(', ')}` }
+  }
   if (typeof p.lat !== 'number' || p.lat < -90 || p.lat > 90) return { valid: false, error: 'invalid lat' }
   if (typeof p.lng !== 'number' || p.lng < -180 || p.lng > 180) return { valid: false, error: 'invalid lng' }
   if (typeof p.ts !== 'number') return { valid: false, error: 'missing ts' }
@@ -34,6 +42,11 @@ function validatePacket(body: unknown): { valid: boolean; error?: string; packet
       heading: typeof p.heading === 'number' ? p.heading : null,
       ts: p.ts as number,
       battery: typeof p.battery === 'number' ? Math.min(100, Math.max(0, p.battery)) : null,
+      confidence: typeof p.confidence === 'number' ? p.confidence : undefined,
+      severity: typeof p.severity === 'string' ? p.severity : undefined,
+      peak_g: typeof p.peak_g === 'number' ? p.peak_g : undefined,
+      sensor_window: typeof p.sensor_window === 'object' && p.sensor_window !== null ? p.sensor_window as Record<string, unknown> : undefined,
+      phone_mount: typeof p.phone_mount === 'string' ? p.phone_mount : undefined,
     },
   }
 }
@@ -114,15 +127,31 @@ serve(async (req) => {
   }
 
   // Insert incident
+  const sensorData: Record<string, unknown> = {
+    heading: packet.heading,
+    battery: packet.battery,
+  }
+  if (packet.sensor_window) {
+    sensorData.sensor_window = packet.sensor_window
+  }
+  if (packet.peak_g !== undefined) {
+    sensorData.peak_g = packet.peak_g
+  }
+  if (packet.phone_mount) {
+    sensorData.phone_mount = packet.phone_mount
+  }
+
   const { data: incident, error: insertError } = await serviceClient
     .from('incidents')
     .insert({
       user_id: userId,
-      type: 'sos',
+      type: packet.type,
       location: `POINT(${packet.lng} ${packet.lat})`,
       speed_at_event: packet.speed,
       status: 'dispatched',
-      sensor_data: { heading: packet.heading, battery: packet.battery },
+      confidence: packet.confidence ?? null,
+      severity: packet.severity ?? null,
+      sensor_data: sensorData,
     })
     .select('id')
     .single()
@@ -183,6 +212,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         incident_id: incidentId,
+        incident_type: packet.type,
         contacts,
         user_profile: profile ?? { name: 'Unknown', phone: '' },
         location: { lat: packet.lat, lng: packet.lng },

@@ -4,6 +4,7 @@ import { getChannel, buildAlertPayload } from '../_shared/channels.ts'
 
 interface CascadeInput {
   incident_id: string
+  incident_type?: string
   contacts: Array<{
     id: string
     name: string
@@ -47,7 +48,7 @@ async function handleRequest(req: Request): Promise<Response> {
   }
 
   const input: CascadeInput = await req.json()
-  const { incident_id, contacts, user_profile, location } = input
+  const { incident_id, incident_type, contacts, user_profile, location } = input
 
   const supabase = createClient(
     Deno.env.get('SUPABASE_URL')!,
@@ -125,6 +126,7 @@ async function handleRequest(req: Request): Promise<Response> {
       user_profile,
       location,
       incident_id,
+      incident_type ?? 'sos',
     )
 
     // Push (t=0s) — only if contact has the app

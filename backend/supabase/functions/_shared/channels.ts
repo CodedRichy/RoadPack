@@ -6,6 +6,7 @@ export interface AlertPayload {
   location: { lat: number; lng: number; address?: string }
   maps_link: string
   incident_id: string
+  incident_type: string
 }
 
 export interface ChannelResult {
@@ -20,17 +21,24 @@ export interface AlertChannel {
 
 export class FcmChannel implements AlertChannel {
   async send(payload: AlertPayload): Promise<ChannelResult> {
-    // FCM implementation — requires GOOGLE_SERVICE_ACCOUNT_KEY env var
-    // For Phase 1, this is a structured mock that logs the payload
+    const isCrash = payload.incident_type === 'crash_detected'
+    const title = isCrash
+      ? 'CRASH DETECTED - RoadPack'
+      : 'EMERGENCY ALERT - RoadPack'
+    const body = isCrash
+      ? `${payload.victim_name} may have been in a crash. Impact detected.`
+      : `${payload.victim_name} triggered an emergency SOS alert.`
+
     console.log('[FCM] Would send push:', JSON.stringify({
-      title: 'EMERGENCY ALERT - RoadPack',
-      body: `${payload.victim_name} may have been in an accident.`,
+      title,
+      body,
       data: {
         incident_id: payload.incident_id,
         lat: payload.location.lat,
         lng: payload.location.lng,
         victim_name: payload.victim_name,
         victim_phone: payload.victim_phone,
+        incident_type: payload.incident_type,
       },
     }))
     return { success: true, provider_id: `fcm_mock_${Date.now()}` }
@@ -39,7 +47,12 @@ export class FcmChannel implements AlertChannel {
 
 export class MockSmsChannel implements AlertChannel {
   async send(payload: AlertPayload): Promise<ChannelResult> {
-    const message = `ROADPACK ALERT: ${payload.victim_name} accident at ${payload.location.lat},${payload.location.lng}. Map: ${payload.maps_link}. Call 112. Call ${payload.victim_name}: ${payload.victim_phone}. Reply OK.`
+    const isCrash = payload.incident_type === 'crash_detected'
+    const alertType = isCrash ? 'CRASH DETECTED' : 'SOS ALERT'
+    const detail = isCrash
+      ? `${payload.victim_name} may have crashed`
+      : `${payload.victim_name} triggered SOS`
+    const message = `ROADPACK ${alertType}: ${detail} at ${payload.location.lat},${payload.location.lng}. Map: ${payload.maps_link}. Call 112. Call ${payload.victim_name}: ${payload.victim_phone}. Reply OK.`
     console.log(`[MockSMS] To: ${payload.recipient_phone} | ${message}`)
     return { success: true, provider_id: `sms_mock_${Date.now()}` }
   }
@@ -47,7 +60,11 @@ export class MockSmsChannel implements AlertChannel {
 
 export class MockVoiceChannel implements AlertChannel {
   async send(payload: AlertPayload): Promise<ChannelResult> {
-    const script = `This is an emergency alert from RoadPack. ${payload.victim_name} may have been in an accident at ${payload.location.lat},${payload.location.lng}. Press 1 to acknowledge. Press 2 to call 112.`
+    const isCrash = payload.incident_type === 'crash_detected'
+    const detail = isCrash
+      ? `${payload.victim_name} may have been in a crash`
+      : `${payload.victim_name} has triggered an emergency SOS alert`
+    const script = `This is an emergency alert from RoadPack. ${detail} at ${payload.location.lat},${payload.location.lng}. Press 1 to acknowledge. Press 2 to call 112.`
     console.log(`[MockVoice] To: ${payload.recipient_phone} | ${script}`)
     return { success: true, provider_id: `voice_mock_${Date.now()}` }
   }
@@ -74,6 +91,7 @@ export function buildAlertPayload(
   userProfile: { name: string; phone: string },
   location: { lat: number; lng: number },
   incidentId: string,
+  incidentType: string = 'sos',
 ): AlertPayload {
   return {
     recipient_phone: contact.phone,
@@ -83,5 +101,6 @@ export function buildAlertPayload(
     location,
     maps_link: `https://maps.google.com/?q=${location.lat},${location.lng}`,
     incident_id: incidentId,
+    incident_type: incidentType,
   }
 }

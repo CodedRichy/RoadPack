@@ -106,6 +106,87 @@ class SosService {
     );
   }
 
+  Future<Incident> dispatchCrash({
+    required double peakG,
+    required double confidence,
+    required double speedAtEvent,
+    required Map<String, dynamic> sensorWindow,
+    String? phoneMount,
+  }) async {
+    final position = await _captureLocation();
+    final token = await _clerkService.getSupabaseToken();
+    if (token == null) throw Exception('No auth token');
+
+    final severity = _deriveSeverity(peakG);
+
+    final packet = {
+      'type': 'crash_detected',
+      'lat': position?.latitude,
+      'lng': position?.longitude,
+      'speed': position?.speed ?? speedAtEvent,
+      'heading': position?.heading,
+      'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      'battery': null,
+      'confidence': confidence,
+      'severity': severity,
+      'peak_g': peakG,
+      'sensor_window': sensorWindow,
+      'phone_mount': phoneMount,
+    };
+
+    final url = Uri.parse(
+      '${AppConstants.supabaseUrl}/functions/v1/incident-receive',
+    );
+
+    http.Response? response;
+    Exception? lastError;
+
+    for (var attempt = 0; attempt < 3; attempt++) {
+      try {
+        response = await http.post(
+          url,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode(packet),
+        );
+        if (response.statusCode == 201) break;
+        lastError = Exception('HTTP ${response.statusCode}: ${response.body}');
+      } catch (e) {
+        lastError = e is Exception ? e : Exception(e.toString());
+      }
+
+      if (attempt < 2) {
+        await Future.delayed(const Duration(seconds: 5));
+      }
+    }
+
+    if (response == null || response.statusCode != 201) {
+      throw lastError ?? Exception('Failed to dispatch crash alert');
+    }
+
+    final body = jsonDecode(response.body) as Map<String, dynamic>;
+    return Incident(
+      id: body['incident_id'] as String,
+      userId: '',
+      type: IncidentType.crashDetected,
+      status: IncidentStatus.values.firstWhere(
+        (e) => e.value == body['status'],
+      ),
+      confidence: confidence,
+      speedAtEvent: speedAtEvent,
+      createdAt: DateTime.now(),
+    );
+  }
+
+  static String _deriveSeverity(double peakG) {
+    if (peakG >= 12) return 'critical';
+    if (peakG >= 8) return 'high';
+    if (peakG >= 5) return 'medium';
+    return 'low';
+  }
+
   Future<void> resolveIncident(String incidentId) async {
     final token = await _clerkService.getSupabaseToken();
     if (token == null) throw Exception('No auth token');

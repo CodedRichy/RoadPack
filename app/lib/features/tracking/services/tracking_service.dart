@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants/app_constants.dart';
 import '../../auth/services/clerk_service.dart';
+import '../../crash_detection/providers/crash_detection_provider.dart';
 import '../db/tracking_database.dart';
 import '../models/tracking_state.dart';
 import 'route_learner.dart';
@@ -23,7 +24,25 @@ final trackingServiceProvider = Provider<TrackingService?>((ref) {
   if (!clerkService.isSignedIn) return null;
 
   final db = ref.watch(trackingDatabaseProvider);
-  final service = TrackingService(db: db, clerkService: clerkService);
+  final crashNotifier = ref.read(crashDetectionProvider.notifier);
+  final crashSensor = ref.read(crashSensorServiceProvider);
+
+  final service = TrackingService(
+    db: db,
+    clerkService: clerkService,
+    onActivityChanged: (activity, confidence) {
+      final isInVehicle =
+          activity == 'in_vehicle' || activity == 'on_bicycle';
+      if (isInVehicle && confidence >= 50) {
+        crashNotifier.startMonitoring();
+      } else {
+        crashNotifier.stopMonitoring();
+      }
+    },
+    onSpeedUpdate: (speedKmh) {
+      crashSensor?.updateSpeed(speedKmh);
+    },
+  );
   ref.onDispose(() => service.dispose());
   return service;
 });
@@ -32,6 +51,8 @@ class TrackingService {
   TrackingService({
     required TrackingDatabase db,
     required ClerkService clerkService,
+    this.onActivityChanged,
+    this.onSpeedUpdate,
   })  : _clerkService = clerkService,
         _tripDetector = TripDetector(db),
         _routeLearner = RouteLearner(db);
@@ -39,6 +60,8 @@ class TrackingService {
   final ClerkService _clerkService;
   final TripDetector _tripDetector;
   final RouteLearner _routeLearner;
+  final void Function(String activity, int confidence)? onActivityChanged;
+  final void Function(double speedKmh)? onSpeedUpdate;
   StreamSubscription<Trip>? _tripCompletedSub;
   bool _started = false;
 
@@ -117,12 +140,14 @@ class TrackingService {
   }
 
   void _onLocation(bg.Location location) {
-    _tripDetector.onLocationUpdate(LocationPoint(
+    final point = LocationPoint(
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
       speed: location.coords.speed.toDouble(),
       timestamp: DateTime.parse(location.timestamp),
-    ));
+    );
+    _tripDetector.onLocationUpdate(point);
+    onSpeedUpdate?.call(point.speed * 3.6);
   }
 
   void _onGeofence(bg.GeofenceEvent event) {
@@ -138,6 +163,7 @@ class TrackingService {
 
   void _onActivityChange(bg.ActivityChangeEvent event) {
     debugPrint('[Tracking] Activity: ${event.activity} (${event.confidence}%)');
+    onActivityChanged?.call(event.activity, event.confidence);
   }
 
   void _onHeartbeat(bg.HeartbeatEvent event) {

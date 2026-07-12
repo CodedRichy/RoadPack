@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/core.dart';
+import 'features/crash_detection/widgets/crash_overlay.dart';
 import 'features/sos/widgets/sos_overlay.dart';
 
 class App extends ConsumerWidget {
@@ -25,7 +26,9 @@ class App extends ConsumerWidget {
       ],
       supportedLocales: const [Locale('en'), Locale('hi'), Locale('ml')],
       builder: (context, child) =>
-          SosOverlay(child: child ?? const SizedBox.shrink()),
+          CrashOverlay(
+            child: SosOverlay(child: child ?? const SizedBox.shrink()),
+          ),
     );
   }
 }
