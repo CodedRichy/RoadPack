@@ -1,1 +1,1 @@
-// Barrel file for local storage (Drift). Empty until DB is set up.
+export '../features/tracking/db/tracking_database.dart';
