@@ -1,1 +1,1 @@
-export '../features/tracking/db/tracking_database.dart';
+export '../../features/tracking/db/tracking_database.dart';
