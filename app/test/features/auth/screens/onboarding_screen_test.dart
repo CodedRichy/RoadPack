@@ -108,6 +108,21 @@ class _TestProfileNotifier extends AsyncNotifier<UserProfile?>
   @override
   Future<void> updateVehicle(String? type, String? reg) async {}
   @override
+  Future<void> updateSafetySettings({
+    required String crashSensitivity,
+    required String phoneMountType,
+  }) async {}
+  @override
+  Future<void> updateNonArrivalSettings({
+    required bool enabled,
+    required int delayMin,
+  }) async {}
+  @override
+  Future<void> updateEmergencyProfile({
+    String? bloodGroup,
+    String? medicalNotes,
+  }) async {}
+  @override
   Future<void> addEmergencyContact({
     required String name,
     required String phone,
