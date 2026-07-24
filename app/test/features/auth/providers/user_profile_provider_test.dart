@@ -54,6 +54,80 @@ void main() {
       expect(profile.isOnboarded, isFalse);
     });
 
+    test('fromJson parses safety and tracking settings', () {
+      final profile = UserProfile.fromJson({
+        'id': 'user_1',
+        'name': 'Test',
+        'date_of_birth': '2000-01-01',
+        'vehicle_type': 'motorcycle',
+        'vehicle_reg': 'KL-01-AB-1234',
+        'crash_sensitivity': 'high',
+        'phone_mount': 'handlebar',
+        'non_arrival_delay_min': 10,
+        'non_arrival_enabled': true,
+        'blood_group': 'O+',
+        'medical_notes': 'Asthma',
+      });
+
+      expect(profile.crashSensitivity, 'high');
+      expect(profile.phoneMountType, 'handlebar');
+      expect(profile.nonArrivalDelayMin, 10);
+      expect(profile.nonArrivalEnabled, true);
+      expect(profile.bloodGroup, 'O+');
+      expect(profile.medicalNotes, 'Asthma');
+    });
+
+    test('fromJson tolerates null settings', () {
+      final profile = UserProfile.fromJson({
+        'id': 'user_2',
+        'name': null,
+        'date_of_birth': null,
+        'vehicle_type': null,
+        'vehicle_reg': null,
+        'crash_sensitivity': null,
+        'phone_mount': null,
+        'non_arrival_delay_min': null,
+        'non_arrival_enabled': null,
+        'blood_group': null,
+        'medical_notes': null,
+      });
+
+      expect(profile.crashSensitivity, isNull);
+      expect(profile.phoneMountType, isNull);
+      expect(profile.nonArrivalDelayMin, isNull);
+      expect(profile.nonArrivalEnabled, isNull);
+      expect(profile.bloodGroup, isNull);
+      expect(profile.medicalNotes, isNull);
+    });
+
+    test('copyWith replaces only the given fields', () {
+      const profile = UserProfile(
+        userId: 'u1',
+        name: 'A',
+        crashSensitivity: 'high',
+        bloodGroup: 'O+',
+      );
+
+      final updated = profile.copyWith(name: 'B');
+
+      expect(updated.name, 'B');
+      expect(updated.crashSensitivity, 'high');
+      expect(updated.bloodGroup, 'O+');
+    });
+
+    test('copyWith clears a nullable field when passed null explicitly', () {
+      const profile = UserProfile(
+        userId: 'u1',
+        bloodGroup: 'O+',
+        medicalNotes: 'Asthma',
+      );
+
+      final updated = profile.copyWith(bloodGroup: null);
+
+      expect(updated.bloodGroup, isNull);
+      expect(updated.medicalNotes, 'Asthma');
+    });
+
     test('equality is value-based', () {
       final a = UserProfile(
         userId: 'u1',

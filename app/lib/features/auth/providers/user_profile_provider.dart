@@ -4,6 +4,18 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'authenticated_supabase_provider.dart';
 import 'clerk_auth_provider.dart';
 
+/// Sentinel used by [UserProfile.copyWith] to distinguish "argument not
+/// passed" (keep the current value) from "explicitly passed as null" (clear
+/// the field). A plain `value ?? this.value` default can't tell those apart,
+/// which would silently un-clear fields like [UserProfile.vehicleType] when
+/// a caller (e.g. [UserProfileNotifier.updateVehicle]) explicitly passes
+/// `null` to clear them.
+class _Unset {
+  const _Unset();
+}
+
+const _unset = _Unset();
+
 /// The signed-in user's row from the `users` table (migration 00002).
 ///
 /// [dateOfBirth] doubles as the onboarding-completion proxy (see
@@ -17,6 +29,12 @@ class UserProfile {
     this.dateOfBirth,
     this.vehicleType,
     this.vehicleReg,
+    this.crashSensitivity,
+    this.phoneMountType,
+    this.nonArrivalDelayMin,
+    this.nonArrivalEnabled,
+    this.bloodGroup,
+    this.medicalNotes,
   });
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
@@ -28,6 +46,12 @@ class UserProfile {
           : null,
       vehicleType: json['vehicle_type'] as String?,
       vehicleReg: json['vehicle_reg'] as String?,
+      crashSensitivity: json['crash_sensitivity'] as String?,
+      phoneMountType: json['phone_mount'] as String?,
+      nonArrivalDelayMin: json['non_arrival_delay_min'] as int?,
+      nonArrivalEnabled: json['non_arrival_enabled'] as bool?,
+      bloodGroup: json['blood_group'] as String?,
+      medicalNotes: json['medical_notes'] as String?,
     );
   }
 
@@ -36,11 +60,66 @@ class UserProfile {
   final DateTime? dateOfBirth;
   final String? vehicleType;
   final String? vehicleReg;
+  final String? crashSensitivity;
+  final String? phoneMountType;
+  final int? nonArrivalDelayMin;
+  final bool? nonArrivalEnabled;
+  final String? bloodGroup;
+  final String? medicalNotes;
 
   /// True once onboarding is complete. `date_of_birth` is `NULL` on the
   /// webhook-created row and is only ever written by the onboarding flow's
   /// final step, so its presence reliably signals a completed profile.
   bool get isOnboarded => dateOfBirth != null;
+
+  /// Returns a copy with the given fields replaced. Omit an argument to
+  /// keep the current value; pass `null` explicitly to clear a nullable
+  /// field (see [_Unset]). [userId] can't be cleared, only replaced.
+  UserProfile copyWith({
+    String? userId,
+    Object? name = _unset,
+    Object? dateOfBirth = _unset,
+    Object? vehicleType = _unset,
+    Object? vehicleReg = _unset,
+    Object? crashSensitivity = _unset,
+    Object? phoneMountType = _unset,
+    Object? nonArrivalDelayMin = _unset,
+    Object? nonArrivalEnabled = _unset,
+    Object? bloodGroup = _unset,
+    Object? medicalNotes = _unset,
+  }) {
+    return UserProfile(
+      userId: userId ?? this.userId,
+      name: identical(name, _unset) ? this.name : name as String?,
+      dateOfBirth: identical(dateOfBirth, _unset)
+          ? this.dateOfBirth
+          : dateOfBirth as DateTime?,
+      vehicleType: identical(vehicleType, _unset)
+          ? this.vehicleType
+          : vehicleType as String?,
+      vehicleReg: identical(vehicleReg, _unset)
+          ? this.vehicleReg
+          : vehicleReg as String?,
+      crashSensitivity: identical(crashSensitivity, _unset)
+          ? this.crashSensitivity
+          : crashSensitivity as String?,
+      phoneMountType: identical(phoneMountType, _unset)
+          ? this.phoneMountType
+          : phoneMountType as String?,
+      nonArrivalDelayMin: identical(nonArrivalDelayMin, _unset)
+          ? this.nonArrivalDelayMin
+          : nonArrivalDelayMin as int?,
+      nonArrivalEnabled: identical(nonArrivalEnabled, _unset)
+          ? this.nonArrivalEnabled
+          : nonArrivalEnabled as bool?,
+      bloodGroup: identical(bloodGroup, _unset)
+          ? this.bloodGroup
+          : bloodGroup as String?,
+      medicalNotes: identical(medicalNotes, _unset)
+          ? this.medicalNotes
+          : medicalNotes as String?,
+    );
+  }
 
   @override
   bool operator ==(Object other) =>
@@ -51,16 +130,37 @@ class UserProfile {
           name == other.name &&
           dateOfBirth == other.dateOfBirth &&
           vehicleType == other.vehicleType &&
-          vehicleReg == other.vehicleReg;
+          vehicleReg == other.vehicleReg &&
+          crashSensitivity == other.crashSensitivity &&
+          phoneMountType == other.phoneMountType &&
+          nonArrivalDelayMin == other.nonArrivalDelayMin &&
+          nonArrivalEnabled == other.nonArrivalEnabled &&
+          bloodGroup == other.bloodGroup &&
+          medicalNotes == other.medicalNotes;
 
   @override
-  int get hashCode =>
-      Object.hash(userId, name, dateOfBirth, vehicleType, vehicleReg);
+  int get hashCode => Object.hash(
+    userId,
+    name,
+    dateOfBirth,
+    vehicleType,
+    vehicleReg,
+    crashSensitivity,
+    phoneMountType,
+    nonArrivalDelayMin,
+    nonArrivalEnabled,
+    bloodGroup,
+    medicalNotes,
+  );
 
   @override
   String toString() =>
       'UserProfile(userId: $userId, name: $name, dateOfBirth: $dateOfBirth, '
-      'vehicleType: $vehicleType, vehicleReg: $vehicleReg)';
+      'vehicleType: $vehicleType, vehicleReg: $vehicleReg, '
+      'crashSensitivity: $crashSensitivity, phoneMountType: $phoneMountType, '
+      'nonArrivalDelayMin: $nonArrivalDelayMin, '
+      'nonArrivalEnabled: $nonArrivalEnabled, bloodGroup: $bloodGroup, '
+      'medicalNotes: $medicalNotes)';
 }
 
 /// Fetches and caches the signed-in user's profile, exposing
@@ -186,13 +286,7 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile?> {
 
     final current = state.value;
     state = AsyncData(
-      UserProfile(
-        userId: userId,
-        name: name,
-        dateOfBirth: current?.dateOfBirth,
-        vehicleType: current?.vehicleType,
-        vehicleReg: current?.vehicleReg,
-      ),
+      (current ?? UserProfile(userId: userId)).copyWith(name: name),
     );
   }
 
@@ -208,13 +302,7 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile?> {
 
     final current = state.value;
     state = AsyncData(
-      UserProfile(
-        userId: userId,
-        name: current?.name,
-        dateOfBirth: dob,
-        vehicleType: current?.vehicleType,
-        vehicleReg: current?.vehicleReg,
-      ),
+      (current ?? UserProfile(userId: userId)).copyWith(dateOfBirth: dob),
     );
   }
 
@@ -230,12 +318,88 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile?> {
 
     final current = state.value;
     state = AsyncData(
-      UserProfile(
-        userId: userId,
-        name: current?.name,
-        dateOfBirth: current?.dateOfBirth,
+      (current ?? UserProfile(userId: userId)).copyWith(
         vehicleType: type,
         vehicleReg: reg,
+      ),
+    );
+  }
+
+  /// Updates crash-detection sensitivity and phone mount type, used to tune
+  /// the L2 crash detection engine's thresholds.
+  Future<void> updateSafetySettings({
+    required String crashSensitivity,
+    required String phoneMountType,
+  }) async {
+    final userId = _userId;
+    final supabase = _supabase;
+    if (userId == null || supabase == null) return;
+
+    await supabase
+        .from('users')
+        .update({
+          'crash_sensitivity': crashSensitivity,
+          'phone_mount': phoneMountType,
+        })
+        .eq('id', userId);
+
+    final current = state.value;
+    state = AsyncData(
+      (current ?? UserProfile(userId: userId)).copyWith(
+        crashSensitivity: crashSensitivity,
+        phoneMountType: phoneMountType,
+      ),
+    );
+  }
+
+  /// Updates the "non-arrival" check-in settings: whether it's enabled, and
+  /// how many minutes past the expected arrival time before it fires.
+  Future<void> updateNonArrivalSettings({
+    required bool enabled,
+    required int delayMin,
+  }) async {
+    final userId = _userId;
+    final supabase = _supabase;
+    if (userId == null || supabase == null) return;
+
+    await supabase
+        .from('users')
+        .update({
+          'non_arrival_enabled': enabled,
+          'non_arrival_delay_min': delayMin,
+        })
+        .eq('id', userId);
+
+    final current = state.value;
+    state = AsyncData(
+      (current ?? UserProfile(userId: userId)).copyWith(
+        nonArrivalEnabled: enabled,
+        nonArrivalDelayMin: delayMin,
+      ),
+    );
+  }
+
+  /// Updates the user's emergency medical profile. Pass `null` for either
+  /// argument to clear that field (e.g. the user removing their blood group
+  /// from their profile).
+  Future<void> updateEmergencyProfile({
+    String? bloodGroup,
+    String? medicalNotes,
+  }) async {
+    final userId = _userId;
+    final supabase = _supabase;
+    if (userId == null || supabase == null) return;
+
+    await supabase
+        .from('users')
+        .update({'blood_group': bloodGroup, 'medical_notes': medicalNotes})
+        .eq('id', userId);
+
+    final current = state.value;
+    state = AsyncData(
+      (current ?? UserProfile(userId: userId)).copyWith(
+        bloodGroup: bloodGroup,
+        medicalNotes: medicalNotes,
       ),
     );
   }
