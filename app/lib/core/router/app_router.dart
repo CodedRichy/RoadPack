@@ -76,8 +76,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/home',
-        builder: (context, state) =>
-            const Scaffold(body: Center(child: Text('RoadPack v2'))),
+        builder: (context, state) => const _HomeScreen(),
       ),
       GoRoute(
         path: '/circles',
@@ -120,3 +119,66 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
+
+class _HomeScreen extends StatelessWidget {
+  const _HomeScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('RoadPack'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => context.push('/settings'),
+          ),
+        ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: const [
+          _NavTile(
+            icon: Icons.group,
+            label: 'Safety Circles',
+            route: '/circles',
+          ),
+          _NavTile(
+            icon: Icons.route,
+            label: 'Known Routes',
+            route: '/routes',
+          ),
+          _NavTile(
+            icon: Icons.history,
+            label: 'Trip History',
+            route: '/trips',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NavTile extends StatelessWidget {
+  const _NavTile({
+    required this.icon,
+    required this.label,
+    required this.route,
+  });
+
+  final IconData icon;
+  final String label;
+  final String route;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Icon(icon),
+        title: Text(label),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => context.push(route),
+      ),
+    );
+  }
+}
