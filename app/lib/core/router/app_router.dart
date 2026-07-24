@@ -74,10 +74,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/onboarding',
         builder: (context, state) => const OnboardingScreen(),
       ),
-      GoRoute(
-        path: '/home',
-        builder: (context, state) => const _HomeScreen(),
-      ),
+      GoRoute(path: '/home', builder: (context, state) => const _HomeScreen()),
       GoRoute(
         path: '/circles',
         builder: (context, state) => const CirclesListScreen(),
@@ -143,16 +140,8 @@ class _HomeScreen extends StatelessWidget {
             label: 'Safety Circles',
             route: '/circles',
           ),
-          _NavTile(
-            icon: Icons.route,
-            label: 'Known Routes',
-            route: '/routes',
-          ),
-          _NavTile(
-            icon: Icons.history,
-            label: 'Trip History',
-            route: '/trips',
-          ),
+          _NavTile(icon: Icons.route, label: 'Known Routes', route: '/routes'),
+          _NavTile(icon: Icons.history, label: 'Trip History', route: '/trips'),
         ],
       ),
     );

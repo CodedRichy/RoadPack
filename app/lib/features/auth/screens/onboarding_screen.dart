@@ -234,12 +234,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Widget _buildLocationPage() {
-    final granted = _locationPermission == LocationPermission.always ||
+    final granted =
+        _locationPermission == LocationPermission.always ||
         _locationPermission == LocationPermission.whileInUse;
 
     return OnboardingStep(
       title: 'Location access',
-      subtitle: 'Required for crash detection and SOS alerts. '
+      subtitle:
+          'Required for crash detection and SOS alerts. '
           'Your location is shared only during emergencies.',
       showSkip: true,
       onSkip: _nextPage,

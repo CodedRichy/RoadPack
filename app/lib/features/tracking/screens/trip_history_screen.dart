@@ -50,8 +50,8 @@ class TripHistoryScreen extends ConsumerWidget {
               'Your commute trips will appear here once tracking detects them.',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
+                color: Theme.of(context).colorScheme.outline,
+              ),
             ),
           ],
         ),
@@ -109,10 +109,7 @@ class _TripCard extends StatelessWidget {
                 ],
                 if (distanceKm != null) ...[
                   const SizedBox(width: 12),
-                  _InfoChip(
-                    icon: Icons.straighten,
-                    label: '$distanceKm km',
-                  ),
+                  _InfoChip(icon: Icons.straighten, label: '$distanceKm km'),
                 ],
               ],
             ),
@@ -124,8 +121,19 @@ class _TripCard extends StatelessWidget {
 
   String _formatDate(DateTime dt) {
     const months = [
-      '', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      '',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${months[dt.month]} ${dt.day}, ${dt.year}';
   }

@@ -19,16 +19,12 @@ void main() {
     });
 
     test('canCancel returns true during countdown', () {
-      const state = CrashDetectionState(
-        status: CrashDetectionStatus.countdown,
-      );
+      const state = CrashDetectionState(status: CrashDetectionStatus.countdown);
       expect(state.canCancel, true);
     });
 
     test('canCancel returns false when active', () {
-      const state = CrashDetectionState(
-        status: CrashDetectionStatus.active,
-      );
+      const state = CrashDetectionState(status: CrashDetectionStatus.active);
       expect(state.canCancel, false);
     });
   });

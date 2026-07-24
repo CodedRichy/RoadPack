@@ -1,6 +1,1 @@
-enum TripState {
-  idle,
-  recording,
-  completed,
-  discarded,
-}
+enum TripState { idle, recording, completed, discarded }

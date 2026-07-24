@@ -63,9 +63,7 @@ class CrashCountdownScreen extends ConsumerWidget {
                     builder: (_) => const CrashReasonPicker(),
                   ).then((reason) {
                     if (reason != null) {
-                      ref
-                          .read(crashDetectionProvider.notifier)
-                          .cancel(reason);
+                      ref.read(crashDetectionProvider.notifier).cancel(reason);
                     }
                   });
                 },

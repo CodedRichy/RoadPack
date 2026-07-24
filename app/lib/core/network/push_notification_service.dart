@@ -9,8 +9,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../features/auth/providers/authenticated_supabase_provider.dart';
 import '../../features/auth/services/clerk_service.dart';
 
-final pushNotificationServiceProvider =
-    Provider<PushNotificationService?>((ref) {
+final pushNotificationServiceProvider = Provider<PushNotificationService?>((
+  ref,
+) {
   final supabase = ref.watch(authenticatedSupabaseProvider);
   if (supabase == null) return null;
 
@@ -53,13 +54,13 @@ class PushNotificationService {
         _firebaseMessagingBackgroundHandler,
       );
 
-      _foregroundSub =
-          FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
+      _foregroundSub = FirebaseMessaging.onMessage.listen(
+        _handleForegroundMessage,
+      );
 
       FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageOpenedApp);
 
-      _tokenRefreshSub =
-          _messaging.onTokenRefresh.listen(_registerToken);
+      _tokenRefreshSub = _messaging.onTokenRefresh.listen(_registerToken);
 
       final token = await _messaging.getToken();
       if (token != null) await _registerToken(token);

@@ -54,16 +54,20 @@ class TrackingStatusIndicator extends ConsumerWidget {
     return switch (state) {
       TripState.idle => (Icons.shield_outlined, 'Protected', scheme.primary),
       TripState.recording => (
-          Icons.directions_car,
-          'Trip Active',
-          scheme.tertiary,
-        ),
+        Icons.directions_car,
+        'Trip Active',
+        scheme.tertiary,
+      ),
       TripState.completed => (
-          Icons.check_circle_outline,
-          'Trip Done',
-          scheme.primary,
-        ),
-      TripState.discarded => (Icons.shield_outlined, 'Protected', scheme.primary),
+        Icons.check_circle_outline,
+        'Trip Done',
+        scheme.primary,
+      ),
+      TripState.discarded => (
+        Icons.shield_outlined,
+        'Protected',
+        scheme.primary,
+      ),
     };
   }
 }

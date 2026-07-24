@@ -31,8 +31,7 @@ final trackingServiceProvider = Provider<TrackingService?>((ref) {
     db: db,
     clerkService: clerkService,
     onActivityChanged: (activity, confidence) {
-      final isInVehicle =
-          activity == 'in_vehicle' || activity == 'on_bicycle';
+      final isInVehicle = activity == 'in_vehicle' || activity == 'on_bicycle';
       if (isInVehicle && confidence >= 50) {
         crashNotifier.startMonitoring();
       } else {
@@ -53,9 +52,9 @@ class TrackingService {
     required ClerkService clerkService,
     this.onActivityChanged,
     this.onSpeedUpdate,
-  })  : _clerkService = clerkService,
-        _tripDetector = TripDetector(db),
-        _routeLearner = RouteLearner(db);
+  }) : _clerkService = clerkService,
+       _tripDetector = TripDetector(db),
+       _routeLearner = RouteLearner(db);
 
   final ClerkService _clerkService;
   final TripDetector _tripDetector;
@@ -82,27 +81,27 @@ class TrackingService {
 
     final token = await _clerkService.getSupabaseToken();
 
-    await bg.BackgroundGeolocation.ready(bg.Config(
-      desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
-      distanceFilter: 10,
-      stopOnTerminate: false,
-      startOnBoot: true,
-      foregroundService: true,
-      notification: bg.Notification(
-        title: 'RoadPack',
-        text: 'Keeping you safe',
+    await bg.BackgroundGeolocation.ready(
+      bg.Config(
+        desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
+        distanceFilter: 10,
+        stopOnTerminate: false,
+        startOnBoot: true,
+        foregroundService: true,
+        notification: bg.Notification(
+          title: 'RoadPack',
+          text: 'Keeping you safe',
+        ),
+        url: '${AppConstants.supabaseUrl}/functions/v1/location-ingest',
+        autoSync: true,
+        batchSync: true,
+        maxBatchSize: 50,
+        headers: {'Authorization': 'Bearer ${token ?? ''}'},
+        heartbeatInterval: 900, // 15 min
+        activityRecognitionInterval: 10000,
+        geofenceProximityRadius: 1000,
       ),
-      url: '${AppConstants.supabaseUrl}/functions/v1/location-ingest',
-      autoSync: true,
-      batchSync: true,
-      maxBatchSize: 50,
-      headers: {
-        'Authorization': 'Bearer ${token ?? ''}',
-      },
-      heartbeatInterval: 900, // 15 min
-      activityRecognitionInterval: 10000,
-      geofenceProximityRadius: 1000,
-    ));
+    );
 
     bg.BackgroundGeolocation.onLocation(_onLocation);
     bg.BackgroundGeolocation.onGeofence(_onGeofence);
@@ -120,23 +119,27 @@ class TrackingService {
 
   Future<void> setSOSMode(bool active) async {
     if (active) {
-      await bg.BackgroundGeolocation.setConfig(bg.Config(
-        desiredAccuracy: bg.Config.DESIRED_ACCURACY_NAVIGATION,
-        distanceFilter: 1,
-        locationUpdateInterval: 1000,
-      ));
+      await bg.BackgroundGeolocation.setConfig(
+        bg.Config(
+          desiredAccuracy: bg.Config.DESIRED_ACCURACY_NAVIGATION,
+          distanceFilter: 1,
+          locationUpdateInterval: 1000,
+        ),
+      );
     } else {
-      await bg.BackgroundGeolocation.setConfig(bg.Config(
-        desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
-        distanceFilter: 10,
-      ));
+      await bg.BackgroundGeolocation.setConfig(
+        bg.Config(
+          desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
+          distanceFilter: 10,
+        ),
+      );
     }
   }
 
   Future<void> updateAuthToken(String token) async {
-    await bg.BackgroundGeolocation.setConfig(bg.Config(
-      headers: {'Authorization': 'Bearer $token'},
-    ));
+    await bg.BackgroundGeolocation.setConfig(
+      bg.Config(headers: {'Authorization': 'Bearer $token'}),
+    );
   }
 
   void _onLocation(bg.Location location) {
@@ -152,12 +155,14 @@ class TrackingService {
 
   void _onGeofence(bg.GeofenceEvent event) {
     if (event.action == 'EXIT') {
-      _tripDetector.onGeofenceEvent(GeofenceExitEvent(
-        identifier: event.identifier,
-        timestamp: DateTime.parse(event.location.timestamp),
-        latitude: event.location.coords.latitude,
-        longitude: event.location.coords.longitude,
-      ));
+      _tripDetector.onGeofenceEvent(
+        GeofenceExitEvent(
+          identifier: event.identifier,
+          timestamp: DateTime.parse(event.location.timestamp),
+          latitude: event.location.coords.latitude,
+          longitude: event.location.coords.longitude,
+        ),
+      );
     }
   }
 

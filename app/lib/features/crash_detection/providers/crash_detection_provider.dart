@@ -26,8 +26,8 @@ final crashSensorServiceProvider = Provider<CrashSensorService?>((ref) {
 
 final crashDetectionProvider =
     StateNotifierProvider<CrashDetectionNotifier, CrashDetectionState>(
-  (ref) => CrashDetectionNotifier(ref),
-);
+      (ref) => CrashDetectionNotifier(ref),
+    );
 
 class CrashDetectionNotifier extends StateNotifier<CrashDetectionState> {
   CrashDetectionNotifier(this._ref) : super(const CrashDetectionState());
@@ -42,8 +42,7 @@ class CrashDetectionNotifier extends StateNotifier<CrashDetectionState> {
   CrashSensorService? get _sensorService =>
       _ref.read(crashSensorServiceProvider);
   SosService? get _sosService => _ref.read(sosServiceProvider);
-  TrackingService? get _trackingService =>
-      _ref.read(trackingServiceProvider);
+  TrackingService? get _trackingService => _ref.read(trackingServiceProvider);
 
   void startMonitoring() {
     if (state.status == CrashDetectionStatus.monitoring) return;
@@ -145,16 +144,18 @@ class CrashDetectionNotifier extends StateNotifier<CrashDetectionState> {
 
     debugPrint('[CrashDetection] Cancelled: $reason');
 
-    unawaited(Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        state = state.copyWith(
-          status: CrashDetectionStatus.monitoring,
-          cancelledReason: null,
-          impactEvent: null,
-        );
-        _sensorService?.start();
-      }
-    }));
+    unawaited(
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          state = state.copyWith(
+            status: CrashDetectionStatus.monitoring,
+            cancelledReason: null,
+            impactEvent: null,
+          );
+          _sensorService?.start();
+        }
+      }),
+    );
   }
 
   Future<void> _dispatch() async {

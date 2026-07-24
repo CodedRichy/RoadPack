@@ -81,8 +81,9 @@ class TripDetector {
   void _handleIdleLocation(LocationPoint loc) {
     if (loc.speed >= _speedThresholdMs) {
       _motionStartTime ??= loc.timestamp;
-      final motionDuration =
-          loc.timestamp.difference(_motionStartTime!).inSeconds;
+      final motionDuration = loc.timestamp
+          .difference(_motionStartTime!)
+          .inSeconds;
       if (motionDuration >= _motionThresholdSec) {
         _startTrip(loc.latitude, loc.longitude, _motionStartTime!);
         _handleRecordingLocation(loc);
@@ -105,8 +106,7 @@ class TripDetector {
 
     if (loc.speed <= _stopThresholdMs) {
       _stopStartTime ??= loc.timestamp;
-      final stopDuration =
-          loc.timestamp.difference(_stopStartTime!).inSeconds;
+      final stopDuration = loc.timestamp.difference(_stopStartTime!).inSeconds;
       if (stopDuration >= _stopDurationSec) {
         _endTrip();
       }
@@ -122,13 +122,15 @@ class TripDetector {
     _stopStartTime = null;
     _motionStartTime = null;
 
-    await _db.insertTrip(TripsCompanion.insert(
-      id: _activeTripId!,
-      startTime: startTime,
-      originLat: lat,
-      originLng: lng,
-      state: 'recording',
-    ));
+    await _db.insertTrip(
+      TripsCompanion.insert(
+        id: _activeTripId!,
+        startTime: startTime,
+        originLat: lat,
+        originLng: lng,
+        state: 'recording',
+      ),
+    );
 
     _activeTrip = await _db.getRecordingTrip();
     _setState(TripState.recording);
@@ -143,28 +145,32 @@ class TripDetector {
     final lastLoc = _locationBuffer.last;
 
     if (_totalDistance < _minTripDistanceM) {
-      await _db.updateTrip(TripsCompanion(
-        id: Value(_activeTripId!),
-        startTime: Value(_locationBuffer.first.timestamp),
-        originLat: Value(_locationBuffer.first.latitude),
-        originLng: Value(_locationBuffer.first.longitude),
-        state: const Value('discarded'),
-      ));
+      await _db.updateTrip(
+        TripsCompanion(
+          id: Value(_activeTripId!),
+          startTime: Value(_locationBuffer.first.timestamp),
+          originLat: Value(_locationBuffer.first.latitude),
+          originLng: Value(_locationBuffer.first.longitude),
+          state: const Value('discarded'),
+        ),
+      );
       _reset();
       return;
     }
 
-    await _db.updateTrip(TripsCompanion(
-      id: Value(_activeTripId!),
-      startTime: Value(_locationBuffer.first.timestamp),
-      originLat: Value(_locationBuffer.first.latitude),
-      originLng: Value(_locationBuffer.first.longitude),
-      endTime: Value(lastLoc.timestamp),
-      destLat: Value(lastLoc.latitude),
-      destLng: Value(lastLoc.longitude),
-      distanceMeters: Value(_totalDistance),
-      state: const Value('completed'),
-    ));
+    await _db.updateTrip(
+      TripsCompanion(
+        id: Value(_activeTripId!),
+        startTime: Value(_locationBuffer.first.timestamp),
+        originLat: Value(_locationBuffer.first.latitude),
+        originLng: Value(_locationBuffer.first.longitude),
+        endTime: Value(lastLoc.timestamp),
+        destLat: Value(lastLoc.latitude),
+        destLng: Value(lastLoc.longitude),
+        distanceMeters: Value(_totalDistance),
+        state: const Value('completed'),
+      ),
+    );
 
     final completedTrips = await _db.getCompletedTrips();
     if (completedTrips.isNotEmpty) {
@@ -202,7 +208,8 @@ class TripDetector {
     const earthRadius = 6371000.0;
     final dLat = _toRadians(lat2 - lat1);
     final dLon = _toRadians(lon2 - lon1);
-    final a = sin(dLat / 2) * sin(dLat / 2) +
+    final a =
+        sin(dLat / 2) * sin(dLat / 2) +
         cos(_toRadians(lat1)) *
             cos(_toRadians(lat2)) *
             sin(dLon / 2) *

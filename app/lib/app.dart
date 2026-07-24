@@ -25,10 +25,9 @@ class App extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('en'), Locale('hi'), Locale('ml')],
-      builder: (context, child) =>
-          CrashOverlay(
-            child: SosOverlay(child: child ?? const SizedBox.shrink()),
-          ),
+      builder: (context, child) => CrashOverlay(
+        child: SosOverlay(child: child ?? const SizedBox.shrink()),
+      ),
     );
   }
 }

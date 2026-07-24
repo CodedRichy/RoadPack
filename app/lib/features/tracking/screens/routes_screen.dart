@@ -42,8 +42,7 @@ class RoutesScreen extends ConsumerWidget {
           return ListView.builder(
             padding: const EdgeInsets.all(16),
             itemCount: routes.length,
-            itemBuilder: (context, index) =>
-                _RouteCard(route: routes[index]),
+            itemBuilder: (context, index) => _RouteCard(route: routes[index]),
           );
         },
       ),
@@ -73,8 +72,8 @@ class RoutesScreen extends ConsumerWidget {
               'After 3 similar trips, a route is created here.',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
+                color: Theme.of(context).colorScheme.outline,
+              ),
             ),
           ],
         ),
@@ -118,21 +117,27 @@ class _RouteCard extends ConsumerWidget {
                 if (route.typicalStart != null) ...[
                   Icon(Icons.schedule, size: 16, color: scheme.outline),
                   const SizedBox(width: 4),
-                  Text(route.typicalStart!,
-                      style: Theme.of(context).textTheme.bodySmall),
+                  Text(
+                    route.typicalStart!,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                   const SizedBox(width: 16),
                 ],
                 if (route.typicalDurationMin != null) ...[
                   Icon(Icons.timer_outlined, size: 16, color: scheme.outline),
                   const SizedBox(width: 4),
-                  Text('${route.typicalDurationMin} min',
-                      style: Theme.of(context).textTheme.bodySmall),
+                  Text(
+                    '${route.typicalDurationMin} min',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                   const SizedBox(width: 16),
                 ],
                 Icon(Icons.repeat, size: 16, color: scheme.outline),
                 const SizedBox(width: 4),
-                Text('${route.repetitionCount} trips',
-                    style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  '${route.repetitionCount} trips',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ],
             ),
             if (days.isNotEmpty) ...[
@@ -205,8 +210,8 @@ class _ConfidenceBadge extends StatelessWidget {
     final color = confidence >= 0.7
         ? Colors.green
         : confidence >= 0.4
-            ? Colors.orange
-            : Theme.of(context).colorScheme.outline;
+        ? Colors.orange
+        : Theme.of(context).colorScheme.outline;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),

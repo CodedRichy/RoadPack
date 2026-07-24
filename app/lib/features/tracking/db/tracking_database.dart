@@ -67,12 +67,11 @@ class TrackingDatabase extends _$TrackingDatabase {
   // --- Trips ---
   Future<int> insertTrip(TripsCompanion trip) => into(trips).insert(trip);
 
-  Future<bool> updateTrip(TripsCompanion trip) =>
-      update(trips).replace(trip);
+  Future<bool> updateTrip(TripsCompanion trip) => update(trips).replace(trip);
 
-  Future<Trip?> getRecordingTrip() =>
-      (select(trips)..where((t) => t.state.equals('recording')))
-          .getSingleOrNull();
+  Future<Trip?> getRecordingTrip() => (select(
+    trips,
+  )..where((t) => t.state.equals('recording'))).getSingleOrNull();
 
   Future<List<Trip>> getCompletedTrips() =>
       (select(trips)
@@ -80,9 +79,9 @@ class TrackingDatabase extends _$TrackingDatabase {
             ..orderBy([(t) => OrderingTerm.desc(t.startTime)]))
           .get();
 
-  Future<int> deleteTripsOlderThan(DateTime cutoff) =>
-      (delete(trips)..where((t) => t.startTime.isSmallerThanValue(cutoff)))
-          .go();
+  Future<int> deleteTripsOlderThan(DateTime cutoff) => (delete(
+    trips,
+  )..where((t) => t.startTime.isSmallerThanValue(cutoff))).go();
 
   // --- Route Candidates ---
   Future<List<RouteCandidate>> getAllCandidates() =>
@@ -94,10 +93,9 @@ class TrackingDatabase extends _$TrackingDatabase {
   Future<bool> updateCandidate(RouteCandidatesCompanion c) =>
       update(routeCandidates).replace(c);
 
-  Future<List<RouteCandidate>> getPromotableCandidates() =>
-      (select(routeCandidates)
-            ..where((c) => c.tripCount.isBiggerOrEqualValue(3)))
-          .get();
+  Future<List<RouteCandidate>> getPromotableCandidates() => (select(
+    routeCandidates,
+  )..where((c) => c.tripCount.isBiggerOrEqualValue(3))).get();
 
   Future<int> deleteCandidate(String id) =>
       (delete(routeCandidates)..where((c) => c.id.equals(id))).go();

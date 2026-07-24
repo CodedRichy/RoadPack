@@ -20,46 +20,52 @@ void main() {
   });
 
   test('toggleNonArrival updates route', () async {
-    await db.insertKnownRoute(KnownRoutesLocalCompanion.insert(
-      id: 'r1',
-      originLat: 9.93,
-      originLng: 76.26,
-      destLat: 10.0,
-      destLng: 76.3,
-      daysActive: '[1,2,3,4,5]',
-    ));
+    await db.insertKnownRoute(
+      KnownRoutesLocalCompanion.insert(
+        id: 'r1',
+        originLat: 9.93,
+        originLng: 76.26,
+        destLat: 10.0,
+        destLng: 76.3,
+        daysActive: '[1,2,3,4,5]',
+      ),
+    );
 
-    await db.updateKnownRoute(KnownRoutesLocalCompanion(
-      id: const Value('r1'),
-      originLat: const Value(9.93),
-      originLng: const Value(76.26),
-      destLat: const Value(10.0),
-      destLng: const Value(76.3),
-      daysActive: const Value('[1,2,3,4,5]'),
-      nonArrivalEnabled: const Value(false),
-    ));
+    await db.updateKnownRoute(
+      KnownRoutesLocalCompanion(
+        id: const Value('r1'),
+        originLat: const Value(9.93),
+        originLng: const Value(76.26),
+        destLat: const Value(10.0),
+        destLng: const Value(76.3),
+        daysActive: const Value('[1,2,3,4,5]'),
+        nonArrivalEnabled: const Value(false),
+      ),
+    );
 
     final routes = await db.getAllKnownRoutes();
     expect(routes.first.nonArrivalEnabled, false);
   });
 
   test('insertKnownRoute with all fields', () async {
-    await db.insertKnownRoute(KnownRoutesLocalCompanion.insert(
-      id: 'r1',
-      originLat: 9.93,
-      originLng: 76.26,
-      destLat: 10.0,
-      destLng: 76.3,
-      daysActive: '[1,2,3,4,5]',
-      name: const Value('Home to Work'),
-      typicalStart: const Value('08:30'),
-      typicalDurationMin: const Value(25),
-      confidence: const Value(0.7),
-      repetitionCount: const Value(7),
-      nonArrivalEnabled: const Value(true),
-      lastTraveled: Value(DateTime(2026, 7, 11)),
-      syncedAt: Value(DateTime(2026, 7, 11, 9, 0)),
-    ));
+    await db.insertKnownRoute(
+      KnownRoutesLocalCompanion.insert(
+        id: 'r1',
+        originLat: 9.93,
+        originLng: 76.26,
+        destLat: 10.0,
+        destLng: 76.3,
+        daysActive: '[1,2,3,4,5]',
+        name: const Value('Home to Work'),
+        typicalStart: const Value('08:30'),
+        typicalDurationMin: const Value(25),
+        confidence: const Value(0.7),
+        repetitionCount: const Value(7),
+        nonArrivalEnabled: const Value(true),
+        lastTraveled: Value(DateTime(2026, 7, 11)),
+        syncedAt: Value(DateTime(2026, 7, 11, 9, 0)),
+      ),
+    );
 
     final routes = await db.getAllKnownRoutes();
     expect(routes.length, 1);

@@ -76,8 +76,8 @@ class _CrashReasonPickerState extends State<CrashReasonPicker> {
                   ? () {
                       final reason = _selectedReason == 'Other'
                           ? _otherController.text.isNotEmpty
-                              ? _otherController.text
-                              : 'Other'
+                                ? _otherController.text
+                                : 'Other'
                           : _selectedReason!;
                       Navigator.of(context).pop(reason);
                     }

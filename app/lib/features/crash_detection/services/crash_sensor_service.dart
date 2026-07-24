@@ -7,10 +7,8 @@ import '../models/impact_event.dart';
 import 'ring_buffer.dart';
 
 class CrashSensorService {
-  CrashSensorService({
-    required double impactThresholdG,
-    this.debounceMs = 20,
-  }) : _impactThresholdG = impactThresholdG;
+  CrashSensorService({required double impactThresholdG, this.debounceMs = 20})
+    : _impactThresholdG = impactThresholdG;
 
   final double _impactThresholdG;
   final int debounceMs;
