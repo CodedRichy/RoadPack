@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants/app_constants.dart';
+import '../../auth/providers/user_profile_provider.dart';
 import '../../auth/services/clerk_service.dart';
 import '../../sos/services/sos_service.dart';
 import '../../tracking/services/tracking_service.dart';
@@ -16,7 +17,8 @@ final crashSensorServiceProvider = Provider<CrashSensorService?>((ref) {
   final clerkService = ref.watch(clerkServiceProvider);
   if (!clerkService.isSignedIn) return null;
 
-  final threshold = getImpactThresholdForMount(null);
+  final profile = ref.watch(userProfileProvider).valueOrNull;
+  final threshold = getImpactThresholdForMount(profile?.phoneMountType);
   final service = CrashSensorService(impactThresholdG: threshold);
   ref.onDispose(() => service.dispose());
   return service;
@@ -82,8 +84,9 @@ class CrashDetectionNotifier extends StateNotifier<CrashDetectionState> {
       return;
     }
 
-    final sensitivity = getSensitivityThreshold(null);
-    final mountThreshold = getImpactThresholdForMount(null);
+    final profile = _ref.read(userProfileProvider).valueOrNull;
+    final sensitivity = getSensitivityThreshold(profile?.crashSensitivity);
+    final mountThreshold = getImpactThresholdForMount(profile?.phoneMountType);
 
     final score = calculateCrashScore(
       impact: impact,
@@ -176,11 +179,13 @@ class CrashDetectionNotifier extends StateNotifier<CrashDetectionState> {
         'peak_rotation_deg_s': impact.peakRotationDegS,
       };
 
+      final profile = _ref.read(userProfileProvider).valueOrNull;
+
       final incident = await service.dispatchCrash(
         peakG: impact.peakG,
         confidence: calculateCrashScore(
           impact: impact,
-          mountThreshold: getImpactThresholdForMount(null),
+          mountThreshold: getImpactThresholdForMount(profile?.phoneMountType),
           currentSpeedKmh: impact.speedBeforeKmh,
           speedAfterKmh: _sensorService?.lastSpeedKmh ?? 0,
           peakRotationDegS: impact.peakRotationDegS,
@@ -188,6 +193,7 @@ class CrashDetectionNotifier extends StateNotifier<CrashDetectionState> {
         ),
         speedAtEvent: impact.speedBeforeKmh,
         sensorWindow: sensorWindow,
+        phoneMount: profile?.phoneMountType,
       );
 
       state = state.copyWith(
