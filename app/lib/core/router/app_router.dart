@@ -14,6 +14,7 @@ import '../../features/circles/screens/circle_detail_screen.dart';
 import '../../features/alerts/screens/alert_detail_screen.dart';
 import '../../features/tracking/screens/routes_screen.dart';
 import '../../features/tracking/screens/trip_history_screen.dart';
+import '../../features/settings/screens/settings_screen.dart';
 
 String? authRedirect({
   required bool isAuthenticated,
@@ -111,6 +112,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/trips',
         builder: (context, state) => const TripHistoryScreen(),
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => const SettingsScreen(),
       ),
     ],
   );

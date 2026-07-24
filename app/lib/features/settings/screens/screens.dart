@@ -1,1 +1,1 @@
-// Settings Screens barrel
+export 'settings_screen.dart';
