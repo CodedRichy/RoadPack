@@ -1,7 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:roadpack/features/circles/models/circle.dart';
+import 'package:roadpack/l10n/app_localizations_en.dart';
 
 void main() {
+  // Circle labels are localised copy; these tests assert the English cut.
+  final l10n = AppLocalizationsEn();
+
   group('CircleType', () {
     test('fromString round-trips all types', () {
       for (final t in CircleType.values) {
@@ -10,13 +14,13 @@ void main() {
     });
 
     test('displayName returns human-readable text', () {
-      expect(CircleType.family.displayName, 'Family');
-      expect(CircleType.convoy.displayName, 'Convoy');
+      expect(CircleType.family.displayName(l10n), 'Family');
+      expect(CircleType.convoy.displayName(l10n), 'Convoy');
     });
 
     test('defaultName returns pre-fill text', () {
-      expect(CircleType.family.defaultName, 'My Family');
-      expect(CircleType.commute.defaultName, 'Commute Group');
+      expect(CircleType.family.defaultName(l10n), 'My Family');
+      expect(CircleType.commute.defaultName(l10n), 'Commute Group');
     });
   });
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/l10n.dart';
 import '../models/sos_state.dart';
 import '../providers/sos_state_provider.dart';
 
@@ -54,19 +55,19 @@ class _SosButtonState extends ConsumerState<SosButton> {
           backgroundColor: Colors.red,
           onPressed: () {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Hold for 2 seconds to trigger SOS'),
-                duration: Duration(seconds: 2),
+              SnackBar(
+                content: Text(context.l10n.sosHoldHint),
+                duration: const Duration(seconds: 2),
               ),
             );
           },
-          child: const Column(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.sos, color: Colors.white, size: 32),
+              const Icon(Icons.sos, color: Colors.white, size: 32),
               Text(
-                'SOS',
-                style: TextStyle(
+                context.l10n.sosLabel,
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 12,

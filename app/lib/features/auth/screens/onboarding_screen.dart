@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../consent/models/age_gate.dart';
+import '../../consent/models/consent_type.dart';
+import '../../consent/providers/consent_provider.dart';
+import '../../consent/widgets/parental_consent_form.dart';
 import '../providers/user_profile_provider.dart';
 import '../widgets/onboarding_step.dart';
 
@@ -33,6 +37,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   // `userProfileProvider` (rather than a one-off `read`) to make sure a
   // rebuild happens once the fetch resolves and the name becomes available.
   bool _profileSeeded = false;
+
+  /// FR-004: the user's answer on the tracking-consent step. Kept as local
+  /// state and only written to the `consents` ledger when they move on, so
+  /// a half-read screen never becomes a recorded yes.
+  bool _trackingConsentChecked = false;
+
+  /// FR-003 / DPDPA C6. Recomputed from [_selectedDob] on every build, so
+  /// picking a different date immediately adds or removes the parental
+  /// consent step rather than leaving a stale one in the flow.
+  bool get _needsParentalConsent =>
+      _selectedDob != null && AgeGate.requiresParentalConsent(_selectedDob);
 
   @override
   void dispose() {
@@ -70,8 +85,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           children: [
             _buildNamePage(),
             _buildDobPage(),
+            if (_needsParentalConsent) _buildParentalConsentPage(),
             _buildVehiclePage(),
             _buildLocationPage(),
+            _buildTrackingConsentPage(),
             _buildEmergencyContactPage(),
           ],
         ),
@@ -164,6 +181,73 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               child: const Text('Select date'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  /// FR-003: shown only to under-18 users, and only ever *before* anything
+  /// starts tracking them. Skippable, because trapping a minor in a form
+  /// they cannot complete just loses the user — but skipping leaves the
+  /// tracking gate shut, which is the honest outcome.
+  Widget _buildParentalConsentPage() {
+    return OnboardingStep(
+      title: 'A parent or guardian has to agree',
+      subtitle:
+          'The law treats riders under 18 differently. RoadPack will not '
+          'record where you are until a parent or guardian says yes.',
+      showSkip: true,
+      onSkip: _nextPage,
+      onNext: _nextPage,
+      nextLabel: 'Continue',
+      child: SingleChildScrollView(
+        child: ParentalConsentForm(onGranted: _nextPage),
+      ),
+    );
+  }
+
+  /// FR-004: the explicit yes for location tracking. Nothing in the app
+  /// starts collecting location until this record exists — see
+  /// `trackingGateProvider`.
+  Widget _buildTrackingConsentPage() {
+    return OnboardingStep(
+      title: 'May we record where you are?',
+      subtitle:
+          'Only while a ride is on, and only so your circle can find you if '
+          'you crash. You can turn this off at any time, and RoadPack stops '
+          'straight away. It does not replace calling 112.',
+      showSkip: true,
+      onSkip: _nextPage,
+      onNext: () async {
+        if (!_trackingConsentChecked) return;
+        setState(() => _isLoading = true);
+        try {
+          await ref
+              .read(consentRecordsProvider.notifier)
+              .grantSelf(ConsentType.tracking);
+          _nextPage();
+        } catch (e) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Could not save that. Please try again.'),
+              ),
+            );
+          }
+        } finally {
+          if (mounted) setState(() => _isLoading = false);
+        }
+      },
+      isLoading: _isLoading,
+      child: CheckboxListTile(
+        value: _trackingConsentChecked,
+        onChanged: (v) => setState(() => _trackingConsentChecked = v ?? false),
+        controlAffinity: ListTileControlAffinity.leading,
+        contentPadding: EdgeInsets.zero,
+        title: const Text('Yes, record my location while I ride'),
+        subtitle: const Text(
+          'Your circle sees it only while a ride is on. There is no hidden '
+          'mode — you can always see who can see you.',
         ),
       ),
     );

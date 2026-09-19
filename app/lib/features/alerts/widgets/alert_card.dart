@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../l10n/l10n.dart';
 import '../models/alert_notification.dart';
 
 class AlertCard extends StatelessWidget {
@@ -10,6 +11,8 @@ class AlertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Card(
       color: alert.acknowledged ? null : Colors.red.shade900,
       child: ListTile(
@@ -17,9 +20,11 @@ class AlertCard extends StatelessWidget {
           alert.acknowledged ? Icons.check_circle : Icons.warning,
           color: alert.acknowledged ? Colors.green : Colors.red,
         ),
-        title: Text('${alert.victimName} - Emergency'),
+        title: Text(l10n.alertCardTitle(alert.victimName)),
         subtitle: Text(
-          alert.acknowledged ? 'Acknowledged' : 'Tap to view and acknowledge',
+          alert.acknowledged
+              ? l10n.alertAcknowledged
+              : l10n.alertCardTapToView,
         ),
         onTap: () => context.push('/alerts/${alert.incidentId}'),
       ),

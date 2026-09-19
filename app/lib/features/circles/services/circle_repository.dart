@@ -30,10 +30,20 @@ class CircleRepository {
     return data.map((row) => Circle.fromJson(row)).toList();
   }
 
+  /// Creates a circle.
+  ///
+  /// [locationSharing] is written explicitly rather than left absent.
+  /// `can_view_location` reads
+  /// `COALESCE((settings->>'location_sharing')::BOOLEAN, false)`, so an
+  /// absent key and an explicit `false` behave identically to the server —
+  /// but only the explicit value records that somebody actually decided.
+  /// An absent key is indistinguishable from a bug, and this exact
+  /// ambiguity is why live sharing silently never worked.
   Future<Circle> createCircle({
     required String name,
     required CircleType type,
     required String userId,
+    required bool locationSharing,
     int? maxMembers,
     DateTime? expiresAt,
   }) async {
@@ -47,6 +57,7 @@ class CircleRepository {
               'type': type.value,
               'created_by': userId,
               'invite_code': inviteCode,
+              'settings': {'location_sharing': locationSharing},
               'max_members': maxMembers,
               'expires_at': expiresAt?.toIso8601String(),
             })

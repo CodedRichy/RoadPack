@@ -1,4 +1,1329 @@
 {
   "@@locale": "en",
-  "appTitle": "RoadPack"
+  "appTitle": "RoadPack",
+  "@appTitle": {
+    "description": "Product name. Not translated."
+  },
+  "commonCancel": "CANCEL",
+  "commonClose": "CLOSE",
+  "commonImOkay": "I'M OKAY",
+  "@commonImOkay": {
+    "description": "Cancels a live countdown. The most important button in the app."
+  },
+  "commonOn": "on",
+  "commonOff": "off",
+  "commonSettings": "Settings",
+  "commonSelect": "Select",
+  "commonName": "Name",
+  "commonNotSignedIn": "Not signed in",
+  "commonError": "Error: {message}",
+  "@commonError": {
+    "description": "Generic failure line. {message} is untranslated technical detail.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "commonCall112": "Call 112",
+  "@commonCall112": {
+    "description": "Reviewed copy, shared with BystanderCopy.dial112."
+  },
+  "sosLabel": "SOS",
+  "@sosLabel": {
+    "description": "Latin script in every language: it is the mark on the button."
+  },
+  "sosAlertTitle": "SOS ALERT",
+  "sosHoldHint": "Hold for 2 seconds to trigger SOS",
+  "sosCountdownBody": "Emergency alerts will be sent to your contacts",
+  "sosSentTitle": "Emergency Alerts Sent",
+  "sosSentBody": "Your emergency contacts are being notified.",
+  "incidentResolvedTitle": "Incident Resolved",
+  "incidentResolvedBody": "Your contacts have been notified that you are safe.",
+  "incidentRef": "Incident: {ref}",
+  "@incidentRef": {
+    "description": "Short incident id, shown so a rider can quote it.",
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "crashDetectedTitle": "CRASH DETECTED",
+  "crashCountdownBody": "{count, plural, =1{Alerting your emergency contacts in 1 second} other{Alerting your emergency contacts in {count} seconds}}",
+  "@crashCountdownBody": {
+    "description": "Live countdown on the crash screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "crashAlertSentTitle": "CRASH ALERT SENT",
+  "crashAlertSentBody": "Your emergency contacts have been notified of a possible crash.",
+  "crashReasonQuestion": "What happened?",
+  "crashReasonPothole": "Pothole / speed bump",
+  "crashReasonPhoneDropped": "Phone dropped",
+  "crashReasonSuddenBraking": "Sudden braking",
+  "crashReasonOther": "Other",
+  "crashReasonOtherHint": "Describe what happened",
+  "crashReasonConfirm": "Confirm - I'm Fine",
+  "alertTitle": "Alert",
+  "alertNotFound": "Alert not found",
+  "alertDetailTitle": "Emergency Alert",
+  "alertVictimHeadline": "{name} may have been in an accident",
+  "@alertVictimHeadline": {
+    "description": "Headline of an alert received about somebody else.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "alertLocationLine": "Location: {lat}, {lng}",
+  "@alertLocationLine": {
+    "placeholders": {
+      "lat": {
+        "type": "String"
+      },
+      "lng": {
+        "type": "String"
+      }
+    }
+  },
+  "alertTimeLine": "Time: {time}",
+  "@alertTimeLine": {
+    "placeholders": {
+      "time": {
+        "type": "DateTime",
+        "format": "yMMMd",
+        "isCustomDateFormat": "false"
+      }
+    }
+  },
+  "alertAcknowledge": "ACKNOWLEDGE",
+  "@alertAcknowledge": {
+    "description": "Tells the cascade a human has seen this alert."
+  },
+  "alertAcknowledged": "Acknowledged",
+  "alertCallPerson": "Call {name}",
+  "@alertCallPerson": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "alertOpenInMaps": "Open in Maps",
+  "alertCardTitle": "{name} — Emergency",
+  "@alertCardTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "alertCardTapToView": "Tap to view and acknowledge",
+  "homeSwitchToNight": "Switch to night",
+  "homeSwitchToSunlight": "Switch to sunlight",
+  "protectionEyebrow": "PROTECTION",
+  "checkCrashDetection": "Crash\ndetection",
+  "@checkCrashDetection": {
+    "description": "Checklist column. The newline is a deliberate two-line wrap."
+  },
+  "checkLocationTracking": "Location\ntracking",
+  "checkNonArrival": "Non-arrival\nalerts",
+  "checkEmergencyContact": "Emergency\ncontact",
+  "checkSemantics": "{label}: {state}",
+  "@checkSemantics": {
+    "description": "Screen-reader label for a checklist column.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "watchersHeading": "WHO IS WATCHING",
+  "watchersError": "Circles could not load. Pull down to try again.",
+  "watchersEmpty": "Nobody yet. A circle is who gets called when you cannot call.",
+  "watchersCreateCircle": "Create a circle",
+  "circleCount": "{count, plural, =1{{count}  circle} other{{count}  circles}}",
+  "@circleCount": {
+    "description": "Count of circles watching. Number and word are styled separately in the widget; this key is the word only fallback.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "circleCountWord": "{count, plural, =1{circle} other{circles}}",
+  "@circleCountWord": {
+    "description": "The noun after the styled figure on the home screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packEyebrow": "RIDING WITH OTHERS",
+  "packTagline": "Everyone sees the gap, not just a dot",
+  "packStartRide": "Start a ride",
+  "packJoinRide": "Join a ride",
+  "navLiveMap": "Live map",
+  "navSafetyCircles": "Safety circles",
+  "navCommutes": "Commutes and non-arrival",
+  "navKnownRoutes": "Known routes",
+  "navTripHistory": "Trip history",
+  "milestoneCapArmed": "ALL SYSTEMS WATCHING",
+  "milestoneHeadlineArmed": "Covered",
+  "@milestoneHeadlineArmed": {
+    "description": "Protection is on. Must not read as a promise that the rider is safe, only that the systems are running."
+  },
+  "milestoneDetailArmed": "Crash detection, tracking and non-arrival alerts are all live. If you go down, your circles hear about it.",
+  "milestoneCapPartial": "GAPS IN COVER",
+  "milestoneHeadlinePartial": "Partly covered",
+  "milestoneDetailPartial": "Some systems are off. Turn the rest on before you ride, or nobody gets told about the part they cover.",
+  "milestoneCapOff": "NOTHING IS WATCHING",
+  "milestoneHeadlineOff": "Not covered",
+  "milestoneDetailOff": "No crash detection, no tracking, no alerts. Turn on protection in Settings before your next ride.",
+  "milestoneCapIncident": "INCIDENT LIVE",
+  "milestoneHeadlineIncident": "Help is being called",
+  "@milestoneHeadlineIncident": {
+    "description": "The app is alerting the rider's own circles. It never dispatches an ambulance and never replaces 112 — no translation may imply that it does."
+  },
+  "milestoneDetailIncident": "Your circles are being alerted right now.",
+  "milestoneSemantics": "Protection {headline}. {detail} {active} of 3 systems active.",
+  "@milestoneSemantics": {
+    "description": "Screen-reader summary of the milestone.",
+    "placeholders": {
+      "headline": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      },
+      "active": {
+        "type": "int"
+      }
+    }
+  },
+  "milestoneSemanticsContactSet": "Emergency contact set.",
+  "milestoneSemanticsContactMissing": "No emergency contact.",
+  "gapNoContactHeadline": "Nobody to call",
+  "gapNoContactDetail": "You have no emergency contact. Crash detection can fire and the alert reaches nobody. Add one contact and the rest starts working.",
+  "gapNoContactAction": "Add a contact",
+  "gapCrashOffHeadline": "Crash detection is off",
+  "gapCrashOffDetail": "Nothing is listening for an impact. If you go down and cannot reach your phone, nobody is told.",
+  "gapTurnOnAction": "Turn it on",
+  "gapTrackingOffHeadline": "Location tracking is off",
+  "gapTrackingOffDetail": "Your circles can be alerted, but not told where you are. Help arrives slower when it has to search.",
+  "gapNonArrivalOffHeadline": "Non-arrival alerts are off",
+  "gapNonArrivalOffDetail": "If you never reach your destination, nothing raises it. Set up a commute route to close this.",
+  "gapSetUpCommutesAction": "Set up commutes",
+  "settingsSectionSafety": "Safety",
+  "settingsCrashSensitivity": "Crash Sensitivity",
+  "settingsSensitivityHigh": "High",
+  "settingsSensitivityMedium": "Medium",
+  "settingsSensitivityLow": "Low",
+  "settingsSensitivityHighDetail": "High - More sensitive, may have more false alerts",
+  "settingsSensitivityMediumDetail": "Medium - Balanced (recommended)",
+  "settingsSensitivityLowDetail": "Low - Less sensitive, fewer false alerts",
+  "settingsPhoneMount": "Phone Mount",
+  "settingsMountBar": "Bar",
+  "settingsMountPocket": "Pocket",
+  "settingsMountBag": "Bag",
+  "settingsMountOther": "Other",
+  "settingsMountBarDetail": "Handlebar mount (most sensitive)",
+  "settingsMountPocketDetail": "In pocket",
+  "settingsMountBagDetail": "In bag (least sensitive)",
+  "settingsMountUnknownDetail": "Other / Unknown",
+  "settingsSectionTracking": "Tracking",
+  "settingsNonArrivalAlerts": "Non-Arrival Alerts",
+  "settingsNonArrivalAlertsSub": "Alert contacts if you don't arrive",
+  "settingsAlertDelay": "Alert Delay",
+  "settingsAlertDelaySub": "{count, plural, =1{1 minute after expected arrival} other{{count} minutes after expected arrival}}",
+  "@settingsAlertDelaySub": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesShort": "{count, plural, =1{1 min} other{{count} min}}",
+  "@minutesShort": {
+    "description": "Compact duration used in dropdowns.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsCommuteRoutes": "Commute routes",
+  "settingsCommuteRoutesSub": "Routes that raise an alert when you do not arrive",
+  "settingsSectionEmergency": "Emergency",
+  "settingsEmergencyContacts": "Emergency contacts",
+  "settingsEmergencyContactsReady": "Who gets called when you cannot call",
+  "settingsEmergencyContactsEmpty": "None yet — alerts have nobody to reach",
+  "settingsIceCard": "ICE card",
+  "@settingsIceCard": {
+    "description": "ICE = in case of emergency. Kept as the Latin abbreviation, which is what Indian responders read."
+  },
+  "settingsIceCardSub": "What a first responder sees at the scene",
+  "settingsBystanderPreview": "See what a bystander sees",
+  "settingsBystanderPreviewSub": "Check your crash screen before you need it",
+  "settingsIceCommuteToggle": "Show ICE card during commutes",
+  "settingsIceCommuteToggleSub": "Off by default. On, a helper at the scene can see your blood group and contacts during a tracked commute, not only after a crash.",
+  "settingsSectionMaps": "Maps",
+  "settingsOfflineMaps": "Offline maps",
+  "settingsOfflineMapsSub": "Download regions for dead-zone riding",
+  "settingsSectionEmergencyProfile": "Emergency Profile",
+  "settingsBloodGroup": "Blood Group",
+  "settingsMedicalNotes": "Medical Notes",
+  "settingsMedicalNotesHint": "Allergies, conditions, medications...",
+  "settingsSectionAccount": "Account",
+  "settingsVehicle": "Vehicle",
+  "settingsSignOut": "Sign Out",
+  "settingsSectionLanguage": "Language",
+  "settingsLanguageSub": "Emergency screens use this language too",
+  "languageSystemDefault": "Match my phone",
+  "languageEnglish": "English",
+  "@languageEnglish": {
+    "description": "Endonym. Identical in every locale so a rider can always find their own language in the list."
+  },
+  "languageHindi": "हिन्दी",
+  "@languageHindi": {
+    "description": "Endonym."
+  },
+  "languageMalayalam": "മലയാളം",
+  "@languageMalayalam": {
+    "description": "Endonym."
+  },
+  "circlesJoinCircleTitle": "Join Circle",
+  "@circlesJoinCircleTitle": {
+    "description": "AppBar title of the join screen, reused as the tooltip on the join icon in the circles list."
+  },
+  "circlesCreateCircle": "Create Circle",
+  "@circlesCreateCircle": {
+    "description": "FAB label on the circles list and AppBar title of the create screen."
+  },
+  "circlesLoadError": "Something went wrong",
+  "@circlesLoadError": {
+    "description": "Generic load failure, reused across circles list/detail/join."
+  },
+  "circlesRetry": "Retry",
+  "circlesEmptyTitle": "Create your first Safety Circle",
+  "circlesEmptyBody": "Your circles help ensure the right people are alerted when something happens on the road",
+  "circlesRegenerateCode": "Regenerate invite code",
+  "circlesDeleteCircle": "Delete circle",
+  "circlesMembersHeading": "{count, plural, =1{Member (1)} other{Members ({count})}}",
+  "@circlesMembersHeading": {
+    "description": "Heading above the member list, with the count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "circlesObserversHeading": "{count, plural, =1{Observer (1)} other{Observers ({count})}}",
+  "@circlesObserversHeading": {
+    "description": "Heading above the observers list, with the count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "circlesObserverSmsTag": "SMS",
+  "@circlesObserverSmsTag": {
+    "description": "Short tag on an observer row. The protocol name, kept as-is like ICE/SOS elsewhere in the app."
+  },
+  "circlesAddObserverAction": "Add Observer",
+  "@circlesAddObserverAction": {
+    "description": "Both the outlined button on the detail screen and the title of the add-observer sheet use this exact text."
+  },
+  "circlesObserverSmsExplainer": "Observers receive SMS alerts but don't need the app.",
+  "circlesPhoneNumberLabel": "Phone number",
+  "circlesAddAction": "Add",
+  "circlesLeaveDialogTitle": "Leave circle?",
+  "circlesLeaveFamilyWarning": "Leaving will remove all emergency contact links from this circle.",
+  "@circlesLeaveFamilyWarning": {
+    "description": "Warns that leaving a FAMILY circle also breaks emergency-contact links. Safety-relevant consequence."
+  },
+  "circlesLeaveConfirm": "Are you sure you want to leave?",
+  "circlesLeaveAction": "Leave",
+  "circlesLeaveError": "Could not leave: {message}",
+  "@circlesLeaveError": {
+    "description": "Failure snackbar when leaving a circle throws. {message} is untranslated technical detail (same pattern as commonError).",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "circlesDeleteDialogTitle": "Delete circle?",
+  "circlesDeleteWarning": "This cannot be undone.",
+  "circlesDeleteAction": "Delete",
+  "circlesNewCodeSnackbar": "New code: {code}",
+  "@circlesNewCodeSnackbar": {
+    "description": "Snackbar after regenerating the invite code.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "circlesRoleUpdateError": "Failed to update role. Please try again.",
+  "circlesRemoveMemberError": "Failed to remove member. Please try again.",
+  "circlesRemoveObserverError": "Failed to remove observer. Please try again.",
+  "circlesEcUpdateError": "Failed to update emergency contact. Please try again.",
+  "circlesShareInviteMessage": "Join my Safety Circle on RoadPack! Code: {code}",
+  "@circlesShareInviteMessage": {
+    "description": "Text handed to the OS share sheet when sharing an invite code.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "circlesNameLabel": "Circle name",
+  "circlesDurationHours": "{count, plural, =1{1 hour} other{{count} hours}}",
+  "@circlesDurationHours": {
+    "description": "Convoy duration options in the dropdown.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "circlesDurationLabel": "Duration",
+  "circlesCreateAction": "Create",
+  "circlesLocationSharingTitle": "Let this circle see live location",
+  "circlesLocationSharingOnDetail": "Everyone in this circle will be able to see where each member is. You can turn this off later.",
+  "@circlesLocationSharingOnDetail": {
+    "description": "Consent copy shown when creating a circle with sharing on."
+  },
+  "circlesLocationSharingOffDetail": "Off. Members still get alerted if someone crashes — they just cannot watch each other the rest of the time.",
+  "@circlesLocationSharingOffDetail": {
+    "description": "Honesty clause: the alert cascade still works with sharing off. Must not be softened."
+  },
+  "circlesInvalidCodeError": "Invalid code",
+  "circlesEnterCodeHeading": "Enter invite code",
+  "circlesMemberCount": "{count, plural, =1{1 member} other{{count} members}}",
+  "@circlesMemberCount": {
+    "description": "Members in one circle, shown on the join-preview card.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "circlesJoinAction": "Join",
+  "circlesWhoCanSeeMeTitle": "Who can see me",
+  "circlesChangeFailedMessage": "Could not change that. Nothing was changed.",
+  "@circlesChangeFailedMessage": {
+    "description": "Failure snackbar for a sharing-setting change. Must clearly say nothing changed, or a failed toggle could be read as succeeded."
+  },
+  "circlesWatcherCountHeadline": "{count, plural, =0{Nobody can see your location} =1{1 person can see your location} other{{count} people can see your location}}",
+  "@circlesWatcherCountHeadline": {
+    "description": "Headline of the anti-stalking 'who can see me' screen. Accuracy here matters more than almost any other string in the feature.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "circlesFullListNotice": "This is the full list. RoadPack has no hidden mode — if someone can see you, they are on this page.",
+  "@circlesFullListNotice": {
+    "description": "The core anti-stalking honesty guarantee: no hidden watchers. Must not be softened or hedged in translation."
+  },
+  "circlesNoCirclesYet": "You are not in any circles yet, so there is nobody to see you.",
+  "circlesLoadWhoCanSeeError": "We could not load who can see you",
+  "circlesLoadWhoCanSeeErrorDetail": "Do not assume this means nobody can. Try again when you have signal.",
+  "@circlesLoadWhoCanSeeErrorDetail": {
+    "description": "Critical honesty clause on the error state: a load failure must not be read as \"you are safe / unwatched\"."
+  },
+  "circlesTryAgainAction": "Try again",
+  "circlesCardSubtitle": "{count, plural, =1{{type} -- 1 member} other{{type} -- {count} members}}",
+  "@circlesCardSubtitle": {
+    "description": "Card subtitle: circle type and member count as one message, never string-concatenated.",
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "circlesExpiredTag": "Expired",
+  "circlesTypeFamily": "Family",
+  "circlesTypeFriends": "Friends",
+  "circlesTypeCommute": "Commute Group",
+  "circlesTypeConvoy": "Convoy",
+  "circlesTypeFamilyDefaultName": "My Family",
+  "circlesTypeFriendsDefaultName": "Friends",
+  "circlesTypeCommuteDefaultName": "Commute Group",
+  "circlesTypeConvoyDefaultName": "Convoy",
+  "circlesTypeFamilyDescription": "Your closest people. Members are automatically added as emergency contacts.",
+  "circlesTypeFriendsDescription": "Friends who ride or commute. Add specific members as emergency contacts.",
+  "circlesTypeCommuteDescription": "Regular commute group.",
+  "circlesTypeConvoyDescription": "Temporary group ride. Set a duration.",
+  "circlesRoleAdmin": "Admin",
+  "circlesRoleMember": "Member",
+  "circlesRoleObserver": "Observer",
+  "circlesUnknownMember": "Unknown",
+  "circlesYouTag": "(you)",
+  "circlesMenuLeaveCircle": "Leave circle",
+  "circlesMenuDemote": "Demote to member",
+  "@circlesMenuDemote": {
+    "description": "Admin-only menu item. \"Demote\" kept as a loanword; unsure it reads naturally in either language."
+  },
+  "circlesMenuPromote": "Promote to admin",
+  "@circlesMenuPromote": {
+    "description": "Admin-only menu item. \"Promote\" kept as a loanword; unsure it reads naturally in either language."
+  },
+  "circlesMenuRemove": "Remove",
+  "circlesMenuMarkEc": "Mark as emergency contact",
+  "circlesMenuRemoveEc": "Remove as emergency contact",
+  "circlesMonthlyCheckTitle": "Monthly check: who can see you?",
+  "circlesWatcherCountBanner": "{count, plural, =0{Nobody can see your location right now. Worth a look anyway — circles change.} =1{1 person can see your location right now.} other{{count} people can see your location right now.}}",
+  "@circlesWatcherCountBanner": {
+    "description": "Body of the monthly sharing-review nudge banner. Safety headline; accuracy matters.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "circlesReviewListAction": "Review the list",
+  "circlesNotNowAction": "Not now",
+  "circlesSharingOnEmptyDetail": "Location sharing is on, but there is nobody else in this circle yet.",
+  "circlesWatchersHereDetail": "{count, plural, =1{1 person here can see where you are.} other{{count} people here can see where you are.}}",
+  "@circlesWatchersHereDetail": {
+    "description": "Watcher count for one circle on the who-can-see-me screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "circlesSharingOffDetail": "Nobody in this circle can see where you are.",
+  "circlesWatcherRow": "{name} — {role}",
+  "@circlesWatcherRow": {
+    "description": "One watcher row: name and role. The role string arriving in {role} is already lower-cased by the caller.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "circlesShareMyLocationTitle": "Share my location with this circle",
+  "circlesSelfSharingOnDetail": "Turning this off hides your live position from this circle. You stay a member, and if you crash they are still alerted with your location.",
+  "@circlesSelfSharingOnDetail": {
+    "description": "Shown while self-sharing is ON, describing what turning it off would do. Must not imply the crash alert stops."
+  },
+  "circlesSelfSharingOffDetail": "Your live position is hidden from this circle. You are still a member, you still get their alerts, and if you crash they are still told where you are.",
+  "@circlesSelfSharingOffDetail": {
+    "description": "Shown while self-sharing is OFF. Critical honesty clause: opting out of the live dot does not opt out of the crash cascade."
+  },
+  "circlesAdminOnlyOptOutNotice": "Only this circle's admin can change the circle-wide setting, but the switch above stops your own location being shared. You can also leave.",
+  "@circlesAdminOnlyOptOutNotice": {
+    "description": "Shown to a non-admin member when the member-side opt-out is enforced server-side."
+  },
+  "circlesAdminOnlyNoOptOutNotice": "Only this circle's admin can change its sharing setting. If you are not comfortable, you can leave the circle — it takes effect at once, and RoadPack will never stop you.",
+  "@circlesAdminOnlyNoOptOutNotice": {
+    "description": "Consent guarantee shown when the member-side opt-out is NOT enforced server-side. \"RoadPack will never stop you\" must not be softened."
+  },
+  "circlesLeaveThisCircleAction": "Leave this circle",
+  "circlesInviteCodeLabel": "Invite Code",
+  "circlesCodeCopiedSnackbar": "Code copied",
+  "circlesCopyAction": "Copy",
+  "circlesShareAction": "Share",
+  "commuteTitle": "Commute",
+  "commuteAddRoute": "Add route",
+  "commuteEditRoute": "Edit route",
+  "commuteLoadError": "Could not load your routes",
+  "commuteYourRoutesHeading": "YOUR ROUTES",
+  "commuteNonArrivalTitle": "Non-arrival alerts",
+  "commuteNonArrivalEnabledBody": "If you have not arrived {late}, RoadPack asks you first. Your circle is only told if you do not answer.",
+  "@commuteNonArrivalEnabledBody": {
+    "description": "Composed with {late} = commuteGraceWindowSemantics, e.g. \"15 minutes late\". Honesty-critical: must not imply the app asks before the circle is told is anything other than a courtesy delay.",
+    "placeholders": {
+      "late": {
+        "type": "String"
+      }
+    }
+  },
+  "commuteNonArrivalDisabledBody": "Nobody will be told if you do not arrive.",
+  "commuteAskMeAfterHeading": "ASK ME AFTER",
+  "@commuteAskMeAfterHeading": {
+    "description": "Eyebrow label above the grace-window picker."
+  },
+  "commuteGraceWindowSemantics": "{late} late",
+  "@commuteGraceWindowSemantics": {
+    "description": "WARNING: the key name says \"late\" but the placeholder is the spoken minute count, e.g. commuteSpokenMinutes(15) -> \"15 minutes\". English renders as \"{late} late\" -> \"15 minutes late\". Used standalone (segment semantics) and composed into commuteNonArrivalEnabledBody.",
+    "placeholders": {
+      "late": {
+        "type": "String"
+      }
+    }
+  },
+  "commuteSpokenMinutes": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "@commuteSpokenMinutes": {
+    "description": "Spoken duration used inside composed sentences (never shown bare) — accessibility labels and the grace-window explanation.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commuteSpokenSeconds": "{count, plural, =1{1 second} other{{count} seconds}}",
+  "@commuteSpokenSeconds": {
+    "description": "Spoken duration used inside commuteAnswerSemantics.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commuteEmptyTitle": "No routes yet",
+  "commuteEmptyBody": "{count, plural, =1{RoadPack learns a commute after 1 similar trip. If you would rather not wait, add one yourself — it works straight away.} other{RoadPack learns a commute after {count} similar trips. If you would rather not wait, add one yourself — it works straight away.}}",
+  "@commuteEmptyBody": {
+    "description": "count = CommuteRoute.learningThreshold (currently always 3, plural kept correct regardless).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commuteDeleteRouteTooltip": "Delete route",
+  "commuteNameHint": "Home to college",
+  "commuteNameValidation": "Give this route a name you will recognise",
+  "commuteSectionWhere": "WHERE",
+  "commuteSectionWhen": "WHEN",
+  "commuteSectionDays": "DAYS",
+  "commuteStartPoint": "Start",
+  "commuteDestinationPoint": "Destination",
+  "commuteLocationPermissionError": "RoadPack needs location permission to pin this point.",
+  "commuteLocationFixError": "Could not get a fix here. Try again outdoors.",
+  "commuteIncompleteError": "Set both points, a start time and at least one day.",
+  "commuteDurationLabel": "Usually takes (minutes)",
+  "commuteDurationEmptyValidation": "How long does this ride usually take?",
+  "commuteDurationTooLongValidation": "That is longer than a day trip",
+  "commuteSaveChanges": "Save changes",
+  "commuteRouteIncompleteHint": "A route needs both points, a start time and at least one day before it can watch for you.",
+  "commuteUsuallyLeavesAt": "Usually leaves at",
+  "commutePointNotSet": "Not set",
+  "commuteUpdatePoint": "Update",
+  "commuteUseHerePoint": "Use here",
+  "commuteDeleteRouteTitle": "Delete this route?",
+  "commuteDeleteRouteBody": "RoadPack will stop watching for non-arrival on it.",
+  "commuteKeepAction": "Keep",
+  "commuteDeleteAction": "Delete",
+  "commuteDayNameMonday": "Monday",
+  "commuteDayNameTuesday": "Tuesday",
+  "commuteDayNameWednesday": "Wednesday",
+  "commuteDayNameThursday": "Thursday",
+  "commuteDayNameFriday": "Friday",
+  "commuteDayNameSaturday": "Saturday",
+  "commuteDayNameSunday": "Sunday",
+  "commuteDayLetterMon": "M",
+  "@commuteDayLetterMon": {
+    "description": "Fixed-size day chip. Shortened mnemonic, not a translation."
+  },
+  "commuteDayLetterTue": "T",
+  "@commuteDayLetterTue": {
+    "description": "Fixed-size day chip. Shortened mnemonic, not a translation."
+  },
+  "commuteDayLetterWed": "W",
+  "@commuteDayLetterWed": {
+    "description": "Fixed-size day chip. Shortened mnemonic, not a translation."
+  },
+  "commuteDayLetterThu": "T",
+  "@commuteDayLetterThu": {
+    "description": "Fixed-size day chip. Shortened mnemonic, not a translation."
+  },
+  "commuteDayLetterFri": "F",
+  "@commuteDayLetterFri": {
+    "description": "Fixed-size day chip. Shortened mnemonic, not a translation."
+  },
+  "commuteDayLetterSat": "S",
+  "@commuteDayLetterSat": {
+    "description": "Fixed-size day chip. Shortened mnemonic, not a translation."
+  },
+  "commuteDayLetterSun": "S",
+  "@commuteDayLetterSun": {
+    "description": "Fixed-size day chip. Shortened mnemonic, not a translation."
+  },
+  "commuteDaysActiveSemantics": "{count, plural, =0{No days set} =1{Active on 1 day a week} other{Active on {count} days a week}}",
+  "@commuteDaysActiveSemantics": {
+    "description": "Accessibility summary for the day strip on a route card.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commuteTimeToAnswerHeading": "TIME TO ANSWER",
+  "commuteAnswerSemantics": "{spoken} before your circle is told.",
+  "@commuteAnswerSemantics": {
+    "description": "{spoken} is filled with commuteSpokenSeconds or commuteSpokenMinutes depending on time remaining.",
+    "placeholders": {
+      "spoken": {
+        "type": "String"
+      }
+    }
+  },
+  "commuteNothingToCheckIn": "Nothing to check in on.",
+  "commuteCheckingInHeading": "CHECKING IN",
+  "commuteCircleToldHeading": "YOUR CIRCLE HAS BEEN TOLD",
+  "commuteEverythingOkay": "Everything okay?",
+  "commuteWeLetThemKnow": "We let them know",
+  "commuteTravellingBody": "You have not reached your usual destination. Nobody has been told yet.",
+  "commuteEscalatedBody": "You did not answer, so your circle was sent an alert. Tell them you are fine when you can.",
+  "@commuteEscalatedBody": {
+    "description": "Honesty-critical: describes the alert that has actually gone out to the circle. Source text says \"your family circle\"; simplified to \"your circle\" to match the app's Circle entity."
+  },
+  "commuteAnswerCaption": "If you do not answer, your circle is told.",
+  "commuteSnoozeExtendedMessage": "Window extended by {minutes}. Nobody was told.",
+  "@commuteSnoozeExtendedMessage": {
+    "description": "{minutes} filled with commuteSpokenMinutes(snooze.minutes), e.g. \"30 minutes\". Snackbar confirming \"I'm running late\" did not notify anybody.",
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "commuteGladYouMadeIt": "Glad you made it.",
+  "commuteFineTellThem": "I'm fine — tell them",
+  "commuteArrivedFine": "I've arrived, I'm fine",
+  "commuteNeedHelp": "I need help",
+  "commuteAddedByYouBadge": "ADDED BY YOU",
+  "commuteTripsBadge": "{count, plural, =1{{count} TRIP} other{{count} TRIPS}}",
+  "@commuteTripsBadge": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commuteLeavesLabel": "LEAVES",
+  "commuteTakesLabel": "TAKES",
+  "commuteArrivesLabel": "ARRIVES",
+  "commuteLearningNote": "{count, plural, =1{Still learning — 1 more trip before this route is watched.} other{Still learning — {count} more trips before this route is watched.}}",
+  "@commuteLearningNote": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commuteNotWatchingTitle": "Not watching this route",
+  "commuteWatchingOnceLearnedTitle": "Watching once learned",
+  "commuteNeedsMoreTripsDetail": "{count, plural, =1{Needs 1 more trip} other{Needs {count} more trips}}",
+  "@commuteNeedsMoreTripsDetail": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commuteNotWatchingYetTitle": "Not watching yet",
+  "commuteMissingScheduleDetail": "No start time, duration or days set",
+  "commuteWatchingTitle": "Watching for non-arrival",
+  "commuteRunningLateLabel": "I'm running late",
+  "@commuteRunningLateLabel": {
+    "description": "Fixed-height, most-pressed button on the check-in screen. Shortened from a literal translation to fit the control."
+  },
+  "commuteMuchLaterLabel": "Much later",
+  "@commuteMuchLaterLabel": {
+    "description": "Fixed-height control, secondary snooze action. Shortened to fit."
+  },
+  "commuteSnoozeTrailing": "{count, plural, =1{+1 min} other{+{count} min}}",
+  "@commuteSnoozeTrailing": {
+    "description": "Snooze badge on the running-late buttons, e.g. \"+30 min\". Deliberately expressed in minutes even for the 60-minute option (never \"+1 hour\") so the count stays a single ICU plural rather than a unit-switching string.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commuteNobodyToldCaption": "Nobody is told when you press this.",
+  "@commuteNobodyToldCaption": {
+    "description": "Honesty-critical: the snooze action truly notifies nobody."
+  },
+  "commuteSnoozeSemantics": "{label}, {trailing}. Nobody is notified.",
+  "@commuteSnoozeSemantics": {
+    "description": "Accessibility label composing the already-localised button label and trailing badge, matching the checkSemantics / milestoneSemantics composition pattern.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "trailing": {
+        "type": "String"
+      }
+    }
+  },
+  "consentCentreTitle": "What I have agreed to",
+  "consentPermissionsHeading": "Your permissions",
+  "consentPermissionsIntro": "Turn any of these off whenever you want. Turning off location sharing stops RoadPack tracking you straight away.",
+  "@consentPermissionsIntro": {
+    "description": "Revocation promise. Must stay unconditional in every language."
+  },
+  "consentGrantedOn": "You said yes on {date}",
+  "@consentGrantedOn": {
+    "description": "When a consent was recorded.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "d MMMM yyyy",
+        "isCustomDateFormat": "true"
+      }
+    }
+  },
+  "consentParentalSectionBody": "A parent or guardian agreed to RoadPack tracking you. They, or you, can take that back at any time — RoadPack stops tracking immediately.",
+  "consentWithdrawParentalAction": "Withdraw parent permission",
+  "consentUnknownLedgerTitle": "We could not check your permissions",
+  "consentUnknownLedgerBody": "Until we can reach the server, RoadPack assumes you have not agreed to anything and will not track you.",
+  "@consentUnknownLedgerBody": {
+    "description": "Fail-closed statement. Must not be softened into \"we will try again later\"."
+  },
+  "consentChecking": "Checking...",
+  "consentTryAgain": "Try again",
+  "consentTypeTrackingTitle": "Share my location while I ride",
+  "consentTypeTrackingMeaning": "RoadPack records where you are while a ride is on, so your circle can find you if you crash.",
+  "consentTypeDataSharingAnonTitle": "Help improve road safety maps",
+  "consentTypeDataSharingAnonMeaning": "Rough, un-named location points help map dangerous stretches. Nothing sent this way carries your name or number.",
+  "consentTypeSensorUploadTitle": "Send crash sensor data after a crash",
+  "consentTypeSensorUploadMeaning": "After a crash, the phone sends what its sensors felt so the detection gets better.",
+  "consentTypeParentalTitle": "Parent or guardian permission",
+  "consentTypeParentalMeaning": "Because you are under 18, a parent or guardian has to say yes before RoadPack can track you at all.",
+  "consentTypeInstitutionalTitle": "Share with my college or employer",
+  "consentTypeInstitutionalMeaning": "Your college or employer sees group totals only — never your live position and never your contacts.",
+  "@consentTypeInstitutionalMeaning": {
+    "description": "A limit on what a third party sees. Must not become vaguer in translation."
+  },
+  "consentTypeAudioCaptureTitle": "Record audio after a crash",
+  "consentTypeAudioCaptureMeaning": "After a crash, the phone can record a short clip so help knows what it is walking into.",
+  "consentGateReadyTitle": "RoadPack can look after you",
+  "consentGateReadyBody": "Your profile is complete and you have agreed to location sharing. RoadPack still does not replace calling 112.",
+  "@consentGateReadyBody": {
+    "description": "Honesty rule 5: never let this imply RoadPack replaces 112."
+  },
+  "consentGateBlockedTitle": "RoadPack is not tracking you yet",
+  "consentGateBlockedBody": "Finish these and it will:",
+  "consentGateAskParentAction": "Ask a parent or guardian",
+  "consentBlockerNameTitle": "Add your name",
+  "consentBlockerNameBody": "Whoever we call needs to know who they are being called about.",
+  "consentBlockerPhoneTitle": "Add your phone number",
+  "consentBlockerPhoneBody": "We need a number that works, so help can call you back.",
+  "consentBlockerContactTitle": "Add an emergency contact",
+  "consentBlockerContactBody": "RoadPack has nobody to alert. One contact is the minimum.",
+  "consentBlockerDobTitle": "Add your date of birth",
+  "consentBlockerDobBody": "The law treats under-18 riders differently, so we have to know which rules apply to you.",
+  "consentBlockerParentalTitle": "Parent or guardian permission needed",
+  "consentBlockerParentalBody": "You are under 18. A parent or guardian has to agree before RoadPack can record where you are.",
+  "consentBlockerTrackingTitle": "Turn on location sharing",
+  "consentBlockerTrackingBody": "RoadPack does not record your location until you say yes, and stops the moment you say no.",
+  "consentBlockerUnknownBody": "We could not reach the server to check what you have agreed to. Until we can, RoadPack will not track you.",
+  "consentParentalScreenTitle": "Parent or guardian permission",
+  "consentParentalFormIntro": "You are under 18, so a parent or guardian has to agree before RoadPack records where you are. Nothing is tracked until they do.",
+  "consentParentalNameLabel": "Parent or guardian name",
+  "consentParentalPhoneLabel": "Their phone number",
+  "consentParentalRelationLabel": "Their relationship to you",
+  "consentParentalRelationHint": "Mother, father, guardian",
+  "consentParentalMethodLine": "How we confirm them: {method}",
+  "@consentParentalMethodLine": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "consentParentalSubmitAction": "Ask them to confirm",
+  "consentVerifierNotAvailable": "Not available yet. RoadPack will not track riders under 18 until a parent or guardian can be properly confirmed.",
+  "@consentVerifierNotAvailable": {
+    "description": "The shipped verifier refuses. This admission must stay an admission in every language."
+  },
+  "consentParentalConfirmed": "Parent or guardian confirmed.",
+  "consentParentalNotConfigured": "RoadPack cannot confirm a parent or guardian yet, so it will not track riders under 18. Everything else still works.",
+  "consentParentalIncomplete": "Please fill in your parent or guardian's name, number and relationship to you.",
+  "consentParentalVerificationFailed": "We could not confirm that number. Please try again.",
+  "consentParentalUnavailable": "We could not reach the server. Until we can, RoadPack will not track riders under 18.",
+  "consentTrackingNotPermitted": "RoadPack cannot start tracking yet",
+  "@consentTrackingNotPermitted": {
+    "description": "Shown when a pack action is refused by the FR-003/FR-004 gate and no specific blocker could be named."
+  },
+  "consentWatcherReason": "In your {type} circle \"{circleName}\", and that circle has location sharing on.",
+  "@consentWatcherReason": {
+    "description": "FR-014 counter-stalking: why this person can see the rider. {type} is a lower-cased circle-type name, {circleName} is the circle's own name and is never translated.",
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "circleName": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsAddButton": "Add contact",
+  "@contactsAddButton": {
+    "description": "FAB label and the submit button when adding a new contact."
+  },
+  "contactsLoadError": "Could not load your contacts",
+  "contactsRetry": "Retry",
+  "contactsEmptyHint": "Add at least one contact before tracking can start.",
+  "contactsOrderHint": "We call them in this order. Drag to change it.",
+  "contactsCountOfMax": "{count} of {max} listed",
+  "@contactsCountOfMax": {
+    "description": "Below the contact list header. count = contacts saved so far, max = the hard cap (5).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "contactsEmptyBody": "Nobody is listed yet.\nAn alert with nobody to send it to is not protection.",
+  "contactsRemoveConfirmTitle": "Remove {name}?",
+  "@contactsRemoveConfirmTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsRemoveConfirmBody": "They will no longer be alerted if something happens to you.",
+  "contactsCancel": "Cancel",
+  "@contactsCancel": {
+    "description": "Dialog action. Sentence case, distinct from the shouty commonCancel button label used elsewhere."
+  },
+  "contactsRemoveButton": "Remove",
+  "contactsEditTitle": "Edit emergency contact",
+  "contactsAddTitle": "Add emergency contact",
+  "contactsPhoneLabel": "Mobile number",
+  "contactsRelationshipLabel": "Relationship (optional)",
+  "contactsHowWeReachThem": "HOW WE REACH THEM",
+  "contactsEditHint": "Correcting a number here does not re-send the notice they already received.",
+  "contactsAddHint": "They get one SMS telling them they are listed, and can opt out of it. We never message them again unless something happens.",
+  "contactsSaveButton": "Save changes",
+  "contactsRemoveTooltip": "Remove {name}",
+  "@contactsRemoveTooltip": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsOptedOut": "Opted out of SMS",
+  "contactsNoticeSent": "Told they are listed",
+  "contactsNoticePending": "Notice not sent yet",
+  "iceScreenTitle": "Emergency card",
+  "iceSealedEyebrow": "YOUR CARD IS SEALED",
+  "iceSealedBody": "Your blood group, medical notes and contacts are shown to a bystander only while an emergency is active — or, if you turn it on, while you are riding. There is no always-on code for anyone to scan.",
+  "@iceSealedBody": {
+    "description": "Explains when the card unseals. Safety/privacy claim: must not be loosened in translation."
+  },
+  "iceBandHeading": "THIS PERSON MAY NEED HELP",
+  "@iceBandHeading": {
+    "description": "Same sentence as the already-reviewed BystanderCopy.title, reused verbatim (rendered in an eyebrow/caps style, but Hindi and Malayalam have no case to transform)."
+  },
+  "iceLabelCallThese": "Call these people",
+  "iceNoContacts": "No contacts listed",
+  "iceDisclaimer": "RoadPack alerts this rider’s circle. It does not call an ambulance. For emergency services, dial 112.",
+  "@iceDisclaimer": {
+    "description": "Honesty clause read at the roadside. Must never imply the app dispatches an ambulance or contacts 112 on the rider's behalf. Keep \"RoadPack\" and \"112\" untranslated."
+  },
+  "iceBloodGroupMissing": "Not recorded",
+  "mapCacheReadError": "Could not read the cache: {message}",
+  "@mapCacheReadError": {
+    "description": "Error reading tile cache stats. {message} is untranslated technical detail, same pattern as commonError.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "mapRoutesReadError": "Could not read your routes: {message}",
+  "@mapRoutesReadError": {
+    "description": "Error reading learned-route plans. {message} is untranslated technical detail.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "mapYourRoutesEyebrow": "YOUR ROUTES",
+  "mapNoRoutesLearned": "No routes learned yet. RoadPack works out your regular routes from trips you actually take.",
+  "mapStoredOnPhoneEyebrow": "STORED ON THIS PHONE",
+  "mapTileCount": "{count, plural, =1{1 tile} other{{count} tiles}}",
+  "@mapTileCount": {
+    "description": "Number of map tiles held in the offline cache.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapCacheInMemoryOnlyNotice": "This cache is held in memory only and is emptied when the app restarts.",
+  "mapClearCachedDataButton": "Clear cached map data",
+  "mapRegionCoverageLine": "{tiles} tiles across {zoomLevels} zoom levels · ~{estimatedSize} estimated · {bufferKm} km buffer",
+  "@mapRegionCoverageLine": {
+    "description": "One learned route's planned tile coverage. estimatedSize is a pre-formatted byte string (e.g. \"12 MB\") from TileCacheStats.formatBytes; km is kept as a Latin unit.",
+    "placeholders": {
+      "tiles": {
+        "type": "int"
+      },
+      "zoomLevels": {
+        "type": "int"
+      },
+      "estimatedSize": {
+        "type": "String"
+      },
+      "bufferKm": {
+        "type": "int"
+      }
+    }
+  },
+  "mapRegionCoverageLineCorridor": "{tiles} tiles across {zoomLevels} zoom levels · ~{estimatedSize} estimated · {bufferKm} km buffer · corridor estimated from start and end only",
+  "@mapRegionCoverageLineCorridor": {
+    "description": "Same as mapRegionCoverageLine, plus the accuracy caveat when the route corridor is only approximated from its two endpoints. Kept as one full string rather than appending a fragment, so no translated pieces are concatenated at the call site.",
+    "placeholders": {
+      "tiles": {
+        "type": "int"
+      },
+      "zoomLevels": {
+        "type": "int"
+      },
+      "estimatedSize": {
+        "type": "String"
+      },
+      "bufferKm": {
+        "type": "int"
+      }
+    }
+  },
+  "mapOfflineNoticeText": "Positions could not be refreshed. Nothing on this map is newer than the age shown on each member.",
+  "@mapOfflineNoticeText": {
+    "description": "Shown when the live-members fetch failed. Must still read as \"this data may be old\", never as \"still updating normally\"."
+  },
+  "mapEmptyNoticeText": "No one is sharing location with you. Location sharing is a per-circle setting, and each member controls their own.",
+  "mapStaleBannerBoth": "{unreachableCount, plural, =1{1 with no signal} other{{unreachableCount} with no signal}}, {staleCount, plural, =1{1 not updating} other{{staleCount} not updating}} — these markers show where they were, not where they are.",
+  "@mapStaleBannerBoth": {
+    "description": "Both some members unreachable and some stale. Honesty-critical: never soften \"not updating / no signal\" into anything implying a normal sync.",
+    "placeholders": {
+      "unreachableCount": {
+        "type": "int"
+      },
+      "staleCount": {
+        "type": "int"
+      }
+    }
+  },
+  "mapStaleBannerNoSignalOnly": "{count, plural, =1{1 with no signal} other{{count} with no signal}} — these markers show where they were, not where they are.",
+  "@mapStaleBannerNoSignalOnly": {
+    "description": "Only unreachable members, no stale ones. See mapStaleBannerBoth.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapStaleBannerNotUpdatingOnly": "{count, plural, =1{1 not updating} other{{count} not updating}} — these markers show where they were, not where they are.",
+  "@mapStaleBannerNotUpdatingOnly": {
+    "description": "Only stale members, no unreachable ones. See mapStaleBannerBoth.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapLastUpdateLabel": "Last update",
+  "mapSpeedLabel": "Speed",
+  "mapBatteryLabel": "Battery",
+  "mapLastUpdateValue": "{duration} ago",
+  "@mapLastUpdateValue": {
+    "description": "duration is a pre-formatted compact age string produced by MemberPresence.formatAge (e.g. \"4m\", \"1h 02m\") — the model file that builds it is outside this pass's scope, so the unit letters inside {duration} itself stay in their current form. Flagging so a reviewer confirms \"{duration} ago\" still reads naturally with that shape dropped in.",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "mapSpeedValue": "{speed} km/h",
+  "@mapSpeedValue": {
+    "description": "km/h kept as the Latin unit abbreviation in every locale.",
+    "placeholders": {
+      "speed": {
+        "type": "int"
+      }
+    }
+  },
+  "mapSpeedNotCurrent": "not current",
+  "@mapSpeedNotCurrent": {
+    "description": "Speed value withheld because the fix is stale. Must not read as \"loading\" or \"syncing\" — the fix is old, not pending."
+  },
+  "mapSpeedUnknown": "unknown",
+  "mapBatteryValue": "{battery}%",
+  "@mapBatteryValue": {
+    "placeholders": {
+      "battery": {
+        "type": "int"
+      }
+    }
+  },
+  "mapFootnoteLocating": "Nothing is being shown on the map for this member yet.",
+  "mapFootnoteLive": "RoadPack shortens the gap between an incident and help being aware. It does not dispatch anyone. In an emergency, call 112.",
+  "@mapFootnoteLive": {
+    "description": "Honesty clause on a live/stationary member's detail sheet. Must never imply RoadPack dispatches help or contacts 112 itself."
+  },
+  "mapFootnoteStale": "The marker has not moved because no new fix has arrived. It is not an estimate of where they are now.",
+  "@mapFootnoteStale": {
+    "description": "Honesty clause on a stale/unreachable member's detail sheet. Must clearly say the position is OLD, never present it as a live or estimated current position."
+  },
+  "mapPresenceLocating": "Locating",
+  "mapPresenceLive": "Live",
+  "mapPresenceStopped": "Stopped",
+  "@mapPresenceStopped": {
+    "description": "The rider is reporting and is not moving. Must stay clearly distinct from mapPresenceNoSignal."
+  },
+  "mapPresenceNoSignal": "No signal",
+  "@mapPresenceNoSignal": {
+    "description": "Nothing is being heard from the device. Must stay clearly distinct from mapPresenceStopped."
+  },
+  "mapPresenceLastSeen": "Last seen {age} ago",
+  "@mapPresenceLastSeen": {
+    "description": "{age} is a compact pre-formatted duration such as \"4m\" or \"1h 05m\".",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "mapAgeLabel": "last seen {age} ago",
+  "@mapAgeLabel": {
+    "description": "Lower-case inline variant of mapPresenceLastSeen.",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "mapPresenceDetailLocating": "Waiting for a first fix from this device.",
+  "mapPresenceDetailLive": "Position updated {age} ago.",
+  "@mapPresenceDetailLive": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "mapPresenceDetailStopped": "Still reporting, not moving.",
+  "mapPresenceDetailStale": "This is where they were, not where they are.",
+  "@mapPresenceDetailStale": {
+    "description": "Honesty rule 1. A stale position must never read as live. Do not soften this in any language."
+  },
+  "mapPresenceDetailUnreachable": "Nothing heard for {age}. Last known position shown.",
+  "@mapPresenceDetailUnreachable": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "mapRegionStatusNotDownloaded": "Not downloaded",
+  "mapRegionStatusDownloading": "Downloading",
+  "mapRegionStatusDownloaded": "Downloaded",
+  "mapRegionStatusFailed": "Failed",
+  "mapOfflineLimitationNotice": "Offline areas are planned and measured, but the base map still needs a connection. Google Maps draws tiles inside its own SDK and gives the app no way to pre-load them. Switching to a self-hosted OSM tile source is what makes offline maps actually work.",
+  "@mapOfflineLimitationNotice": {
+    "description": "Says plainly that offline maps do not work yet. Must not be softened into a promise."
+  },
+  "packCreateTitle": "Start a pack ride",
+  "packDestinationInvalid": "Enter the destination as latitude, longitude",
+  "packRideNameLabel": "Ride name (optional)",
+  "packRideNameHint": "Munnar run",
+  "@packRideNameHint": {
+    "description": "Example hint text in the ride-name field. \"Munnar\" is a place name and is kept; only the accompanying word is translated."
+  },
+  "packCircleLabel": "Circle (optional)",
+  "packCircleHelper": "Members of this circle can find the ride",
+  "packNoCircleOption": "No circle",
+  "packDestinationHeading": "Destination",
+  "packLatitudeLabel": "Latitude",
+  "packLongitudeLabel": "Longitude",
+  "packCreateShareNotice": "Everyone who joins shares their position with the pack until the ride ends, and for at most 12 hours. RoadPack does not call for help — in an emergency, dial 112.",
+  "packCreateSubmit": "Create ride",
+  "packPasteLinkError": "Paste the link somebody sent you",
+  "packShareLinkLabel": "Share link",
+  "packJoinNotice": "When you join, the pack sees where you are along the route until the ride ends. You can leave at any time, and leaving removes you straight away.",
+  "packJoinSubmit": "Join ride",
+  "packDefaultRideName": "Pack",
+  "@packDefaultRideName": {
+    "description": "Fallback AppBar title when the ride has no name."
+  },
+  "packEndRideAction": "End ride",
+  "packTellPack": "Tell the pack",
+  "@packTellPack": {
+    "description": "Shared by the FAB label and the status sheet heading — identical text in both places."
+  },
+  "packEmptyRoster": "Nobody has joined yet. Share the link to fill the pack.",
+  "packEndRideConfirmTitle": "End this ride?",
+  "packEndRideConfirmBody": "Everyone stops sharing and the link stops working immediately. This cannot be undone.",
+  "packKeepRidingAction": "Keep riding",
+  "packAddNoteAction": "Add a note (optional)",
+  "packNoteLabel": "Note",
+  "packNoteHint": "Tyre puncture, 20 min",
+  "packShareHonestyNotice": "RoadPack shares where you are. It does not call for help — in an emergency, dial 112.",
+  "packStatusRiding": "Riding",
+  "packStatusRefueling": "Fuel",
+  "packStatusTakingBreak": "Break",
+  "packStatusWrongTurn": "Wrong turn",
+  "packStatusWaiting": "Waiting",
+  "packStatusStopped": "Stopped",
+  "@packStatusStopped": {
+    "description": "A rider who chose to stop. Must read as clearly different from packStatusUnreachable (a dead zone) in every language."
+  },
+  "packStatusDone": "Done",
+  "packStatusUnexplainedStop": "Stopped, unexplained",
+  "@packStatusUnexplainedStop": {
+    "description": "Automatic-only: stationary past the threshold with no rider explanation. Not an impact."
+  },
+  "packStatusUnreachable": "No signal",
+  "@packStatusUnreachable": {
+    "description": "Automatic-only: the phone stopped reporting (a dead zone). Must read as clearly different from packStatusStopped in every language."
+  },
+  "packStatusPossibleIncident": "Possible incident",
+  "@packStatusPossibleIncident": {
+    "description": "Automatic-only, emergency tier. Crash detection fired. Must not imply RoadPack has dispatched help."
+  },
+  "packAutoTag": "AUTO",
+  "@packAutoTag": {
+    "description": "Short chip tag marking an automatic (not rider-set) status. Unlike SOS it is a word, not a mark, so it is translated — the native-script forms are short enough for the chip."
+  },
+  "packRoleLeader": "Leader",
+  "packRoleSweep": "Sweep",
+  "@packRoleSweep": {
+    "description": "Convoy term for the rider at the back watching for stragglers. Not confident of an idiomatic one-word equivalent in either language."
+  },
+  "packRoleRider": "Rider",
+  "packGapFront": "Front",
+  "packOffRouteHeadline": "Off route",
+  "packLastSeenHeadline": "Last seen",
+  "packLocatingHeadline": "Locating",
+  "packStraightLineUnknown": "straight line unknown",
+  "packDistanceAway": "{distance} away",
+  "@packDistanceAway": {
+    "description": "distance is a pre-formatted, unit-suffixed string (\"620 m\") from formatDistance(); the placeholder is substituted whole, never built by concatenating separately-translated words.",
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "packNoFixYet": "no fix yet",
+  "packJustNow": "just now",
+  "packAgoCompact": "{duration} ago",
+  "@packAgoCompact": {
+    "description": "duration is a pre-formatted compact string (\"4m\", \"1h 30m\") from formatDuration(); a single ICU placeholder, never a plural built by string addition. Care point: a stale position must never read as live — this string only ever appears attached to the \"Last seen\" headline, never substituted for a live gap.",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "packBehindLabel": "BEHIND",
+  "packBehindLabelEst": "BEHIND EST",
+  "@packBehindLabelEst": {
+    "description": "An estimated gap with no duration figure. Must still read as estimated, not measured."
+  },
+  "packBehindWithDuration": "{duration} BEHIND",
+  "@packBehindWithDuration": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "packBehindWithDurationEst": "{duration} BEHIND EST",
+  "@packBehindWithDurationEst": {
+    "description": "Care point: an estimated value must still read as estimated after translation — the estimate word must survive here.",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "packYouLabel": "You",
+  "packNameYouSuffix": "{name} (you)",
+  "@packNameYouSuffix": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "packSharingLiveHeadline": "This ride is being shared",
+  "packSharingOffHeadline": "Sharing is off",
+  "packLiveNotice": "Anyone with the link can see where the pack is until {expiry}. Riders can see the viewer count.",
+  "@packLiveNotice": {
+    "description": "expiry is itself a fully localized phrase (packExpiresNow / packExpiresInHours / packExpiresInMinutes) substituted as one opaque placeholder — nested composition, not concatenation of untranslated fragments.",
+    "placeholders": {
+      "expiry": {
+        "type": "String"
+      }
+    }
+  },
+  "packLinkExpiredNotice": "The link no longer resolves. Nobody can see this ride.",
+  "packExpiresNow": "now",
+  "packExpiresInHours": "it expires in {hours}h",
+  "@packExpiresInHours": {
+    "description": "hours is a plain number; the unit letter \"h\" is kept, matching the compact-duration convention used elsewhere in this feature.",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "packExpiresInMinutes": "it expires in {minutes}m",
+  "@packExpiresInMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "packShareLinkAction": "Share link",
+  "packCopyLinkTooltip": "Copy link",
+  "packStopSharingAction": "Stop sharing this ride",
+  "packLinkCopiedSnackbar": "Link copied",
+  "packDefaultShareRideName": "our ride",
+  "packShareMessage": "Follow {name} live: {url}\n\nRoadPack shows where the pack is. It does not call an ambulance — for an emergency, dial 112.",
+  "@packShareMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "packWatchingCount": "{count, plural, =1{1 watching} other{{count} watching}}",
+  "@packWatchingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packNotShared": "not shared"
 }

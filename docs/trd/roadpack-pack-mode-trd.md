@@ -239,16 +239,49 @@ route_length_m   = route_cumdist[n-1]
 
 Per position update, `fn_pack_project_member(ride_id, user_id, pos)`:
 
-1. **Window the search.** If the member has a prior `chainage_m`, restrict to a ±2 km substring:
-   ```sql
-   ST_LineSubstring(route_line::geometry,
-                    GREATEST(0, (chainage_m - 2000) / route_length_m),
-                    LEAST(1,  (chainage_m + 2000) / route_length_m))
+1. **Window the search.** If the member has a prior `chainage_m` that is not itself stale, restrict
+   the search to a substring around it. The window is **kinematic, not fixed** — its width is
+   derived from how long it has been since the last fix:
+
    ```
-   On first fix, search the whole line.
+   elapsed  = p_at - chainage_at
+   forward  = LEAST(window_fwd_m,  max_speed_mps * elapsed + window_jitter_m)
+   backward = LEAST(window_back_m, 0.25 * max_speed_mps * elapsed + window_jitter_m)
+   lo       = GREATEST(0,              chainage_m - backward)
+   hi       = LEAST(route_length_m,    chainage_m + forward)
+   ```
+
+   A fixed ±2 km window is **wrong** and was rejected during implementation. Position ingest is
+   batched at ~30 s (§6.3) and backfills after a dead zone can be far longer (§9); at highway speed
+   a rider covers well over 2 km between fixes. A fixed window would fail to contain the true
+   position, the projection would clamp to the window edge, and the displayed gap would silently
+   freeze while looking live — the exact class of confidently-wrong readout §9 exists to prevent.
+   Deriving the bound from `max_speed_mps × elapsed` makes the window exactly as wide as physics
+   allows and no wider.
+
+   `window_fwd_m` (2000) and `window_back_m` (500) survive as **caps**, not as the window itself:
+   they bound the search after a long gap so cost stays predictable. Backward travel along a route
+   is rare and slow (a U-turn, a missed exit), so the rear bound is a quarter of the forward one.
+   `window_jitter_m` (75) absorbs GPS noise at rest.
+
+   On first fix — or when the prior fix is older than `stale_threshold_s` and therefore no longer
+   trustworthy as an anchor — search the whole line.
+
+   All five values (`window_fwd_m`, `window_back_m`, `max_speed_mps`, `window_jitter_m`,
+   `stale_threshold_s`) are per-ride columns on `pack_rides`, not constants.
 2. **Locate.** `ST_LineLocatePoint(window, pos)` → fraction within window → add the window's start offset → absolute `chainage_m`.
-3. **Off-route test.** `ST_Distance(pos::geography, route_line)` > `off_route_threshold_m` → set `off_route = true`, **do not update `chainage_m`**, and suppress the gap downstream.
-4. Write `chainage_m`, `chainage_at`, `last_position`.
+3. **Off-route test.** If the projection onto the window is within `off_route_threshold_m`, accept
+   it. Otherwise re-measure against the **whole** route line and distinguish two cases that must not
+   be conflated:
+   - distance to the full line > `off_route_threshold_m` → genuinely `off_route = true`.
+   - distance to the full line is within threshold, but the point is outside the window's corridor →
+     the rider is still on the route, somewhere the window cannot see. This is **not** off-route,
+     but it is also not a position worth jumping to, because that jump is precisely the hairpin
+     failure the window exists to prevent. `chainage_m` holds until the fix goes stale and the next
+     projection re-acquires against the whole line.
+
+   In both cases `chainage_m` is left unchanged and the gap is suppressed downstream.
+4. Write `chainage_m`, `chainage_at`, `last_position` (and `off_route`, `off_route_dist_m`).
 
 ### 4.3 Why the Window Is Non-Optional
 
@@ -258,7 +291,9 @@ Without it, `ST_LineLocatePoint` returns the *nearest* point on the entire line.
 - **Cloverleaf interchanges** — inbound and outbound arms within metres
 - **Out-and-back rides** — the return leg projects onto the outbound leg
 
-The ±2 km window plus a monotonic-progress assumption removes the ambiguity. This is the single highest-risk piece of the algorithm and must be validated against a real Indian highway trace containing a cloverleaf **before any UI work begins**.
+The kinematic window plus a monotonic-progress assumption removes the ambiguity. This is the single highest-risk piece of the algorithm and must be validated against a real Indian highway trace containing a cloverleaf **before any UI work begins**.
+
+Note the window's two failure modes pull in opposite directions, which is why it is derived rather than guessed. Too narrow and it cannot contain the true position, so chainage clamps to the window edge and the gap freezes while still looking live. Too wide and it re-admits the hairpin ambiguity it exists to exclude. `max_speed_mps × elapsed` is the only bound that is tight in both directions, because it is the only one that tracks the actual physics of the gap between fixes.
 
 Parallel service lanes and flyovers are, by contrast, a non-problem: both project to nearly identical chainage on the same route line. They only matter for the off-route test, which is why the threshold is a tunable (§4.6).
 
@@ -538,7 +573,7 @@ A 6-hour ride at 10%/hr consumes ~60% — survivable, but only with batching. Mi
 | Web viewer | Cold link tap on a mid-range Android browser over 3G. Measure time-to-first-render — this is the conversion path. |
 | Offline | Airplane-mode mid-ride: verify staleness surfaces within threshold, queue backfills correctly on reconnect, and no position is ever interpolated forward. |
 
-Existing suite is 143 passing tests, 0 analyze issues. Pack Mode must not regress either.
+Existing suite is 151 passing tests, 0 analyze issues. Pack Mode must not regress either.
 
 ---
 

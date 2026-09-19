@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/l10n.dart';
 import '../models/circle_member.dart';
 
 class MemberTile extends StatelessWidget {
@@ -29,6 +30,7 @@ class MemberTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final initials = (member.userName ?? '?')
         .split(' ')
         .where((s) => s.isNotEmpty)
@@ -48,13 +50,13 @@ class MemberTile extends StatelessWidget {
         children: [
           Flexible(
             child: Text(
-              member.userName ?? 'Unknown',
+              member.userName ?? l10n.circlesUnknownMember,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           if (isCurrentUser) ...[
             const SizedBox(width: 4),
-            Text('(you)', style: theme.textTheme.bodySmall),
+            Text(l10n.circlesYouTag, style: theme.textTheme.bodySmall),
           ],
         ],
       ),
@@ -62,7 +64,7 @@ class MemberTile extends StatelessWidget {
         children: [
           Chip(
             label: Text(
-              member.role.displayName,
+              member.role.displayName(l10n),
               style: theme.textTheme.labelSmall,
             ),
             visualDensity: VisualDensity.compact,
@@ -78,34 +80,32 @@ class MemberTile extends StatelessWidget {
   }
 
   Widget? _buildMenu(BuildContext context) {
+    final l10n = context.l10n;
     final items = <PopupMenuEntry<String>>[];
 
     if (isCurrentUser) {
       items.add(
-        const PopupMenuItem(value: 'leave', child: Text('Leave circle')),
+        PopupMenuItem(value: 'leave', child: Text(l10n.circlesMenuLeaveCircle)),
       );
     } else if (isAdmin) {
       if (member.isAdmin) {
         items.add(
-          const PopupMenuItem(value: 'demote', child: Text('Demote to member')),
+          PopupMenuItem(value: 'demote', child: Text(l10n.circlesMenuDemote)),
         );
       } else {
         items.add(
-          const PopupMenuItem(
-            value: 'promote',
-            child: Text('Promote to admin'),
-          ),
+          PopupMenuItem(value: 'promote', child: Text(l10n.circlesMenuPromote)),
         );
       }
-      items.add(const PopupMenuItem(value: 'remove', child: Text('Remove')));
+      items.add(
+        PopupMenuItem(value: 'remove', child: Text(l10n.circlesMenuRemove)),
+      );
       if (onToggleEc != null) {
         items.add(
           PopupMenuItem(
             value: 'ec',
             child: Text(
-              isEc
-                  ? 'Remove as emergency contact'
-                  : 'Mark as emergency contact',
+              isEc ? l10n.circlesMenuRemoveEc : l10n.circlesMenuMarkEc,
             ),
           ),
         );

@@ -1,4 +1,1051 @@
 {
   "@@locale": "hi",
-  "appTitle": "RoadPack"
+  "appTitle": "RoadPack",
+  "commonCancel": "रद्द करें",
+  "commonClose": "बंद करें",
+  "commonImOkay": "मैं ठीक हूँ",
+  "commonOn": "चालू",
+  "commonOff": "बंद",
+  "commonSettings": "सेटिंग्स",
+  "commonSelect": "चुनें",
+  "commonName": "नाम",
+  "commonNotSignedIn": "साइन इन नहीं हैं",
+  "commonError": "त्रुटि: {message}",
+  "commonCall112": "112 पर कॉल करें",
+  "sosLabel": "SOS",
+  "sosAlertTitle": "SOS अलर्ट",
+  "@sosAlertTitle": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "sosHoldHint": "SOS भेजने के लिए 2 सेकंड दबाए रखें",
+  "sosCountdownBody": "आपके आपातकालीन संपर्कों को अलर्ट भेजा जाएगा",
+  "sosSentTitle": "आपातकालीन अलर्ट भेजे गए",
+  "sosSentBody": "आपके आपातकालीन संपर्कों को सूचित किया जा रहा है।",
+  "incidentResolvedTitle": "घटना समाप्त",
+  "@incidentResolvedTitle": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "incidentResolvedBody": "आपके संपर्कों को बता दिया गया है कि आप सुरक्षित हैं।",
+  "incidentRef": "घटना: {ref}",
+  "crashDetectedTitle": "दुर्घटना का पता चला",
+  "@crashDetectedTitle": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "crashCountdownBody": "{count, plural, =1{1 सेकंड में आपके आपातकालीन संपर्कों को अलर्ट भेजा जाएगा} other{{count} सेकंड में आपके आपातकालीन संपर्कों को अलर्ट भेजा जाएगा}}",
+  "crashAlertSentTitle": "दुर्घटना अलर्ट भेजा गया",
+  "@crashAlertSentTitle": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "crashAlertSentBody": "संभावित दुर्घटना की सूचना आपके आपातकालीन संपर्कों को दे दी गई है।",
+  "@crashAlertSentBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "crashReasonQuestion": "क्या हुआ?",
+  "crashReasonPothole": "गड्ढा / स्पीड ब्रेकर",
+  "crashReasonPhoneDropped": "फ़ोन गिर गया",
+  "crashReasonSuddenBraking": "अचानक ब्रेक",
+  "crashReasonOther": "अन्य",
+  "crashReasonOtherHint": "क्या हुआ, बताएँ",
+  "crashReasonConfirm": "पुष्टि करें — मैं ठीक हूँ",
+  "alertTitle": "अलर्ट",
+  "alertNotFound": "अलर्ट नहीं मिला",
+  "alertDetailTitle": "आपातकालीन अलर्ट",
+  "alertVictimHeadline": "{name} शायद किसी दुर्घटना में हैं",
+  "@alertVictimHeadline": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "alertLocationLine": "जगह: {lat}, {lng}",
+  "alertTimeLine": "समय: {time}",
+  "alertAcknowledge": "देख लिया",
+  "@alertAcknowledge": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "alertAcknowledged": "देख लिया गया",
+  "@alertAcknowledged": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "alertCallPerson": "{name} को कॉल करें",
+  "alertOpenInMaps": "मैप में खोलें",
+  "alertCardTitle": "{name} — आपातकाल",
+  "alertCardTapToView": "देखने और पुष्टि के लिए टैप करें",
+  "homeSwitchToNight": "रात मोड पर जाएँ",
+  "homeSwitchToSunlight": "धूप मोड पर जाएँ",
+  "protectionEyebrow": "सुरक्षा",
+  "checkCrashDetection": "दुर्घटना\nपहचान",
+  "checkLocationTracking": "लोकेशन\nट्रैकिंग",
+  "checkNonArrival": "न पहुँचने पर\nअलर्ट",
+  "checkEmergencyContact": "आपातकालीन\nसंपर्क",
+  "checkSemantics": "{label}: {state}",
+  "watchersHeading": "कौन देख रहा है",
+  "watchersError": "सर्कल लोड नहीं हो सके। दोबारा कोशिश के लिए नीचे खींचें।",
+  "watchersEmpty": "अभी कोई नहीं। सर्कल वे लोग हैं जिन्हें तब कॉल जाता है जब आप ख़ुद कॉल नहीं कर सकते।",
+  "@watchersEmpty": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "watchersCreateCircle": "सर्कल बनाएँ",
+  "circleCount": "{count, plural, =1{{count}  सर्कल} other{{count}  सर्कल}}",
+  "circleCountWord": "{count, plural, =1{सर्कल} other{सर्कल}}",
+  "packEyebrow": "साथ में सवारी",
+  "packTagline": "सिर्फ़ एक बिंदु नहीं — सबको फ़ासला दिखता है",
+  "@packTagline": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStartRide": "सवारी शुरू करें",
+  "packJoinRide": "सवारी में शामिल हों",
+  "navLiveMap": "लाइव मैप",
+  "navSafetyCircles": "सुरक्षा सर्कल",
+  "navCommutes": "रोज़ का सफ़र और न पहुँचना",
+  "navKnownRoutes": "जाने-पहचाने रास्ते",
+  "navTripHistory": "यात्रा इतिहास",
+  "milestoneCapArmed": "सभी सिस्टम चालू",
+  "milestoneHeadlineArmed": "सुरक्षा चालू",
+  "@milestoneHeadlineArmed": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "milestoneDetailArmed": "दुर्घटना पहचान, ट्रैकिंग और न पहुँचने पर अलर्ट — तीनों चालू हैं। अगर आप गिरते हैं, तो आपके सर्कल को पता चल जाएगा।",
+  "@milestoneDetailArmed": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "milestoneCapPartial": "सुरक्षा में कमी",
+  "milestoneHeadlinePartial": "आंशिक सुरक्षा",
+  "milestoneDetailPartial": "कुछ सिस्टम बंद हैं। सवारी से पहले बाक़ी चालू करें, वरना उनसे जुड़ी बात किसी को पता नहीं चलेगी।",
+  "@milestoneDetailPartial": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "milestoneCapOff": "कुछ भी नहीं देख रहा",
+  "milestoneHeadlineOff": "सुरक्षा बंद",
+  "milestoneDetailOff": "न दुर्घटना पहचान, न ट्रैकिंग, न अलर्ट। अगली सवारी से पहले सेटिंग्स में सुरक्षा चालू करें।",
+  "milestoneCapIncident": "घटना सक्रिय",
+  "@milestoneCapIncident": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "milestoneHeadlineIncident": "मदद बुलाई जा रही है",
+  "@milestoneHeadlineIncident": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "milestoneDetailIncident": "आपके सर्कल को अभी अलर्ट भेजा जा रहा है।",
+  "milestoneSemantics": "सुरक्षा {headline}। {detail} 3 में से {active} सिस्टम चालू।",
+  "@milestoneSemantics": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "milestoneSemanticsContactSet": "आपातकालीन संपर्क सेट है।",
+  "milestoneSemanticsContactMissing": "कोई आपातकालीन संपर्क नहीं।",
+  "gapNoContactHeadline": "कॉल करने को कोई नहीं",
+  "gapNoContactDetail": "आपका कोई आपातकालीन संपर्क नहीं है। दुर्घटना पहचान चल भी जाए तो अलर्ट किसी तक नहीं पहुँचेगा। एक संपर्क जोड़ें, बाक़ी सब काम करने लगेगा।",
+  "@gapNoContactDetail": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "gapNoContactAction": "संपर्क जोड़ें",
+  "gapCrashOffHeadline": "दुर्घटना पहचान बंद है",
+  "gapCrashOffDetail": "टक्कर सुनने वाला कुछ भी चालू नहीं है। अगर आप गिरें और फ़ोन तक न पहुँच पाएँ, तो किसी को पता नहीं चलेगा।",
+  "@gapCrashOffDetail": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "gapTurnOnAction": "चालू करें",
+  "gapTrackingOffHeadline": "लोकेशन ट्रैकिंग बंद है",
+  "gapTrackingOffDetail": "आपके सर्कल को अलर्ट तो जाएगा, पर यह नहीं कि आप कहाँ हैं। ढूँढना पड़े तो मदद देर से पहुँचती है।",
+  "@gapTrackingOffDetail": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "gapNonArrivalOffHeadline": "न पहुँचने पर अलर्ट बंद है",
+  "gapNonArrivalOffDetail": "अगर आप मंज़िल तक न पहुँचें, तो कोई इसे नहीं उठाएगा। यह कमी भरने के लिए एक रोज़ का रास्ता सेट करें।",
+  "@gapNonArrivalOffDetail": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "gapSetUpCommutesAction": "रोज़ का सफ़र सेट करें",
+  "settingsSectionSafety": "सुरक्षा",
+  "settingsCrashSensitivity": "दुर्घटना संवेदनशीलता",
+  "settingsSensitivityHigh": "उच्च",
+  "settingsSensitivityMedium": "मध्यम",
+  "settingsSensitivityLow": "कम",
+  "settingsSensitivityHighDetail": "उच्च — ज़्यादा संवेदनशील, ग़लत अलर्ट ज़्यादा हो सकते हैं",
+  "settingsSensitivityMediumDetail": "मध्यम — संतुलित (सुझाया गया)",
+  "settingsSensitivityLowDetail": "कम — कम संवेदनशील, ग़लत अलर्ट कम",
+  "settingsPhoneMount": "फ़ोन माउंट",
+  "settingsMountBar": "हैंडलबार",
+  "settingsMountPocket": "जेब",
+  "settingsMountBag": "बैग",
+  "settingsMountOther": "अन्य",
+  "settingsMountBarDetail": "हैंडलबार माउंट (सबसे संवेदनशील)",
+  "settingsMountPocketDetail": "जेब में",
+  "settingsMountBagDetail": "बैग में (सबसे कम संवेदनशील)",
+  "settingsMountUnknownDetail": "अन्य / अज्ञात",
+  "settingsSectionTracking": "ट्रैकिंग",
+  "settingsNonArrivalAlerts": "न पहुँचने पर अलर्ट",
+  "settingsNonArrivalAlertsSub": "अगर आप न पहुँचें तो संपर्कों को अलर्ट भेजें",
+  "settingsAlertDelay": "अलर्ट में देरी",
+  "settingsAlertDelaySub": "{count, plural, =1{अनुमानित पहुँचने के 1 मिनट बाद} other{अनुमानित पहुँचने के {count} मिनट बाद}}",
+  "minutesShort": "{count, plural, =1{1 मिनट} other{{count} मिनट}}",
+  "settingsCommuteRoutes": "रोज़ के रास्ते",
+  "settingsCommuteRoutesSub": "वे रास्ते जिन पर न पहुँचने पर अलर्ट जाता है",
+  "settingsSectionEmergency": "आपातकाल",
+  "settingsEmergencyContacts": "आपातकालीन संपर्क",
+  "settingsEmergencyContactsReady": "जब आप कॉल नहीं कर सकते, तब किसे कॉल जाएगा",
+  "settingsEmergencyContactsEmpty": "अभी कोई नहीं — अलर्ट किसी तक नहीं पहुँचेगा",
+  "settingsIceCard": "ICE कार्ड",
+  "settingsIceCardSub": "घटनास्थल पर पहुँचने वाले को क्या दिखेगा",
+  "settingsBystanderPreview": "देखें कि राहगीर को क्या दिखता है",
+  "settingsBystanderPreviewSub": "ज़रूरत पड़ने से पहले अपनी दुर्घटना स्क्रीन जाँच लें",
+  "settingsIceCommuteToggle": "रोज़ के सफ़र में ICE कार्ड दिखाएँ",
+  "settingsIceCommuteToggleSub": "डिफ़ॉल्ट रूप से बंद। चालू करने पर, ट्रैक किए जा रहे सफ़र के दौरान भी — सिर्फ़ दुर्घटना के बाद नहीं — घटनास्थल पर मदद करने वाला आपका ब्लड ग्रुप और संपर्क देख सकता है।",
+  "@settingsIceCommuteToggleSub": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "settingsSectionMaps": "मैप",
+  "settingsOfflineMaps": "ऑफ़लाइन मैप",
+  "settingsOfflineMapsSub": "नेटवर्क-रहित इलाक़ों के लिए क्षेत्र डाउनलोड करें",
+  "settingsSectionEmergencyProfile": "आपातकालीन प्रोफ़ाइल",
+  "settingsBloodGroup": "ब्लड ग्रुप",
+  "settingsMedicalNotes": "मेडिकल जानकारी",
+  "settingsMedicalNotesHint": "एलर्जी, बीमारियाँ, दवाइयाँ...",
+  "settingsSectionAccount": "खाता",
+  "settingsVehicle": "वाहन",
+  "settingsSignOut": "साइन आउट",
+  "settingsSectionLanguage": "भाषा",
+  "settingsLanguageSub": "आपातकालीन स्क्रीन भी इसी भाषा में दिखेंगी",
+  "languageSystemDefault": "फ़ोन के अनुसार",
+  "languageEnglish": "English",
+  "languageHindi": "हिन्दी",
+  "languageMalayalam": "മലയാളം",
+  "circlesJoinCircleTitle": "सर्कल में शामिल हों",
+  "circlesCreateCircle": "सर्कल बनाएँ",
+  "circlesLoadError": "कुछ गड़बड़ हो गई",
+  "circlesRetry": "फिर कोशिश करें",
+  "circlesEmptyTitle": "अपना पहला सुरक्षा सर्कल बनाएँ",
+  "circlesEmptyBody": "आपके सर्कल यह सुनिश्चित करते हैं कि सड़क पर कुछ होने पर सही लोगों को अलर्ट मिले",
+  "circlesRegenerateCode": "नया इनवाइट कोड बनाएँ",
+  "circlesDeleteCircle": "सर्कल हटाएँ",
+  "circlesMembersHeading": "{count, plural, =1{सदस्य (1)} other{सदस्य ({count})}}",
+  "circlesObserversHeading": "{count, plural, =1{ऑब्ज़र्वर (1)} other{ऑब्ज़र्वर ({count})}}",
+  "circlesObserverSmsTag": "SMS",
+  "circlesAddObserverAction": "ऑब्ज़र्वर जोड़ें",
+  "circlesObserverSmsExplainer": "ऑब्ज़र्वर को SMS अलर्ट मिलते हैं, उन्हें ऐप की ज़रूरत नहीं है।",
+  "circlesPhoneNumberLabel": "फ़ोन नंबर",
+  "circlesAddAction": "जोड़ें",
+  "circlesLeaveDialogTitle": "सर्कल छोड़ें?",
+  "circlesLeaveFamilyWarning": "छोड़ने पर इस सर्कल से जुड़े सभी आपातकालीन संपर्क हटा दिए जाएँगे।",
+  "@circlesLeaveFamilyWarning": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesLeaveConfirm": "क्या आप वाकई छोड़ना चाहते हैं?",
+  "circlesLeaveAction": "छोड़ें",
+  "circlesLeaveError": "छोड़ा नहीं जा सका: {message}",
+  "circlesDeleteDialogTitle": "सर्कल हटाएँ?",
+  "circlesDeleteWarning": "यह पूर्ववत नहीं किया जा सकता।",
+  "circlesDeleteAction": "हटाएँ",
+  "circlesNewCodeSnackbar": "नया कोड: {code}",
+  "circlesRoleUpdateError": "भूमिका अपडेट नहीं हो सकी। कृपया फिर कोशिश करें।",
+  "circlesRemoveMemberError": "सदस्य हटाया नहीं जा सका। कृपया फिर कोशिश करें।",
+  "circlesRemoveObserverError": "ऑब्ज़र्वर हटाया नहीं जा सका। कृपया फिर कोशिश करें।",
+  "circlesEcUpdateError": "आपातकालीन संपर्क अपडेट नहीं हो सका। कृपया फिर कोशिश करें।",
+  "circlesShareInviteMessage": "RoadPack पर मेरे सुरक्षा सर्कल में शामिल हों! कोड: {code}",
+  "circlesNameLabel": "सर्कल का नाम",
+  "circlesDurationHours": "{count, plural, =1{1 घंटा} other{{count} घंटे}}",
+  "circlesDurationLabel": "अवधि",
+  "circlesCreateAction": "बनाएँ",
+  "circlesLocationSharingTitle": "इस सर्कल को लाइव लोकेशन देखने दें",
+  "circlesLocationSharingOnDetail": "इस सर्कल में सभी को पता चलेगा कि हर सदस्य कहाँ है। आप इसे बाद में बंद कर सकते हैं।",
+  "@circlesLocationSharingOnDetail": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesLocationSharingOffDetail": "बंद है। दुर्घटना होने पर सदस्यों को अभी भी अलर्ट मिलेगा — बस वे बाक़ी समय एक-दूसरे को नहीं देख सकते।",
+  "@circlesLocationSharingOffDetail": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesInvalidCodeError": "अमान्य कोड",
+  "circlesEnterCodeHeading": "इनवाइट कोड डालें",
+  "circlesMemberCount": "{count, plural, =1{1 सदस्य} other{{count} सदस्य}}",
+  "circlesJoinAction": "शामिल हों",
+  "circlesWhoCanSeeMeTitle": "मुझे कौन देख सकता है",
+  "circlesChangeFailedMessage": "वह बदला नहीं जा सका। कुछ भी नहीं बदला।",
+  "@circlesChangeFailedMessage": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesWatcherCountHeadline": "{count, plural, =0{कोई भी आपकी लोकेशन नहीं देख सकता} =1{1 व्यक्ति आपकी लोकेशन देख सकता है} other{{count} लोग आपकी लोकेशन देख सकते हैं}}",
+  "@circlesWatcherCountHeadline": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesFullListNotice": "यह पूरी सूची है। RoadPack में कोई छुपा हुआ मोड नहीं है — जो भी आपको देख सकता है, वह इस पेज पर है।",
+  "@circlesFullListNotice": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesNoCirclesYet": "आप अभी किसी सर्कल में नहीं हैं, इसलिए आपको देखने वाला कोई नहीं है।",
+  "circlesLoadWhoCanSeeError": "हम यह लोड नहीं कर सके कि आपको कौन देख सकता है",
+  "circlesLoadWhoCanSeeErrorDetail": "यह न समझें कि इसका मतलब कोई नहीं देख सकता। सिग्नल मिलने पर फिर कोशिश करें।",
+  "@circlesLoadWhoCanSeeErrorDetail": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesTryAgainAction": "फिर कोशिश करें",
+  "circlesCardSubtitle": "{count, plural, =1{{type} — 1 सदस्य} other{{type} — {count} सदस्य}}",
+  "circlesExpiredTag": "समाप्त",
+  "circlesTypeFamily": "परिवार",
+  "circlesTypeFriends": "दोस्त",
+  "circlesTypeCommute": "रोज़ के सफ़र वाला ग्रुप",
+  "circlesTypeConvoy": "काफ़िला",
+  "circlesTypeFamilyDefaultName": "मेरा परिवार",
+  "circlesTypeFriendsDefaultName": "दोस्त",
+  "circlesTypeCommuteDefaultName": "रोज़ के सफ़र वाला ग्रुप",
+  "circlesTypeConvoyDefaultName": "काफ़िला",
+  "circlesTypeFamilyDescription": "आपके सबसे क़रीबी लोग। सदस्य अपने आप आपातकालीन संपर्क बन जाते हैं।",
+  "circlesTypeFriendsDescription": "साथ सवारी या सफ़र करने वाले दोस्त। ख़ास सदस्यों को आपातकालीन संपर्क के रूप में जोड़ें।",
+  "circlesTypeCommuteDescription": "नियमित सफ़र वाला ग्रुप।",
+  "circlesTypeConvoyDescription": "अस्थायी ग्रुप सवारी। एक अवधि सेट करें।",
+  "circlesRoleAdmin": "एडमिन",
+  "circlesRoleMember": "सदस्य",
+  "circlesRoleObserver": "ऑब्ज़र्वर",
+  "circlesUnknownMember": "अज्ञात",
+  "circlesYouTag": "(आप)",
+  "circlesMenuLeaveCircle": "सर्कल छोड़ें",
+  "circlesMenuDemote": "सदस्य में डिमोट करें",
+  "@circlesMenuDemote": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesMenuPromote": "एडमिन में प्रोमोट करें",
+  "@circlesMenuPromote": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesMenuRemove": "हटाएँ",
+  "circlesMenuMarkEc": "आपातकालीन संपर्क के रूप में चिह्नित करें",
+  "circlesMenuRemoveEc": "आपातकालीन संपर्क से हटाएँ",
+  "circlesMonthlyCheckTitle": "मासिक जाँच: आपको कौन देख सकता है?",
+  "circlesWatcherCountBanner": "{count, plural, =0{अभी कोई भी आपकी लोकेशन नहीं देख सकता। फिर भी एक नज़र डाल लें — सर्कल बदलते रहते हैं।} =1{अभी 1 व्यक्ति आपकी लोकेशन देख सकता है।} other{अभी {count} लोग आपकी लोकेशन देख सकते हैं।}}",
+  "@circlesWatcherCountBanner": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesReviewListAction": "सूची देखें",
+  "circlesNotNowAction": "अभी नहीं",
+  "circlesSharingOnEmptyDetail": "लोकेशन शेयरिंग चालू है, लेकिन इस सर्कल में अभी कोई और नहीं है।",
+  "circlesWatchersHereDetail": "{count, plural, =1{यहाँ 1 व्यक्ति देख सकता है कि आप कहाँ हैं।} other{यहाँ {count} लोग देख सकते हैं कि आप कहाँ हैं।}}",
+  "@circlesWatchersHereDetail": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesSharingOffDetail": "इस सर्कल में कोई भी नहीं देख सकता कि आप कहाँ हैं।",
+  "circlesWatcherRow": "{name} — {role}",
+  "circlesShareMyLocationTitle": "इस सर्कल के साथ अपनी लोकेशन शेयर करें",
+  "circlesSelfSharingOnDetail": "इसे बंद करने पर आपकी लाइव लोकेशन इस सर्कल से छुप जाएगी। आप फिर भी सदस्य रहेंगे, और दुर्घटना होने पर उन्हें आपकी लोकेशन के साथ अभी भी अलर्ट मिलेगा।",
+  "@circlesSelfSharingOnDetail": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesSelfSharingOffDetail": "आपकी लाइव लोकेशन इस सर्कल से छुपी है। आप अभी भी सदस्य हैं, आपको अभी भी उनके अलर्ट मिलते हैं, और दुर्घटना होने पर उन्हें अभी भी बताया जाएगा कि आप कहाँ हैं।",
+  "@circlesSelfSharingOffDetail": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesAdminOnlyOptOutNotice": "सिर्फ़ इस सर्कल का एडमिन पूरे सर्कल की सेटिंग बदल सकता है, लेकिन ऊपर का स्विच आपकी अपनी लोकेशन शेयर होना रोक देता है। आप सर्कल छोड़ भी सकते हैं।",
+  "@circlesAdminOnlyOptOutNotice": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesAdminOnlyNoOptOutNotice": "सिर्फ़ इस सर्कल का एडमिन इसकी शेयरिंग सेटिंग बदल सकता है। अगर आप सहज नहीं हैं, तो आप सर्कल छोड़ सकते हैं — यह तुरंत असर करता है, और RoadPack आपको कभी नहीं रोकेगा।",
+  "@circlesAdminOnlyNoOptOutNotice": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "circlesLeaveThisCircleAction": "यह सर्कल छोड़ें",
+  "circlesInviteCodeLabel": "इनवाइट कोड",
+  "circlesCodeCopiedSnackbar": "कोड कॉपी हो गया",
+  "circlesCopyAction": "कॉपी करें",
+  "circlesShareAction": "शेयर करें",
+  "commuteTitle": "रोज़ का सफ़र",
+  "commuteAddRoute": "रास्ता जोड़ें",
+  "commuteEditRoute": "रास्ता संपादित करें",
+  "commuteLoadError": "आपके रास्ते लोड नहीं हो सके",
+  "commuteYourRoutesHeading": "आपके रास्ते",
+  "commuteNonArrivalTitle": "न पहुँचने पर अलर्ट",
+  "commuteNonArrivalEnabledBody": "अगर आप {late} तक नहीं पहुँचे, तो RoadPack पहले आपसे पूछेगा। जवाब न देने पर ही आपके सर्कल को बताया जाएगा।",
+  "@commuteNonArrivalEnabledBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteNonArrivalDisabledBody": "अगर आप न पहुँचें, तो किसी को नहीं बताया जाएगा।",
+  "commuteAskMeAfterHeading": "कितनी देर बाद पूछें",
+  "@commuteAskMeAfterHeading": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteGraceWindowSemantics": "देर से {late}",
+  "commuteSpokenMinutes": "{count, plural, =1{1 मिनट} other{{count} मिनट}}",
+  "commuteSpokenSeconds": "{count, plural, =1{1 सेकंड} other{{count} सेकंड}}",
+  "commuteEmptyTitle": "अभी कोई रास्ता नहीं",
+  "commuteEmptyBody": "{count, plural, =1{RoadPack 1 जैसी यात्रा के बाद रोज़ का सफ़र सीख लेता है। इंतज़ार नहीं करना है तो ख़ुद जोड़ें — यह तुरंत काम करने लगता है।} other{RoadPack {count} जैसी यात्राओं के बाद रोज़ का सफ़र सीख लेता है। इंतज़ार नहीं करना है तो ख़ुद जोड़ें — यह तुरंत काम करने लगता है।}}",
+  "@commuteEmptyBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteDeleteRouteTooltip": "रास्ता हटाएँ",
+  "commuteNameHint": "घर से कॉलेज",
+  "commuteNameValidation": "ऐसा नाम दें जिसे आप पहचान सकें",
+  "commuteSectionWhere": "कहाँ",
+  "commuteSectionWhen": "कब",
+  "commuteSectionDays": "दिन",
+  "commuteStartPoint": "शुरुआत",
+  "commuteDestinationPoint": "मंज़िल",
+  "commuteLocationPermissionError": "इस जगह को सेट करने के लिए RoadPack को लोकेशन अनुमति चाहिए।",
+  "commuteLocationFixError": "यहाँ लोकेशन नहीं मिली। बाहर जाकर दोबारा कोशिश करें।",
+  "commuteIncompleteError": "दोनों जगह, शुरू होने का समय और कम से कम एक दिन सेट करें।",
+  "commuteDurationLabel": "सामान्यतः लगते हैं (मिनट)",
+  "commuteDurationEmptyValidation": "यह सफ़र सामान्यतः कितनी देर का होता है?",
+  "commuteDurationTooLongValidation": "यह एक दिन की यात्रा से भी ज़्यादा लंबा है",
+  "commuteSaveChanges": "बदलाव सेव करें",
+  "commuteRouteIncompleteHint": "रास्ते को आपके लिए देखना शुरू करने के लिए दोनों जगह, शुरू होने का समय और कम से कम एक दिन ज़रूरी है।",
+  "commuteUsuallyLeavesAt": "सामान्यतः निकलने का समय",
+  "commutePointNotSet": "सेट नहीं",
+  "commuteUpdatePoint": "बदलें",
+  "commuteUseHerePoint": "यहाँ इस्तेमाल करें",
+  "commuteDeleteRouteTitle": "यह रास्ता हटाएँ?",
+  "commuteDeleteRouteBody": "RoadPack इस पर न पहुँचने की जाँच बंद कर देगा।",
+  "commuteKeepAction": "रखें",
+  "commuteDeleteAction": "हटाएँ",
+  "commuteDayNameMonday": "सोमवार",
+  "commuteDayNameTuesday": "मंगलवार",
+  "commuteDayNameWednesday": "बुधवार",
+  "commuteDayNameThursday": "गुरुवार",
+  "commuteDayNameFriday": "शुक्रवार",
+  "commuteDayNameSaturday": "शनिवार",
+  "commuteDayNameSunday": "रविवार",
+  "commuteDayLetterMon": "सो",
+  "@commuteDayLetterMon": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteDayLetterTue": "मं",
+  "@commuteDayLetterTue": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteDayLetterWed": "बु",
+  "@commuteDayLetterWed": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteDayLetterThu": "गु",
+  "@commuteDayLetterThu": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteDayLetterFri": "शु",
+  "@commuteDayLetterFri": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteDayLetterSat": "श",
+  "@commuteDayLetterSat": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteDayLetterSun": "र",
+  "@commuteDayLetterSun": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteDaysActiveSemantics": "{count, plural, =0{कोई दिन सेट नहीं} =1{हफ़्ते में 1 दिन चालू} other{हफ़्ते में {count} दिन चालू}}",
+  "commuteTimeToAnswerHeading": "जवाब देने का समय",
+  "commuteAnswerSemantics": "{spoken} बाद आपके सर्कल को बताया जाएगा।",
+  "commuteNothingToCheckIn": "चेक-इन करने के लिए कुछ नहीं है।",
+  "commuteCheckingInHeading": "चेक-इन हो रहा है",
+  "commuteCircleToldHeading": "आपके सर्कल को बता दिया गया",
+  "@commuteCircleToldHeading": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteEverythingOkay": "सब ठीक है?",
+  "commuteWeLetThemKnow": "हमने उन्हें बता दिया",
+  "commuteTravellingBody": "आप अपनी सामान्य मंज़िल तक नहीं पहुँचे हैं। अभी तक किसी को नहीं बताया गया है।",
+  "commuteEscalatedBody": "आपने जवाब नहीं दिया, इसलिए आपके सर्कल को अलर्ट भेजा गया। जब हो सके, उन्हें बता दें कि आप ठीक हैं।",
+  "@commuteEscalatedBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteAnswerCaption": "अगर आप जवाब नहीं देते, तो आपके सर्कल को बताया जाएगा।",
+  "commuteSnoozeExtendedMessage": "{minutes} के लिए समय बढ़ा दिया गया। किसी को नहीं बताया गया।",
+  "commuteGladYouMadeIt": "अच्छा हुआ आप पहुँच गए।",
+  "commuteFineTellThem": "मैं ठीक हूँ — उन्हें बताएँ",
+  "commuteArrivedFine": "मैं पहुँच गया, ठीक हूँ",
+  "commuteNeedHelp": "मुझे मदद चाहिए",
+  "commuteAddedByYouBadge": "आपने जोड़ा",
+  "commuteTripsBadge": "{count, plural, =1{{count} यात्रा} other{{count} यात्राएँ}}",
+  "commuteLeavesLabel": "निकलना",
+  "commuteTakesLabel": "लगता है",
+  "commuteArrivesLabel": "पहुँचना",
+  "commuteLearningNote": "{count, plural, =1{अभी सीख रहा है — इस रास्ते पर नज़र रखने से पहले 1 और यात्रा चाहिए।} other{अभी सीख रहा है — इस रास्ते पर नज़र रखने से पहले {count} और यात्राएँ चाहिए।}}",
+  "commuteNotWatchingTitle": "यह रास्ता नहीं देखा जा रहा",
+  "commuteWatchingOnceLearnedTitle": "सीखने के बाद देखा जाएगा",
+  "commuteNeedsMoreTripsDetail": "{count, plural, =1{1 और यात्रा चाहिए} other{{count} और यात्राएँ चाहिए}}",
+  "commuteNotWatchingYetTitle": "अभी नहीं देखा जा रहा",
+  "commuteMissingScheduleDetail": "शुरू होने का समय, अवधि या दिन सेट नहीं है",
+  "commuteWatchingTitle": "न पहुँचने के लिए देखा जा रहा है",
+  "commuteRunningLateLabel": "देर हो रही है",
+  "@commuteRunningLateLabel": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteMuchLaterLabel": "बहुत देर",
+  "@commuteMuchLaterLabel": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteSnoozeTrailing": "{count, plural, =1{+1 मिनट} other{+{count} मिनट}}",
+  "commuteNobodyToldCaption": "इसे दबाने पर किसी को नहीं बताया जाता।",
+  "@commuteNobodyToldCaption": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "commuteSnoozeSemantics": "{label}, {trailing}। किसी को सूचित नहीं किया जाता।",
+  "consentCentreTitle": "मैंने किन बातों पर हाँ कहा",
+  "@consentCentreTitle": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentPermissionsHeading": "आपकी अनुमतियाँ",
+  "consentPermissionsIntro": "इनमें से कोई भी कभी भी बंद कर सकते हैं। लोकेशन शेयरिंग बंद करते ही RoadPack आपको ट्रैक करना तुरंत रोक देता है।",
+  "@consentPermissionsIntro": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentGrantedOn": "आपने {date} को हाँ कहा था",
+  "@consentGrantedOn": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentParentalSectionBody": "किसी माता-पिता या अभिभावक ने RoadPack को आपको ट्रैक करने की अनुमति दी है। वे, या आप, इसे कभी भी वापस ले सकते हैं — RoadPack तुरंत ट्रैक करना बंद कर देता है।",
+  "@consentParentalSectionBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentWithdrawParentalAction": "माता-पिता की अनुमति वापस लें",
+  "@consentWithdrawParentalAction": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentUnknownLedgerTitle": "हम आपकी अनुमतियाँ जाँच नहीं सके",
+  "@consentUnknownLedgerTitle": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentUnknownLedgerBody": "जब तक सर्वर से संपर्क नहीं होता, RoadPack यह मानता है कि आपने किसी बात पर हाँ नहीं कहा और आपको ट्रैक नहीं करेगा।",
+  "@consentUnknownLedgerBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentChecking": "जाँच हो रही है...",
+  "consentTryAgain": "फिर कोशिश करें",
+  "consentTypeTrackingTitle": "सवारी के दौरान मेरी लोकेशन शेयर करें",
+  "consentTypeTrackingMeaning": "सवारी चालू रहने तक RoadPack यह दर्ज करता है कि आप कहाँ हैं, ताकि दुर्घटना होने पर आपका सर्कल आपको ढूँढ सके।",
+  "@consentTypeTrackingMeaning": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentTypeDataSharingAnonTitle": "सड़क सुरक्षा मैप बेहतर बनाने में मदद करें",
+  "consentTypeDataSharingAnonMeaning": "मोटे तौर पर, बिना नाम के लोकेशन बिंदु ख़तरनाक हिस्सों का नक़्शा बनाने में मदद करते हैं। इस तरह भेजी गई किसी भी जानकारी में आपका नाम या नंबर नहीं होता।",
+  "@consentTypeDataSharingAnonMeaning": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentTypeSensorUploadTitle": "दुर्घटना के बाद सेंसर डेटा भेजें",
+  "consentTypeSensorUploadMeaning": "दुर्घटना के बाद फ़ोन अपने सेंसर की रीडिंग भेजता है, ताकि पहचान बेहतर हो।",
+  "@consentTypeSensorUploadMeaning": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentTypeParentalTitle": "माता-पिता या अभिभावक की अनुमति",
+  "consentTypeParentalMeaning": "चूँकि आपकी उम्र 18 से कम है, RoadPack आपको ट्रैक कर सके इससे पहले माता-पिता या अभिभावक का हाँ कहना ज़रूरी है।",
+  "@consentTypeParentalMeaning": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentTypeInstitutionalTitle": "अपने कॉलेज या नियोक्ता के साथ शेयर करें",
+  "@consentTypeInstitutionalTitle": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentTypeInstitutionalMeaning": "आपका कॉलेज या नियोक्ता सिर्फ़ समूह के कुल आँकड़े देखता है — कभी आपकी लाइव जगह नहीं और कभी आपके संपर्क नहीं।",
+  "@consentTypeInstitutionalMeaning": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentTypeAudioCaptureTitle": "दुर्घटना के बाद ऑडियो रिकॉर्ड करें",
+  "consentTypeAudioCaptureMeaning": "दुर्घटना के बाद फ़ोन एक छोटी क्लिप रिकॉर्ड कर सकता है, ताकि मदद करने वालों को पता हो कि वे किस हालात में आ रहे हैं।",
+  "@consentTypeAudioCaptureMeaning": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentGateReadyTitle": "RoadPack आपका ध्यान रख सकता है",
+  "@consentGateReadyTitle": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentGateReadyBody": "आपकी प्रोफ़ाइल पूरी है और आपने लोकेशन शेयरिंग के लिए हाँ कहा है। फिर भी RoadPack 112 पर कॉल करने की जगह नहीं लेता।",
+  "@consentGateReadyBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentGateBlockedTitle": "RoadPack अभी आपको ट्रैक नहीं कर रहा",
+  "@consentGateBlockedTitle": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentGateBlockedBody": "इन्हें पूरा करें, फिर यह करेगा:",
+  "@consentGateBlockedBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentGateAskParentAction": "माता-पिता या अभिभावक से पूछें",
+  "consentBlockerNameTitle": "अपना नाम जोड़ें",
+  "consentBlockerNameBody": "जिसे भी हम कॉल करें, उसे पता होना चाहिए कि कॉल किसके बारे में है।",
+  "@consentBlockerNameBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentBlockerPhoneTitle": "अपना फ़ोन नंबर जोड़ें",
+  "consentBlockerPhoneBody": "हमें एक चालू नंबर चाहिए, ताकि मदद आपको वापस कॉल कर सके।",
+  "consentBlockerContactTitle": "एक आपातकालीन संपर्क जोड़ें",
+  "consentBlockerContactBody": "RoadPack के पास अलर्ट भेजने को कोई नहीं है। कम से कम एक संपर्क ज़रूरी है।",
+  "consentBlockerDobTitle": "अपनी जन्म तिथि जोड़ें",
+  "consentBlockerDobBody": "क़ानून 18 से कम उम्र के सवारों के साथ अलग व्यवहार करता है, इसलिए हमें जानना होगा कि आप पर कौन-से नियम लागू होते हैं।",
+  "@consentBlockerDobBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentBlockerParentalTitle": "माता-पिता या अभिभावक की अनुमति चाहिए",
+  "consentBlockerParentalBody": "आपकी उम्र 18 से कम है। RoadPack आपकी जगह दर्ज करे, इससे पहले माता-पिता या अभिभावक का सहमत होना ज़रूरी है।",
+  "@consentBlockerParentalBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentBlockerTrackingTitle": "लोकेशन शेयरिंग चालू करें",
+  "consentBlockerTrackingBody": "जब तक आप हाँ नहीं कहते, RoadPack आपकी लोकेशन दर्ज नहीं करता, और जैसे ही आप ना कहते हैं, रुक जाता है।",
+  "@consentBlockerTrackingBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentBlockerUnknownBody": "आपने किन बातों पर हाँ कहा है, यह जाँचने के लिए हम सर्वर तक नहीं पहुँच सके। जब तक नहीं पहुँचते, RoadPack आपको ट्रैक नहीं करेगा।",
+  "@consentBlockerUnknownBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentParentalScreenTitle": "माता-पिता या अभिभावक की अनुमति",
+  "consentParentalFormIntro": "आपकी उम्र 18 से कम है, इसलिए RoadPack आपकी जगह दर्ज करे इससे पहले माता-पिता या अभिभावक का सहमत होना ज़रूरी है। तब तक कुछ भी ट्रैक नहीं होता।",
+  "@consentParentalFormIntro": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentParentalNameLabel": "माता-पिता या अभिभावक का नाम",
+  "consentParentalPhoneLabel": "उनका फ़ोन नंबर",
+  "consentParentalRelationLabel": "आपसे उनका रिश्ता",
+  "consentParentalRelationHint": "माता, पिता, अभिभावक",
+  "consentParentalMethodLine": "हम उन्हें कैसे पक्का करते हैं: {method}",
+  "@consentParentalMethodLine": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentParentalSubmitAction": "उनसे पुष्टि करने को कहें",
+  "consentVerifierNotAvailable": "अभी उपलब्ध नहीं। जब तक माता-पिता या अभिभावक की ठीक से पुष्टि नहीं हो जाती, RoadPack 18 से कम उम्र के सवारों को ट्रैक नहीं करेगा।",
+  "@consentVerifierNotAvailable": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentParentalConfirmed": "माता-पिता या अभिभावक की पुष्टि हो गई।",
+  "consentParentalNotConfigured": "RoadPack अभी माता-पिता या अभिभावक की पुष्टि नहीं कर सकता, इसलिए यह 18 से कम उम्र के सवारों को ट्रैक नहीं करेगा। बाक़ी सब काम करता रहेगा।",
+  "@consentParentalNotConfigured": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentParentalIncomplete": "कृपया अपने माता-पिता या अभिभावक का नाम, नंबर और आपसे उनका रिश्ता भरें।",
+  "consentParentalVerificationFailed": "हम उस नंबर की पुष्टि नहीं कर सके। कृपया फिर कोशिश करें।",
+  "consentParentalUnavailable": "हम सर्वर तक नहीं पहुँच सके। जब तक नहीं पहुँचते, RoadPack 18 से कम उम्र के सवारों को ट्रैक नहीं करेगा।",
+  "@consentParentalUnavailable": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentTrackingNotPermitted": "RoadPack अभी ट्रैक करना शुरू नहीं कर सकता",
+  "@consentTrackingNotPermitted": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "consentWatcherReason": "आपके {type} सर्कल \"{circleName}\" में, और उस सर्कल की लोकेशन शेयरिंग चालू है।",
+  "@consentWatcherReason": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "contactsAddButton": "संपर्क जोड़ें",
+  "contactsLoadError": "आपके संपर्क लोड नहीं हो सके",
+  "contactsRetry": "फिर कोशिश करें",
+  "contactsEmptyHint": "ट्रैकिंग शुरू होने से पहले कम से कम एक संपर्क जोड़ें।",
+  "contactsOrderHint": "हम उन्हें इस क्रम में कॉल करते हैं। क्रम बदलने के लिए खींचें।",
+  "@contactsOrderHint": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "contactsCountOfMax": "{max} में से {count} सूचीबद्ध",
+  "@contactsCountOfMax": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "contactsEmptyBody": "अभी कोई सूचीबद्ध नहीं है।\nजिस अलर्ट को भेजने के लिए कोई न हो, वह सुरक्षा नहीं है।",
+  "@contactsEmptyBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "contactsRemoveConfirmTitle": "{name} को हटाएँ?",
+  "contactsRemoveConfirmBody": "अब आपके साथ कुछ होने पर उन्हें अलर्ट नहीं भेजा जाएगा।",
+  "contactsCancel": "रद्द करें",
+  "contactsRemoveButton": "हटाएँ",
+  "contactsEditTitle": "आपातकालीन संपर्क में बदलाव करें",
+  "contactsAddTitle": "आपातकालीन संपर्क जोड़ें",
+  "contactsPhoneLabel": "मोबाइल नंबर",
+  "contactsRelationshipLabel": "रिश्ता (वैकल्पिक)",
+  "contactsHowWeReachThem": "हम उनसे कैसे संपर्क करते हैं",
+  "@contactsHowWeReachThem": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "contactsEditHint": "यहाँ नंबर सुधारने पर, उन्हें पहले भेजी गई सूचना दोबारा नहीं भेजी जाती।",
+  "@contactsEditHint": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "contactsAddHint": "उन्हें एक SMS मिलेगा जिसमें बताया जाएगा कि वे सूचीबद्ध हैं, और वे इससे बाहर निकल सकते हैं। कुछ होने तक हम उन्हें फिर से मैसेज नहीं करते।",
+  "@contactsAddHint": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "contactsSaveButton": "बदलाव सहेजें",
+  "contactsRemoveTooltip": "{name} को हटाएँ",
+  "contactsOptedOut": "SMS से बाहर",
+  "contactsNoticeSent": "उन्हें बताया गया कि वे सूचीबद्ध हैं",
+  "contactsNoticePending": "सूचना अभी नहीं भेजी गई",
+  "iceScreenTitle": "आपातकालीन कार्ड",
+  "iceSealedEyebrow": "आपका कार्ड बंद है",
+  "@iceSealedEyebrow": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "iceSealedBody": "आपका ब्लड ग्रुप, मेडिकल जानकारी और संपर्क किसी राहगीर को सिर्फ़ आपातकाल के दौरान दिखते हैं — या, अगर आप इसे चालू करें, तो सवारी के दौरान भी। किसी के स्कैन करने के लिए कोई हमेशा-चालू कोड नहीं है।",
+  "@iceSealedBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "iceBandHeading": "इस व्यक्ति को मदद की ज़रूरत हो सकती है",
+  "iceLabelCallThese": "इन्हें कॉल करें",
+  "iceNoContacts": "कोई संपर्क सूचीबद्ध नहीं",
+  "iceDisclaimer": "RoadPack इस राइडर के सर्कल को अलर्ट भेजता है। यह एम्बुलेंस को कॉल नहीं करता। आपातकालीन सेवाओं के लिए 112 डायल करें।",
+  "@iceDisclaimer": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "iceBloodGroupMissing": "दर्ज नहीं है",
+  "mapCacheReadError": "कैश नहीं पढ़ा जा सका: {message}",
+  "@mapCacheReadError": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapRoutesReadError": "आपके रास्ते नहीं पढ़े जा सके: {message}",
+  "mapYourRoutesEyebrow": "आपके रास्ते",
+  "mapNoRoutesLearned": "अभी कोई रास्ता नहीं सीखा गया। RoadPack आपकी असली यात्राओं से आपके रोज़ के रास्ते ख़ुद तय करता है।",
+  "mapStoredOnPhoneEyebrow": "इस फ़ोन में सेव है",
+  "mapTileCount": "{count, plural, =1{1 टाइल} other{{count} टाइल}}",
+  "mapCacheInMemoryOnlyNotice": "यह कैश सिर्फ़ मेमोरी में है और ऐप फिर से शुरू होने पर खाली हो जाता है।",
+  "mapClearCachedDataButton": "कैश किया गया मैप डेटा हटाएँ",
+  "mapRegionCoverageLine": "{zoomLevels} ज़ूम स्तरों में {tiles} टाइल · लगभग {estimatedSize} अनुमानित · {bufferKm} किमी बफ़र",
+  "mapRegionCoverageLineCorridor": "{zoomLevels} ज़ूम स्तरों में {tiles} टाइल · लगभग {estimatedSize} अनुमानित · {bufferKm} किमी बफ़र · कॉरिडोर सिर्फ़ शुरुआत और अंत से अनुमानित",
+  "@mapRegionCoverageLineCorridor": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapOfflineNoticeText": "पोज़िशन दोबारा लोड नहीं हो सकी। इस मैप पर कोई भी जानकारी हर सदस्य के पास दिखाई गई उम्र से नई नहीं है।",
+  "@mapOfflineNoticeText": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapEmptyNoticeText": "कोई भी आपके साथ लोकेशन शेयर नहीं कर रहा। लोकेशन शेयरिंग हर सर्कल की अपनी सेटिंग है, और हर सदस्य अपनी ख़ुद तय करता है।",
+  "mapStaleBannerBoth": "{unreachableCount, plural, =1{1 का सिग्नल नहीं} other{{unreachableCount} का सिग्नल नहीं}}, {staleCount, plural, =1{1 अपडेट नहीं हो रहा} other{{staleCount} अपडेट नहीं हो रहे}} — ये मार्कर बताते हैं कि वे कहाँ थे, कहाँ हैं यह नहीं।",
+  "@mapStaleBannerBoth": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapStaleBannerNoSignalOnly": "{count, plural, =1{1 का सिग्नल नहीं} other{{count} का सिग्नल नहीं}} — ये मार्कर बताते हैं कि वे कहाँ थे, कहाँ हैं यह नहीं।",
+  "@mapStaleBannerNoSignalOnly": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapStaleBannerNotUpdatingOnly": "{count, plural, =1{1 अपडेट नहीं हो रहा} other{{count} अपडेट नहीं हो रहे}} — ये मार्कर बताते हैं कि वे कहाँ थे, कहाँ हैं यह नहीं।",
+  "@mapStaleBannerNotUpdatingOnly": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapLastUpdateLabel": "आख़िरी अपडेट",
+  "mapSpeedLabel": "स्पीड",
+  "mapBatteryLabel": "बैटरी",
+  "mapLastUpdateValue": "{duration} पहले",
+  "@mapLastUpdateValue": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapSpeedValue": "{speed} km/h",
+  "mapSpeedNotCurrent": "अभी की नहीं",
+  "@mapSpeedNotCurrent": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapSpeedUnknown": "अज्ञात",
+  "mapBatteryValue": "{battery}%",
+  "mapFootnoteLocating": "इस सदस्य के लिए मैप पर अभी कुछ नहीं दिखाया जा रहा।",
+  "mapFootnoteLive": "RoadPack घटना और मदद को पता चलने के बीच का समय कम करता है। यह किसी को नहीं भेजता। आपातकाल में 112 पर कॉल करें।",
+  "@mapFootnoteLive": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapFootnoteStale": "मार्कर नहीं हिला क्योंकि कोई नई लोकेशन नहीं आई। यह इस बात का अंदाज़ा नहीं है कि वे अभी कहाँ हैं।",
+  "@mapFootnoteStale": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapPresenceLocating": "पता लगाया जा रहा है",
+  "mapPresenceLive": "लाइव",
+  "mapPresenceStopped": "रुके हुए हैं",
+  "@mapPresenceStopped": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapPresenceNoSignal": "सिग्नल नहीं",
+  "@mapPresenceNoSignal": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapPresenceLastSeen": "आख़िरी बार {age} पहले",
+  "@mapPresenceLastSeen": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapAgeLabel": "आख़िरी बार {age} पहले",
+  "@mapAgeLabel": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapPresenceDetailLocating": "इस डिवाइस से पहली लोकेशन का इंतज़ार है।",
+  "@mapPresenceDetailLocating": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapPresenceDetailLive": "स्थिति {age} पहले अपडेट हुई।",
+  "mapPresenceDetailStopped": "जानकारी आ रही है, हलचल नहीं।",
+  "@mapPresenceDetailStopped": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapPresenceDetailStale": "यह वह जगह है जहाँ वे थे, जहाँ वे अभी हैं वह नहीं।",
+  "@mapPresenceDetailStale": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapPresenceDetailUnreachable": "{age} से कुछ नहीं मिला। आख़िरी ज्ञात जगह दिखाई जा रही है।",
+  "@mapPresenceDetailUnreachable": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "mapRegionStatusNotDownloaded": "डाउनलोड नहीं हुआ",
+  "mapRegionStatusDownloading": "डाउनलोड हो रहा है",
+  "mapRegionStatusDownloaded": "डाउनलोड हो गया",
+  "mapRegionStatusFailed": "विफल",
+  "mapOfflineLimitationNotice": "ऑफ़लाइन क्षेत्रों की योजना और माप हो चुकी है, पर बेस मैप के लिए अब भी कनेक्शन चाहिए। Google Maps अपने ही SDK में टाइल बनाता है और ऐप को उन्हें पहले से लोड करने का कोई रास्ता नहीं देता। ऑफ़लाइन मैप असल में तभी काम करेंगे जब हम अपना OSM टाइल स्रोत इस्तेमाल करेंगे।",
+  "@mapOfflineLimitationNotice": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packCreateTitle": "साथ में सवारी शुरू करें",
+  "packDestinationInvalid": "मंज़िल को अक्षांश, देशांतर के रूप में डालें",
+  "@packDestinationInvalid": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packRideNameLabel": "सवारी का नाम (वैकल्पिक)",
+  "packRideNameHint": "मुन्नार राइड",
+  "@packRideNameHint": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packCircleLabel": "सर्कल (वैकल्पिक)",
+  "packCircleHelper": "इस सर्कल के सदस्य इस सवारी को ढूँढ सकते हैं",
+  "packNoCircleOption": "कोई सर्कल नहीं",
+  "packDestinationHeading": "मंज़िल",
+  "packLatitudeLabel": "अक्षांश",
+  "packLongitudeLabel": "देशांतर",
+  "packCreateShareNotice": "जो भी सवारी में शामिल होगा, वह सवारी ख़त्म होने तक — और अधिकतम 12 घंटे तक — अपनी जगह पैक के साथ साझा करेगा। RoadPack मदद के लिए ख़ुद कॉल नहीं करता — आपातकाल में 112 पर कॉल करें।",
+  "@packCreateShareNotice": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packCreateSubmit": "सवारी बनाएँ",
+  "packPasteLinkError": "किसी ने आपको जो लिंक भेजा है उसे पेस्ट करें",
+  "packShareLinkLabel": "शेयर लिंक",
+  "packJoinNotice": "शामिल होने पर, सवारी ख़त्म होने तक पैक को रास्ते पर आपकी जगह दिखती रहेगी। आप कभी भी छोड़ सकते हैं, और छोड़ने पर आप फ़ौरन हटा दिए जाते हैं।",
+  "@packJoinNotice": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packJoinSubmit": "सवारी में शामिल हों",
+  "packDefaultRideName": "पैक",
+  "packEndRideAction": "सवारी ख़त्म करें",
+  "packTellPack": "पैक को बताएँ",
+  "packEmptyRoster": "अभी कोई शामिल नहीं हुआ। पैक भरने के लिए लिंक शेयर करें।",
+  "packEndRideConfirmTitle": "यह सवारी ख़त्म करें?",
+  "packEndRideConfirmBody": "सब की शेयरिंग रुक जाएगी और लिंक तुरंत काम करना बंद कर देगा। इसे वापस नहीं किया जा सकता।",
+  "@packEndRideConfirmBody": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packKeepRidingAction": "सवारी जारी रखें",
+  "packAddNoteAction": "नोट जोड़ें (वैकल्पिक)",
+  "packNoteLabel": "नोट",
+  "packNoteHint": "टायर पंक्चर, 20 मिनट",
+  "packShareHonestyNotice": "RoadPack आपकी जगह साझा करता है। यह मदद के लिए कॉल नहीं करता — आपातकाल में 112 पर कॉल करें।",
+  "@packShareHonestyNotice": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStatusRiding": "सवारी में",
+  "@packStatusRiding": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStatusRefueling": "ईंधन",
+  "@packStatusRefueling": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStatusTakingBreak": "विश्राम",
+  "@packStatusTakingBreak": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStatusWrongTurn": "गलत मोड़",
+  "@packStatusWrongTurn": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStatusWaiting": "प्रतीक्षा",
+  "@packStatusWaiting": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStatusStopped": "रुका हुआ",
+  "@packStatusStopped": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStatusDone": "पूरा हुआ",
+  "@packStatusDone": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStatusUnexplainedStop": "अस्पष्ट रुकावट",
+  "@packStatusUnexplainedStop": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStatusUnreachable": "सिग्नल नहीं",
+  "@packStatusUnreachable": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packStatusPossibleIncident": "संभावित घटना",
+  "@packStatusPossibleIncident": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packAutoTag": "स्वतः",
+  "@packAutoTag": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packRoleLeader": "अग्रणी",
+  "@packRoleLeader": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packRoleSweep": "सफ़ाई सवार",
+  "@packRoleSweep": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packRoleRider": "सवार",
+  "packGapFront": "सबसे आगे",
+  "packOffRouteHeadline": "रास्ते से बाहर",
+  "packLastSeenHeadline": "आख़िरी बार दिखे",
+  "packLocatingHeadline": "जगह ढूँढी जा रही है",
+  "packStraightLineUnknown": "सीधी दूरी अज्ञात",
+  "packDistanceAway": "{distance} दूर",
+  "packNoFixYet": "अभी लोकेशन नहीं मिली",
+  "packJustNow": "अभी अभी",
+  "packAgoCompact": "{duration} पहले",
+  "packBehindLabel": "पीछे",
+  "packBehindLabelEst": "अनुमानित पीछे",
+  "@packBehindLabelEst": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packBehindWithDuration": "{duration} पीछे",
+  "packBehindWithDurationEst": "{duration} अनुमानित पीछे",
+  "@packBehindWithDurationEst": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packYouLabel": "आप",
+  "packNameYouSuffix": "{name} (आप)",
+  "packSharingLiveHeadline": "यह सवारी शेयर की जा रही है",
+  "packSharingOffHeadline": "शेयरिंग बंद है",
+  "packLiveNotice": "लिंक रखने वाला कोई भी {expiry} तक देख सकता है कि पैक कहाँ है। सवार देखने वालों की संख्या देख सकते हैं।",
+  "@packLiveNotice": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packLinkExpiredNotice": "लिंक अब काम नहीं करता। इस सवारी को कोई नहीं देख सकता।",
+  "packExpiresNow": "अभी",
+  "packExpiresInHours": "{hours} घंटे में समाप्त",
+  "packExpiresInMinutes": "{minutes} मिनट में समाप्त",
+  "packShareLinkAction": "लिंक शेयर करें",
+  "packCopyLinkTooltip": "लिंक कॉपी करें",
+  "packStopSharingAction": "शेयरिंग बंद करें",
+  "packLinkCopiedSnackbar": "लिंक कॉपी हो गया",
+  "packDefaultShareRideName": "हमारी सवारी",
+  "packShareMessage": "{name} को लाइव फ़ॉलो करें: {url}\n\nRoadPack दिखाता है कि पैक कहाँ है। यह एम्बुलेंस के लिए कॉल नहीं करता — आपातकाल में 112 पर कॉल करें।",
+  "@packShareMessage": {
+    "x-needsReview": true,
+    "x-reviewNote": "Machine-authored translation. Needs a native Hindi speaker to confirm before the Ernakulam pilot."
+  },
+  "packWatchingCount": "{count, plural, =1{1 देख रहा है} other{{count} देख रहे हैं}}",
+  "packNotShared": "शेयर नहीं हो रहा"
 }

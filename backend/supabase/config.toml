@@ -385,6 +385,84 @@ deno_version = 2
 # [edge_runtime.secrets]
 # secret_key = "env(SECRET_VALUE)"
 
+# ---------------------------------------------------------------------------
+# Edge functions
+# ---------------------------------------------------------------------------
+# Every function sets verify_jwt = false, and that is deliberate rather than
+# lax. Supabase's built-in gate validates a *Supabase* JWT, but this project
+# authenticates users through Clerk -- a valid Clerk token would be rejected by
+# the platform gate before the function ever ran. Each function therefore does
+# its own verification, and the mode is noted per entry below. Removing a
+# `verify_jwt = false` here does not make a function safer; it makes it
+# unreachable.
+#
+#   clerk    - verifies the caller's Clerk JWT via _shared/jwt.ts
+#   webhook  - verifies a provider signature or shared secret via
+#              _shared/webhook_auth.ts
+#   service  - requires the service-role bearer; invoked by pg_cron or by
+#              another function, never by a client
+#   open     - no auth by design
+
+# -- client-called (clerk) --------------------------------------------------
+[functions.incident-receive]
+verify_jwt = false
+
+[functions.location-ingest]
+verify_jwt = false
+
+[functions.acknowledge-incident]
+verify_jwt = false
+
+[functions.resolve-incident]
+verify_jwt = false
+
+[functions.check-in-response]
+verify_jwt = false
+
+[functions.emergency-contact-notice]
+verify_jwt = false
+
+# -- provider webhooks (webhook) --------------------------------------------
+[functions.clerk-webhook]
+verify_jwt = false
+
+[functions.sms-webhook]
+verify_jwt = false
+
+[functions.voice-webhook]
+verify_jwt = false
+
+# -- scheduled / internal (service) -----------------------------------------
+[functions.alert-cascade]
+verify_jwt = false
+
+[functions.escalation-check]
+verify_jwt = false
+
+[functions.heartbeat-check]
+verify_jwt = false
+
+[functions.non-arrival-check]
+verify_jwt = false
+
+[functions.pack-tick]
+verify_jwt = false
+
+# -- health probe (open) ----------------------------------------------------
+[functions.canary]
+verify_jwt = false
+
+# Snapshot bucket for the no-install pack viewer (TRD 7.2).
+# Public: anonymous viewers read it straight from the CDN with no auth and no
+# database round trip -- that is what keeps viewer count off the Realtime
+# connection cap. Nothing sensitive lives here: pack-tick refuses to publish a
+# payload containing a user id, a phone-shaped string or contact data, and
+# refuses positions finer than 50 m.
+[storage.buckets.packs]
+public = true
+file_size_limit = "1MiB"
+allowed_mime_types = ["application/json"]
+
 [analytics]
 enabled = true
 port = 54327

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../l10n/l10n.dart';
 import '../providers/alerts_provider.dart';
 import '../services/alert_service.dart';
 
@@ -12,19 +13,20 @@ class AlertDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final alerts = ref.watch(alertsProvider);
     final alert = alerts.where((a) => a.incidentId == incidentId).firstOrNull;
 
     if (alert == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Alert')),
-        body: const Center(child: Text('Alert not found')),
+        appBar: AppBar(title: Text(l10n.alertTitle)),
+        body: Center(child: Text(l10n.alertNotFound)),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Emergency Alert'),
+        title: Text(l10n.alertDetailTitle),
         backgroundColor: Colors.red,
       ),
       body: Padding(
@@ -33,15 +35,18 @@ class AlertDetailScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${alert.victimName} may have been in an accident',
+              l10n.alertVictimHeadline(alert.victimName),
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 16),
             Text(
-              'Location: ${alert.lat.toStringAsFixed(4)}, ${alert.lng.toStringAsFixed(4)}',
+              l10n.alertLocationLine(
+                alert.lat.toStringAsFixed(4),
+                alert.lng.toStringAsFixed(4),
+              ),
             ),
             const SizedBox(height: 8),
-            Text('Time: ${alert.receivedAt}'),
+            Text(l10n.alertTimeLine(alert.receivedAt)),
             const SizedBox(height: 24),
             if (!alert.acknowledged)
               SizedBox(
@@ -64,40 +69,42 @@ class AlertDetailScreen extends ConsumerWidget {
                       if (context.mounted) {
                         ScaffoldMessenger.of(
                           context,
-                        ).showSnackBar(SnackBar(content: Text('Error: $e')));
+                        ).showSnackBar(
+                          SnackBar(content: Text(l10n.commonError('$e'))),
+                        );
                       }
                     }
                   },
-                  child: const Text(
-                    'ACKNOWLEDGE',
-                    style: TextStyle(fontSize: 18),
+                  child: Text(
+                    l10n.alertAcknowledge,
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
               ),
             if (alert.acknowledged)
-              const Chip(
-                label: Text('Acknowledged'),
+              Chip(
+                label: Text(l10n.alertAcknowledged),
                 backgroundColor: Colors.green,
-                labelStyle: TextStyle(color: Colors.white),
+                labelStyle: const TextStyle(color: Colors.white),
               ),
             const SizedBox(height: 16),
             OutlinedButton.icon(
               icon: const Icon(Icons.phone),
-              label: const Text('Call 112'),
+              label: Text(l10n.commonCall112),
               onPressed: () => launchUrl(Uri.parse('tel:112')),
             ),
             const SizedBox(height: 8),
             if (alert.victimPhone.isNotEmpty)
               OutlinedButton.icon(
                 icon: const Icon(Icons.phone),
-                label: Text('Call ${alert.victimName}'),
+                label: Text(l10n.alertCallPerson(alert.victimName)),
                 onPressed: () =>
                     launchUrl(Uri.parse('tel:${alert.victimPhone}')),
               ),
             const SizedBox(height: 8),
             OutlinedButton.icon(
               icon: const Icon(Icons.map),
-              label: const Text('Open in Maps'),
+              label: Text(l10n.alertOpenInMaps),
               onPressed: () => launchUrl(
                 Uri.parse(
                   'https://maps.google.com/?q=${alert.lat},${alert.lng}',

@@ -1,0 +1,165 @@
+{
+  "ride_id": "9f2a5c1e-0000-0000-0000-000000000001",
+  "name": "Kochi → Muvattupuzha",
+  "status": "active",
+  "generated_at": "REPLACED_AT_LOAD",
+  "stale_threshold_s": 90,
+  "viewer_count": 7,
+  "route": {
+    "polyline": "_p|{@kiupMffAcbDn|CohCwcAowHgbC_dIgY_kHnF_gEbB_gEcBooB",
+    "length_m": 38400
+  },
+  "members": [
+    {
+      "member_key": "Rk3Zq7Xa2Lmp",
+      "display_name": "Ravi",
+      "chainage_m": 31200,
+      "position": [
+        9.98,
+        76.53
+      ],
+      "precision_m": 50,
+      "gap_from_leader_m": 0,
+      "gap_from_leader_s": 0,
+      "status": "riding",
+      "status_auto": false,
+      "stale": false,
+      "off_route": false,
+      "updated_at": "REPLACED_AT_LOAD",
+      "role": "leader",
+      "display_state": "ok"
+    },
+    {
+      "member_key": "Bt9Ye1Cv8Qsd",
+      "display_name": "Anjali",
+      "chainage_m": 24800,
+      "position": [
+        9.9812,
+        76.498
+      ],
+      "precision_m": 50,
+      "gap_from_leader_m": -6400,
+      "gap_from_leader_s": 420,
+      "gap_estimated": true,
+      "status": "riding",
+      "status_auto": false,
+      "stale": false,
+      "off_route": false,
+      "updated_at": "REPLACED_AT_LOAD",
+      "role": "rider",
+      "display_state": "estimated"
+    },
+    {
+      "member_key": "Hn4Uw6Gk0Jrz",
+      "display_name": "John",
+      "chainage_m": 18100,
+      "position": [
+        9.977,
+        76.45
+      ],
+      "precision_m": 50,
+      "gap_from_leader_m": -13100,
+      "gap_from_leader_s": 900,
+      "status": "refueling",
+      "status_auto": false,
+      "stale": false,
+      "off_route": false,
+      "updated_at": "REPLACED_AT_LOAD",
+      "role": "rider",
+      "display_state": "ok"
+    },
+    {
+      "member_key": "Pz2Md5Tb7Vxc",
+      "display_name": "Meera",
+      "chainage_m": 12400,
+      "position": [
+        9.9605,
+        76.415
+      ],
+      "precision_m": 50,
+      "gap_from_leader_m": -18800,
+      "gap_from_leader_s": 1500,
+      "status": "riding",
+      "status_auto": false,
+      "stale": false,
+      "off_route": true,
+      "updated_at": "REPLACED_AT_LOAD",
+      "role": "rider",
+      "display_state": "off_route",
+      "off_route_m": 2300
+    },
+    {
+      "member_key": "Cy8La3Nf1Wqe",
+      "display_name": "Sabu",
+      "chainage_m": 9600,
+      "position": [
+        9.956,
+        76.398
+      ],
+      "precision_m": 50,
+      "gap_from_leader_m": -21600,
+      "gap_from_leader_s": 1800,
+      "status": "stopped",
+      "status_auto": false,
+      "stale": false,
+      "off_route": false,
+      "updated_at": "REPLACED_AT_LOAD",
+      "role": "rider",
+      "display_state": "ok"
+    },
+    {
+      "member_key": "Vq6Sx9Db4Kth",
+      "display_name": "Deepa",
+      "chainage_m": 6100,
+      "position": [
+        9.945,
+        76.348
+      ],
+      "precision_m": 50,
+      "gap_from_leader_m": -25100,
+      "gap_from_leader_s": 2100,
+      "status": "unreachable",
+      "status_auto": true,
+      "stale": true,
+      "off_route": false,
+      "updated_at": "STALE_6M",
+      "role": "rider",
+      "display_state": "stale"
+    },
+    {
+      "member_key": "Jm1Rf7Zp3Ygu",
+      "display_name": "Faisal",
+      "chainage_m": 3200,
+      "position": [
+        9.9702,
+        76.326
+      ],
+      "precision_m": 50,
+      "gap_from_leader_m": -28000,
+      "gap_from_leader_s": 2400,
+      "status": "possible_incident",
+      "status_auto": true,
+      "stale": false,
+      "off_route": false,
+      "updated_at": "REPLACED_AT_LOAD",
+      "role": "rider",
+      "display_state": "ok"
+    },
+    {
+      "member_key": "Xk5Hc2Wn8Bod",
+      "display_name": "Nithin",
+      "chainage_m": null,
+      "position": null,
+      "precision_m": 50,
+      "gap_from_leader_m": null,
+      "gap_from_leader_s": null,
+      "status": "riding",
+      "status_auto": false,
+      "stale": false,
+      "off_route": false,
+      "updated_at": null,
+      "role": "rider",
+      "display_state": "locating"
+    }
+  ]
+}

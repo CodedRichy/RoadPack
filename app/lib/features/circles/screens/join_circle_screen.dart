@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../l10n/l10n.dart';
 import '../models/circle.dart';
 import '../providers/circle_actions_provider.dart';
 import '../widgets/invite_code_input.dart';
@@ -32,7 +33,7 @@ class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
       final actions = ref.read(circleActionsProvider);
       final circle = await actions.lookupInviteCode(code);
       if (circle == null) {
-        setState(() => _errorText = 'Invalid code');
+        setState(() => _errorText = context.l10n.circlesInvalidCodeError);
       } else {
         final count = await actions.memberCount(circle.id);
         setState(() {
@@ -41,7 +42,7 @@ class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
         });
       }
     } catch (e) {
-      setState(() => _errorText = 'Something went wrong');
+      setState(() => _errorText = context.l10n.circlesLoadError);
     } finally {
       setState(() => _isLoading = false);
     }
@@ -69,14 +70,18 @@ class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: const Text('Join Circle')),
+      appBar: AppBar(title: Text(l10n.circlesJoinCircleTitle)),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Enter invite code', style: theme.textTheme.headlineSmall),
+            Text(
+              l10n.circlesEnterCodeHeading,
+              style: theme.textTheme.headlineSmall,
+            ),
             const SizedBox(height: 24),
             InviteCodeInput(
               onCompleted: _onCodeCompleted,
@@ -96,13 +101,13 @@ class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
                       Text(_preview!.name, style: theme.textTheme.titleLarge),
                       const SizedBox(height: 4),
                       Text(
-                        _preview!.type.displayName,
+                        _preview!.type.displayName(l10n),
                         style: theme.textTheme.bodyMedium,
                       ),
                       if (_memberCount != null) ...[
                         const SizedBox(height: 4),
                         Text(
-                          '$_memberCount member${_memberCount == 1 ? '' : 's'}',
+                          l10n.circlesMemberCount(_memberCount!),
                           style: theme.textTheme.bodySmall,
                         ),
                       ],
@@ -122,7 +127,7 @@ class _JoinCircleScreenState extends ConsumerState<JoinCircleScreen> {
                         height: 20,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : const Text('Join'),
+                    : Text(l10n.circlesJoinAction),
               ),
             ],
           ],

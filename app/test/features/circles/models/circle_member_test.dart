@@ -55,7 +55,7 @@ void main() {
       final ec = EmergencyContact.fromJson(json);
       expect(ec.id, 'ec1');
       expect(ec.name, 'Mom');
-      expect(ec.alertMethod, ['push', 'sms']);
+      expect(ec.alertMethods, {AlertMethod.push, AlertMethod.sms});
       expect(ec.isAppUser, isTrue);
       expect(ec.circleId, 'c1');
     });

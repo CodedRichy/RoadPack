@@ -1,1 +1,1 @@
-// Bystander Screens barrel
+export 'bystander_screen.dart';

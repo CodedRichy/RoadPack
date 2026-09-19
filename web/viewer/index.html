@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Live pack · RoadPack</title>
+<meta name="description" content="Follow a RoadPack ride live. No app, no account.">
+<meta name="theme-color" content="#101411" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fbfaf8" media="(prefers-color-scheme: light)">
+
+<!-- The share token lives in the URL fragment (TRD 8.1). Belt and braces: tell
+     the browser never to leak this URL in a Referer header either, and keep
+     the page out of search results — a live location feed must not be
+     indexable, however short-lived the link is. -->
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow, noarchive">
+
+<!-- Warm the two hosts the first paint depends on, before the CSS parses. -->
+<link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+<link rel="stylesheet" href="./css/tokens.css">
+<link rel="stylesheet" href="./css/viewer.css">
+<link rel="modulepreload" href="./js/main.js">
+<link rel="modulepreload" href="./js/format.js">
+<link rel="modulepreload" href="./js/snapshot.js">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__id">
+    <h1 class="topbar__name" id="ride-name">Pack ride</h1>
+    <p class="topbar__sub" id="ride-sub">Loading…</p>
+  </div>
+
+  <!-- The freshness pill is the honesty anchor of the page. It always states
+       the age of the data in words; it is never a bare coloured dot. -->
+  <div class="freshness" id="freshness" data-state="frozen" role="status" aria-live="polite">
+    <span class="freshness__dot" aria-hidden="true"></span>
+    <span id="freshness-text">Loading</span>
+  </div>
+
+  <button class="themetoggle" id="themetoggle" type="button"
+          title="Switch between the night and sunlight themes"
+          aria-label="Switch between the night and sunlight themes">◐</button>
+</header>
+
+<section class="banner" id="banner" role="status" aria-live="polite" data-tier="notice" hidden>
+  <strong id="banner-title"></strong>
+  <p id="banner-body"></p>
+</section>
+
+<main class="stage">
+  <div class="mapwrap" id="mapwrap">
+    <div id="map" role="region" aria-label="Map of the pack along the route"></div>
+    <p class="maphint" id="maphint" hidden></p>
+  </div>
+
+  <div class="side">
+    <!-- Chainage strip: the route as a rail, riders ticked along it. Renders
+         with no tiles and no WebGL, so ordering and gaps survive a failed or
+         slow basemap. -->
+    <section class="strip" id="strip" aria-label="Riders along the route" hidden>
+      <div class="strip__head">
+        <span>Start</span>
+        <span id="strip-note"></span>
+        <span><span id="strip-length" class="num"></span> · Finish</span>
+      </div>
+      <div class="strip__rail" id="strip-rail"></div>
+      <div class="strip__scale">
+        <span>front of pack is to the right</span>
+      </div>
+    </section>
+
+    <section class="roster" aria-label="Riders">
+      <ul class="roster__list" id="roster-list"></ul>
+    </section>
+
+    <footer class="footnote">
+      <p id="precision-note">Positions shown to link viewers are coarsened.</p>
+      <p>
+        Sharing lasts only while this ride is active, and the leader can end it
+        at any time. Riders can see how many people are watching.
+      </p>
+      <p>
+        RoadPack shortens the time it takes for a pack to notice something is
+        wrong. It does not call for help on its own and does not replace 112.
+      </p>
+    </footer>
+  </div>
+</main>
+
+<!-- Conversion, TRD 7.3: value first, ask second. This sheet is created hidden
+     and is only ever revealed after the map has rendered and become
+     interactive. It never covers the map on load and it is never a gate. -->
+<aside class="install" id="install" hidden>
+  <div class="install__row">
+    <div class="install__copy">
+      <p class="install__title">Riding with them?</p>
+      <p class="install__sub">Join the pack and share your own position back.</p>
+    </div>
+    <button class="btn btn--primary" id="install-cta" type="button">Join</button>
+    <button class="btn btn--ghost" id="install-dismiss" type="button"
+            aria-label="Keep watching in the browser">Not now</button>
+  </div>
+</aside>
+
+<!-- Full-page states: loading, no token, dead link, no network. There is no
+     state in which this page shows a blank map, and none in which it shows a
+     stale map that looks live. -->
+<div class="state" id="state" data-kind="loading">
+  <p class="state__mark">RoadPack · live pack</p>
+  <div class="spinner" id="state-spinner" aria-hidden="true"></div>
+  <h1 id="state-title">Loading the pack</h1>
+  <p id="state-body">Finding everyone on the route.</p>
+</div>
+
+<script type="module" src="./js/main.js"></script>
+<noscript>
+  <div class="state">
+    <h1>JavaScript is required</h1>
+    <p>This page draws a live map of a ride and needs JavaScript to load it.</p>
+  </div>
+</noscript>
+
+</body>
+</html>

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../l10n/l10n.dart';
 import '../../auth/providers/clerk_auth_provider.dart';
 import '../models/circle_member.dart';
 import '../providers/circle_actions_provider.dart';
@@ -19,6 +20,7 @@ class CircleDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final detailAsync = ref.watch(circleDetailProvider(circleId));
     final currentUserId = ref.watch(clerkAuthProvider).valueOrNull?.userId;
+    final l10n = context.l10n;
 
     return detailAsync.when(
       loading: () => Scaffold(
@@ -31,11 +33,11 @@ class CircleDetailScreen extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Something went wrong'),
+              Text(l10n.circlesLoadError),
               const SizedBox(height: 8),
               FilledButton(
                 onPressed: () => ref.invalidate(circleDetailProvider(circleId)),
-                child: const Text('Retry'),
+                child: Text(l10n.circlesRetry),
               ),
             ],
           ),
@@ -56,13 +58,13 @@ class CircleDetailScreen extends ConsumerWidget {
                   onSelected: (value) =>
                       _onAdminAction(context, ref, value, circle.id),
                   itemBuilder: (_) => [
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       value: 'regenerate',
-                      child: Text('Regenerate invite code'),
+                      child: Text(l10n.circlesRegenerateCode),
                     ),
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       value: 'delete',
-                      child: Text('Delete circle'),
+                      child: Text(l10n.circlesDeleteCircle),
                     ),
                   ],
                 ),
@@ -71,21 +73,22 @@ class CircleDetailScreen extends ConsumerWidget {
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              Chip(label: Text(circle.type.displayName)),
+              Chip(label: Text(circle.type.displayName(l10n))),
               const SizedBox(height: 12),
               if (circle.inviteCode != null)
                 InviteCodeDisplay(
                   code: circle.inviteCode!,
                   onShare: () {
                     Share.share(
-                      'Join my Safety Circle on RoadPack! '
-                      'Code: ${circle.inviteCode!.toUpperCase()}',
+                      l10n.circlesShareInviteMessage(
+                        circle.inviteCode!.toUpperCase(),
+                      ),
                     );
                   },
                 ),
               const SizedBox(height: 24),
               Text(
-                'Members (${detail.members.length})',
+                l10n.circlesMembersHeading(detail.members.length),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
@@ -158,7 +161,7 @@ class CircleDetailScreen extends ConsumerWidget {
               if (detail.observers.isNotEmpty) ...[
                 const SizedBox(height: 24),
                 Text(
-                  'Observers (${detail.observers.length})',
+                  l10n.circlesObserversHeading(detail.observers.length),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8),
@@ -180,7 +183,7 @@ class CircleDetailScreen extends ConsumerWidget {
                             onPressed: () =>
                                 _removeObserver(context, ref, obs.id),
                           )
-                        : const Chip(label: Text('SMS')),
+                        : Chip(label: Text(l10n.circlesObserverSmsTag)),
                   ),
                 ),
               ],
@@ -189,7 +192,7 @@ class CircleDetailScreen extends ConsumerWidget {
                 OutlinedButton.icon(
                   onPressed: () => _showAddObserver(context, ref, circle.id),
                   icon: const Icon(Icons.person_add),
-                  label: const Text('Add Observer'),
+                  label: Text(l10n.circlesAddObserverAction),
                 ),
               ],
             ],
@@ -210,23 +213,22 @@ class CircleDetailScreen extends ConsumerWidget {
     String circleId,
     bool isFamily,
   ) async {
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Leave circle?'),
+        title: Text(l10n.circlesLeaveDialogTitle),
         content: Text(
-          isFamily
-              ? 'Leaving will remove all emergency contact links from this circle.'
-              : 'Are you sure you want to leave?',
+          isFamily ? l10n.circlesLeaveFamilyWarning : l10n.circlesLeaveConfirm,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Leave'),
+            child: Text(l10n.circlesLeaveAction),
           ),
         ],
       ),
@@ -245,6 +247,7 @@ class CircleDetailScreen extends ConsumerWidget {
     String action,
     String circleId,
   ) async {
+    final l10n = context.l10n;
     if (action == 'regenerate') {
       final newCode = await ref
           .read(circleActionsProvider)
@@ -252,26 +255,28 @@ class CircleDetailScreen extends ConsumerWidget {
       ref.invalidate(circleDetailProvider(circleId));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('New code: ${newCode.toUpperCase()}')),
+          SnackBar(
+            content: Text(l10n.circlesNewCodeSnackbar(newCode.toUpperCase())),
+          ),
         );
       }
     } else if (action == 'delete') {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Delete circle?'),
-          content: const Text('This cannot be undone.'),
+          title: Text(l10n.circlesDeleteDialogTitle),
+          content: Text(l10n.circlesDeleteWarning),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancel'),
+              child: Text(l10n.commonCancel),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, true),
               style: FilledButton.styleFrom(
                 backgroundColor: Theme.of(ctx).colorScheme.error,
               ),
-              child: const Text('Delete'),
+              child: Text(l10n.circlesDeleteAction),
             ),
           ],
         ),
@@ -298,9 +303,7 @@ class CircleDetailScreen extends ConsumerWidget {
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to update role. Please try again.'),
-          ),
+          SnackBar(content: Text(context.l10n.circlesRoleUpdateError)),
         );
       }
     }
@@ -321,9 +324,7 @@ class CircleDetailScreen extends ConsumerWidget {
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to remove member. Please try again.'),
-          ),
+          SnackBar(content: Text(context.l10n.circlesRemoveMemberError)),
         );
       }
     }
@@ -340,9 +341,7 @@ class CircleDetailScreen extends ConsumerWidget {
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to remove observer. Please try again.'),
-          ),
+          SnackBar(content: Text(context.l10n.circlesRemoveObserverError)),
         );
       }
     }
@@ -369,11 +368,7 @@ class CircleDetailScreen extends ConsumerWidget {
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Failed to update emergency contact. Please try again.',
-            ),
-          ),
+          SnackBar(content: Text(context.l10n.circlesEcUpdateError)),
         );
       }
     }
@@ -386,6 +381,7 @@ class CircleDetailScreen extends ConsumerWidget {
   ) async {
     final nameCtrl = TextEditingController();
     final phoneCtrl = TextEditingController();
+    final l10n = context.l10n;
 
     await showModalBottomSheet(
       context: context,
@@ -401,29 +397,32 @@ class CircleDetailScreen extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Add Observer', style: Theme.of(ctx).textTheme.titleLarge),
+            Text(
+              l10n.circlesAddObserverAction,
+              style: Theme.of(ctx).textTheme.titleLarge,
+            ),
             const SizedBox(height: 8),
             Text(
-              'Observers receive SMS alerts but don\'t need the app.',
+              l10n.circlesObserverSmsExplainer,
               style: Theme.of(ctx).textTheme.bodySmall,
             ),
             const SizedBox(height: 16),
             TextField(
               controller: nameCtrl,
               textCapitalization: TextCapitalization.words,
-              decoration: const InputDecoration(
-                labelText: 'Name',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.commonName,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: phoneCtrl,
               keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(
-                labelText: 'Phone number',
+              decoration: InputDecoration(
+                labelText: l10n.circlesPhoneNumberLabel,
                 prefixText: '+91 ',
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16),
@@ -438,7 +437,7 @@ class CircleDetailScreen extends ConsumerWidget {
                 ref.invalidate(circleDetailProvider(circleId));
                 if (ctx.mounted) Navigator.pop(ctx);
               },
-              child: const Text('Add'),
+              child: Text(l10n.circlesAddAction),
             ),
           ],
         ),

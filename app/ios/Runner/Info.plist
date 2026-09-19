@@ -66,5 +66,41 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- RoadPack. iOS is the secondary platform (the pilot is Android-first),
+	     but these keys are not optional: iOS terminates the app on the first
+	     location or motion request if the matching usage string is absent. -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>RoadPack shares your live location with the safety circles you choose, so they can see you are on your way.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>RoadPack needs background location to notice a crash or a missed arrival while your phone is in your pocket. Without it, nobody is alerted if you cannot reach your phone.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>RoadPack reads motion sensors on your device to detect a crash and to start and stop trips without keeping GPS running.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<!-- Needed so the bystander screen can resolve its dial and directions
+	     actions; without this iOS reports every scheme as unavailable. -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tel</string>
+		<string>sms</string>
+		<string>maps</string>
+		<string>comgooglemaps</string>
+	</array>
+	<!-- Pack share links (TRD 7.3). -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.roadpack.pack</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>roadpack</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

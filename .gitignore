@@ -79,3 +79,6 @@ desktop.ini
 
 # HCR local cache
 .hcr/
+
+# Google Maps key -- never commit; see google_maps_api.xml.example
+app/android/app/src/main/res/values/google_maps_api.xml

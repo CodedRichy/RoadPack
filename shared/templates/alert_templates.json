@@ -28,5 +28,25 @@
   "lost_contact": {
     "title": "Lost contact with {name}",
     "body": "We lost contact with {name} at {last_location} ({time_ago} ago). Their phone may be off or out of range."
+  },
+  "emergency_contact_listed": {
+    "_comment": "FR-024 one-time 'you have been listed as an emergency contact' notice. FR-104 caps it at 2 SMS segments in every language; hi/ml are native script and therefore UCS-2, a 134-code-unit budget for 2 segments, which is why the copy is this terse. {name} is clamped to 12 characters by the sender. Runtime source of truth is backend/supabase/functions/emergency-contact-notice/notice.ts; a test asserts the two match. dlt_template_id values are filled in from the env vars named below once DLT registration completes - no code change required.",
+    "dlt_entity_id_env": "DLT_ENTITY_ID",
+    "dlt_header_env": "DLT_HEADER_ID",
+    "en": {
+      "template": "RoadPack: {name} listed you as their emergency contact. If they have a road accident you may get an SMS with their location. RoadPack does not send help - call 112. Reply STOP to opt out.",
+      "dlt_template_id": "PENDING_REGISTRATION",
+      "dlt_template_id_env": "DLT_TEMPLATE_ID_CONTACT_LISTED_EN"
+    },
+    "hi": {
+      "template": "RoadPack: {name} ने आपको आपातकालीन संपर्क बनाया। दुर्घटना पर SMS आ सकता है। मदद नहीं भेजते, 112 पर कॉल करें। बंद करने को STOP।",
+      "dlt_template_id": "PENDING_REGISTRATION",
+      "dlt_template_id_env": "DLT_TEMPLATE_ID_CONTACT_LISTED_HI"
+    },
+    "ml": {
+      "template": "RoadPack: {name} നിങ്ങളെ അടിയന്തര ബന്ധുവാക്കി. അപകടത്തിൽ SMS വരാം. ഞങ്ങൾ സഹായം അയക്കില്ല. 112 വിളിക്കുക. വേണ്ടെങ്കിൽ STOP.",
+      "dlt_template_id": "PENDING_REGISTRATION",
+      "dlt_template_id_env": "DLT_TEMPLATE_ID_CONTACT_LISTED_ML"
+    }
   }
 }

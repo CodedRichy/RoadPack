@@ -1,0 +1,218 @@
+/* RoadPack "Kilometre Stone" tokens, ported from app/lib/core/theme/app_colors.dart.
+ *
+ * Authored in OKLCH. The sRGB hex is the same value the Dart file carries and is
+ * declared first as a fallback for old Android WebViews that predate oklch()
+ * (Chrome < 111). If you change a value, change the OKLCH and re-derive the hex
+ * in BOTH files -- app_colors.dart is the source of truth.
+ *
+ * Rules inherited from the app, load-bearing here too:
+ *  1. Neutrals are tinted, never pure grey. Night H155, sunlight (paper) H95.
+ *  2. Tiers separate by LIGHTNESS, not hue. ~8% of Indian men have red-green
+ *     CVD, so every state colour distinguishes is ALSO distinguished by a
+ *     glyph and by a text label. Nothing in this viewer relies on hue alone.
+ *  3. The emergency tier is reserved for SOS / crash. Nothing routine uses it.
+ */
+
+:root {
+  /* --- Night neutrals: instrument glass ------------------------------- */
+  --canvas: #101411;
+  --surface-1: #1b1f1c;
+  --surface-2: #262a27;
+  --surface-3: #303632;
+  --hairline: #3e4440;
+  --border: #59615c;
+  --text-muted: #818883;
+  --text-secondary: #abb3ae;
+  --text-primary: #e6ede8;
+
+  /* --- Hazard tier ----------------------------------------------------- */
+  --protected-accent: #b1f145;   /* hi-viz: protection on, riding */
+  --protected-fill: #83af3e;
+  --attention-accent: #e39000;   /* gaps, waiting, needs a decision */
+  --watch-accent: #54c2db;       /* who is watching -- never status */
+
+  /* --- Emergency tier: RESERVED (SOS / crash only) --------------------- */
+  --emergency: #d80318;
+  --emergency-deep: #9e0000;
+  --on-emergency: #fbfaf7;
+
+  --hazard-band: #f7c600;
+  --on-hazard: #070603;
+
+  /* --- Map surface ----------------------------------------------------- */
+  /* The basemap is third-party cartography we do not control. These knobs keep
+   * it subordinate to the pack data drawn on top of it. */
+  --map-scrim: rgba(16, 20, 17, 0.34);
+  --map-saturate: 0.55;
+  --map-brightness: 0.82;
+  --route-line: #83af3e;
+  --route-casing: #101411;
+
+  /* --- Geometry -------------------------------------------------------- */
+  --stroke: 1px;                 /* doubles in sunlight */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --glove-target: 64px;          /* AppSpace.gloveTarget -- do not shrink */
+  --tap-target: 48px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* --- Type ------------------------------------------------------------
+   * No webfont. The app bundles Space Grotesk + IBM Plex; the viewer must not
+   * fetch either, because a render-blocking font round trip on 3G is exactly
+   * the cost this page exists to avoid. System stack with tabular figures gets
+   * the numeric readouts aligned without a byte over the wire. */
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans",
+    "Noto Sans Devanagari", sans-serif;
+  --font-num: ui-monospace, "SF Mono", "Roboto Mono", "DejaVu Sans Mono",
+    monospace;
+
+  /* Outdoors, at arm's length, sun on the screen. Not desk sizes. */
+  --type-xs: 0.8125rem;
+  --type-sm: 0.9375rem;
+  --type-md: 1.0625rem;
+  --type-lg: clamp(1.25rem, 4.5vw, 1.5rem);
+  --type-xl: clamp(1.75rem, 7vw, 2.25rem);
+
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --easing: cubic-bezier(0.2, 0, 0.2, 1);
+
+  color-scheme: dark;
+}
+
+@supports (color: oklch(0.5 0.1 155)) {
+  :root {
+    --canvas: oklch(0.185 0.008 155);
+    --surface-1: oklch(0.235 0.008 155);
+    --surface-2: oklch(0.28 0.009 155);
+    --surface-3: oklch(0.325 0.01 155);
+    --hairline: oklch(0.38 0.012 155);
+    --border: oklch(0.485 0.014 155);
+    --text-muted: oklch(0.62 0.012 155);
+    --text-secondary: oklch(0.76 0.012 155);
+    --text-primary: oklch(0.94 0.01 155);
+
+    --protected-accent: oklch(0.885 0.205 128);
+    --protected-fill: oklch(0.7 0.15 128);
+    --attention-accent: oklch(0.72 0.165 72);
+    --watch-accent: oklch(0.76 0.105 215);
+
+    --emergency: oklch(0.555 0.225 27);
+    --emergency-deep: oklch(0.43 0.19 27);
+    --on-emergency: oklch(0.985 0.004 95);
+
+    --hazard-band: oklch(0.845 0.185 92);
+    --on-hazard: oklch(0.12 0.01 92);
+
+    --map-scrim: oklch(0.185 0.008 155 / 0.34);
+    --route-line: oklch(0.7 0.15 128);
+    --route-casing: oklch(0.185 0.008 155);
+  }
+}
+
+/* --- Sunlight (paper) ---------------------------------------------------
+ * Not a dimmer theme. At noon a dark screen is a mirror, so the sunlight path
+ * goes to maximum luminance, kills mid-greys, doubles strokes and drops every
+ * shadow. Accents darken into inks so they stay legible ON paper; the
+ * emergency tier keeps its field colours so a red screen still reads red from
+ * arm's length. Follows the OS, overridable via [data-theme]. */
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="night"]) {
+    color-scheme: light;
+    --canvas: #fbfaf8;
+    --surface-1: #f1f0ec;
+    --surface-2: #e4e3de;
+    --surface-3: #e4e3de;
+    --hairline: #b9b7b0;
+    --border: #4a483f;
+    --text-muted: #5d5b53;
+    --text-secondary: #37352f;
+    --text-primary: #110f0b;
+    --protected-accent: #4c7800;
+    --protected-fill: #b1f145;
+    --attention-accent: #b05c00;
+    --watch-accent: #0e6288;
+    --map-scrim: rgba(251, 250, 248, 0.18);
+    --map-saturate: 0.7;
+    --map-brightness: 1;
+    --route-line: #4c7800;
+    --route-casing: #fbfaf8;
+    --stroke: 2px;
+  }
+}
+
+@supports (color: oklch(0.5 0.1 155)) {
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="night"]) {
+      --canvas: oklch(0.985 0.003 95);
+      --surface-1: oklch(0.955 0.005 95);
+      --surface-2: oklch(0.915 0.007 95);
+      --surface-3: oklch(0.915 0.007 95);
+      --hairline: oklch(0.78 0.01 95);
+      --border: oklch(0.4 0.014 95);
+      --text-muted: oklch(0.47 0.012 95);
+      --text-secondary: oklch(0.33 0.012 95);
+      --text-primary: oklch(0.17 0.01 95);
+      --protected-accent: oklch(0.52 0.145 130);
+      --protected-fill: oklch(0.885 0.205 128);
+      --attention-accent: oklch(0.56 0.155 65);
+      --watch-accent: oklch(0.47 0.095 235);
+      --map-scrim: oklch(0.985 0.003 95 / 0.18);
+      --route-line: oklch(0.52 0.145 130);
+      --route-casing: oklch(0.985 0.003 95);
+    }
+  }
+}
+
+/* Explicit choice wins over the OS, in both directions. */
+:root[data-theme="sunlight"] {
+  color-scheme: light;
+  --canvas: #fbfaf8;
+  --surface-1: #f1f0ec;
+  --surface-2: #e4e3de;
+  --surface-3: #e4e3de;
+  --hairline: #b9b7b0;
+  --border: #4a483f;
+  --text-muted: #5d5b53;
+  --text-secondary: #37352f;
+  --text-primary: #110f0b;
+  --protected-accent: #4c7800;
+  --protected-fill: #b1f145;
+  --attention-accent: #b05c00;
+  --watch-accent: #0e6288;
+  --map-scrim: rgba(251, 250, 248, 0.18);
+  --map-saturate: 0.7;
+  --map-brightness: 1;
+  --route-line: #4c7800;
+  --route-casing: #fbfaf8;
+  --stroke: 2px;
+}
+
+@supports (color: oklch(0.5 0.1 155)) {
+  :root[data-theme="sunlight"] {
+    --canvas: oklch(0.985 0.003 95);
+    --surface-1: oklch(0.955 0.005 95);
+    --surface-2: oklch(0.915 0.007 95);
+    --surface-3: oklch(0.915 0.007 95);
+    --hairline: oklch(0.78 0.01 95);
+    --border: oklch(0.4 0.014 95);
+    --text-muted: oklch(0.47 0.012 95);
+    --text-secondary: oklch(0.33 0.012 95);
+    --text-primary: oklch(0.17 0.01 95);
+    --protected-accent: oklch(0.52 0.145 130);
+    --protected-fill: oklch(0.885 0.205 128);
+    --attention-accent: oklch(0.56 0.155 65);
+    --watch-accent: oklch(0.47 0.095 235);
+    --map-scrim: oklch(0.985 0.003 95 / 0.18);
+    --route-line: oklch(0.52 0.145 130);
+    --route-casing: oklch(0.985 0.003 95);
+  }
+}

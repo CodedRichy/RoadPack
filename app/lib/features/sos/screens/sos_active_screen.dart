@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/l10n.dart';
 import '../models/sos_state.dart';
 import '../providers/sos_state_provider.dart';
 
@@ -11,6 +12,7 @@ class SosActiveScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(sosStateProvider);
     final isResolved = state.status == SosStatus.resolved;
+    final l10n = context.l10n;
 
     return Material(
       color: Colors.black.withValues(alpha: 0.95),
@@ -27,7 +29,7 @@ class SosActiveScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                isResolved ? 'Incident Resolved' : 'Emergency Alerts Sent',
+                isResolved ? l10n.incidentResolvedTitle : l10n.sosSentTitle,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -37,15 +39,17 @@ class SosActiveScreen extends ConsumerWidget {
               const SizedBox(height: 12),
               Text(
                 isResolved
-                    ? 'Your contacts have been notified that you are safe.'
-                    : 'Your emergency contacts are being notified.',
+                    ? l10n.incidentResolvedBody
+                    : l10n.sosSentBody,
                 style: const TextStyle(color: Colors.white70, fontSize: 16),
                 textAlign: TextAlign.center,
               ),
               if (state.activeIncident != null) ...[
                 const SizedBox(height: 24),
                 Text(
-                  'Incident: ${state.activeIncident!.id.substring(0, 8)}...',
+                  l10n.incidentRef(
+                    '${state.activeIncident!.id.substring(0, 8)}...',
+                  ),
                   style: const TextStyle(color: Colors.white38, fontSize: 12),
                 ),
               ],
@@ -66,7 +70,7 @@ class SosActiveScreen extends ConsumerWidget {
                     onPressed: () {
                       ref.read(sosStateProvider.notifier).resolve();
                     },
-                    child: const Text("I'M OKAY"),
+                    child: Text(l10n.commonImOkay),
                   ),
                 ),
               if (isResolved)
@@ -81,7 +85,7 @@ class SosActiveScreen extends ConsumerWidget {
                     onPressed: () {
                       ref.read(sosStateProvider.notifier).reset();
                     },
-                    child: const Text('CLOSE'),
+                    child: Text(l10n.commonClose),
                   ),
                 ),
               if (state.errorMessage != null) ...[

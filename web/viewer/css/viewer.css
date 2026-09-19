@@ -1,0 +1,585 @@
+/* RoadPack pack viewer -- layout and components.
+ *
+ * Read outdoors, one-handed, on a 320px screen, with the sun on it. Every
+ * decision below follows from that: large type, high contrast, no shadow
+ * language in sunlight, 48-64px targets, no decorative motion.
+ *
+ * The one structural idea worth naming: the CHAINAGE STRIP. The map is the
+ * expensive, fragile part of this page (third-party tiles, WebGL, 3G). The
+ * strip is a plain DOM representation of the same route with the same members
+ * ticked along it, and it renders with zero network. If tiles never arrive,
+ * the strip still answers the only question the viewer actually has -- who is
+ * where, in what order, how far apart.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--canvas);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: var(--type-md);
+  line-height: 1.35;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.num {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--watch-accent);
+  outline-offset: 2px;
+}
+
+[hidden] { display: none !important; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Header ------------------------------------------------------------ */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-1);
+  border-bottom: var(--stroke) solid var(--hairline);
+  flex: 0 0 auto;
+}
+
+.topbar__id { min-width: 0; flex: 1 1 auto; }
+
+.topbar__name {
+  font-size: var(--type-md);
+  font-weight: 650;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar__sub {
+  font-size: var(--type-xs);
+  color: var(--text-secondary);
+  margin: 2px 0 0;
+}
+
+/* Freshness pill. This is the honesty anchor for the whole page: it states
+ * how old the data on screen is, always, in words, never as a bare dot. */
+.freshness {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 999px;
+  border: var(--stroke) solid var(--border);
+  background: var(--surface-2);
+  font-size: var(--type-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.freshness__dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--protected-accent);
+  flex: 0 0 auto;
+}
+
+.freshness[data-state="live"] { color: var(--text-primary); }
+.freshness[data-state="lagging"] {
+  color: var(--attention-accent);
+  border-color: var(--attention-accent);
+}
+.freshness[data-state="lagging"] .freshness__dot {
+  background: var(--attention-accent);
+}
+/* Frozen: polling has failed or the ride is over. The dot becomes a hollow
+ * ring so "not live" survives greyscale and CVD. */
+.freshness[data-state="frozen"] { color: var(--text-secondary); }
+.freshness[data-state="frozen"] .freshness__dot {
+  background: transparent;
+  border: 2px solid var(--text-muted);
+}
+
+.themetoggle {
+  width: var(--tap-target);
+  height: var(--tap-target);
+  border-radius: var(--radius-md);
+  border: var(--stroke) solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  line-height: 1;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+/* --- Banner ------------------------------------------------------------
+ * One banner slot, always above the map, never dismissible by accident.
+ * Tiers: notice (neutral), attention, emergency. */
+
+.banner {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--type-sm);
+  font-weight: 600;
+  border-bottom: var(--stroke) solid var(--hairline);
+  flex: 0 0 auto;
+}
+.banner strong { display: block; font-size: var(--type-md); }
+.banner p { margin: var(--space-1) 0 0; font-weight: 400; }
+
+.banner[data-tier="notice"] {
+  background: var(--surface-2);
+  color: var(--text-primary);
+}
+.banner[data-tier="attention"] {
+  background: var(--surface-2);
+  color: var(--text-primary);
+  border-left: 6px solid var(--attention-accent);
+}
+/* Reserved tier. Only reached when a member is flagged possible_incident. */
+.banner[data-tier="emergency"] {
+  background: var(--emergency-deep);
+  color: var(--on-emergency);
+  border-left: 6px solid var(--emergency);
+}
+
+/* --- Map --------------------------------------------------------------- */
+
+/* Stage: map above, data below on a phone; map beside data on a wide screen. */
+.stage {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.side {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.mapwrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 34dvh;
+  background: var(--surface-1);
+}
+
+#map { position: absolute; inset: 0; }
+
+/* Third-party cartography, desaturated so the pack data reads first. */
+#map .maplibregl-canvas {
+  filter: saturate(var(--map-saturate)) brightness(var(--map-brightness));
+}
+
+.maplibregl-ctrl-attrib {
+  font-size: 11px;
+}
+
+/* When data is frozen the map is visibly not live. A greyed map with an
+ * explicit label beats a fresh-looking map every time -- people make
+ * wait/continue decisions on this. */
+.mapwrap[data-frozen="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--map-scrim);
+  pointer-events: none;
+}
+.mapwrap[data-frozen="true"] #map .maplibregl-canvas {
+  filter: grayscale(1) brightness(0.75);
+}
+
+.maphint {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 2;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--surface-1);
+  border: var(--stroke) solid var(--border);
+  font-size: var(--type-xs);
+  color: var(--text-secondary);
+  max-width: calc(100% - var(--space-6));
+}
+
+/* --- Member markers ----------------------------------------------------
+ * Markers NEVER animate between positions. There is no transform transition
+ * here on purpose: a marker that glides is a marker that is inventing
+ * positions the payload never contained. It jumps, or it does not move. */
+
+.marker {
+  --marker-color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: none !important;
+}
+
+.marker__pin {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--marker-color);
+  color: var(--on-hazard);
+  border: 2px solid var(--canvas);
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.marker__label {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-1);
+  color: var(--text-primary);
+  border: var(--stroke) solid var(--border);
+  white-space: nowrap;
+  max-width: 96px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.marker[data-tone="protected"] { --marker-color: var(--protected-accent); }
+.marker[data-tone="attention"] { --marker-color: var(--attention-accent); }
+.marker[data-tone="emergency"] { --marker-color: var(--emergency); }
+.marker[data-tone="muted"]     { --marker-color: var(--text-muted); }
+
+.marker[data-tone="emergency"] .marker__pin { color: var(--on-emergency); }
+
+/* Stale: hollow, dashed, greyed. Never a filled dot -- a filled dot reads as
+ * a live fix, and a stale fix the pack trusts is worse than no fix. */
+.marker[data-stale="true"] .marker__pin {
+  background: transparent;
+  border: 2px dashed var(--text-muted);
+  color: var(--text-muted);
+}
+.marker[data-stale="true"] .marker__label {
+  color: var(--text-secondary);
+  border-style: dashed;
+}
+
+/* unreachable != stopped. Dead zone is a hollow ring (no fix arriving);
+ * stopped is a solid square (a fix is arriving, the rider is not moving).
+ * Distinct in shape, so distinct in greyscale and under CVD. */
+.marker[data-shape="ring"] .marker__pin {
+  background: transparent;
+  border: 3px double var(--marker-color);
+  color: var(--marker-color);
+}
+.marker[data-shape="square"] .marker__pin { border-radius: 4px; }
+
+/* --- Chainage strip ----------------------------------------------------
+ * The route as a straight line, members ticked at their chainage. Renders
+ * with no tiles, no WebGL, no network. This is the fallback that keeps the
+ * page useful when the basemap does not arrive. */
+
+.strip {
+  flex: 0 0 auto;
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  background: var(--surface-1);
+  border-top: var(--stroke) solid var(--hairline);
+}
+
+.strip__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-size: var(--type-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.strip__rail {
+  position: relative;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  border: var(--stroke) solid var(--hairline);
+}
+
+.strip__tick {
+  position: absolute;
+  top: -4px;
+  width: 14px;
+  height: 28px;
+  margin-left: -7px;
+  border-radius: 3px;
+  background: var(--text-muted);
+  border: var(--stroke) solid var(--canvas);
+}
+.strip__tick[data-tone="protected"] { background: var(--protected-accent); }
+.strip__tick[data-tone="attention"] { background: var(--attention-accent); }
+.strip__tick[data-tone="emergency"] { background: var(--emergency); }
+.strip__tick[data-stale="true"] {
+  background: transparent;
+  border: 2px dashed var(--text-muted);
+}
+
+.strip__scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--type-xs);
+  color: var(--text-muted);
+  margin-top: var(--space-2);
+}
+
+/* --- Member list ------------------------------------------------------- */
+
+.roster {
+  flex: 0 0 auto;
+  max-height: 46dvh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--canvas);
+  border-top: var(--stroke) solid var(--hairline);
+}
+
+.roster__list { list-style: none; margin: 0; padding: 0; }
+
+.member {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  min-height: var(--glove-target);
+  border-bottom: var(--stroke) solid var(--hairline);
+}
+
+.member__glyph {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: var(--type-sm);
+  background: var(--protected-fill);
+  color: var(--on-hazard);
+  border: 2px solid transparent;
+}
+.member[data-tone="attention"] .member__glyph {
+  background: var(--attention-accent);
+  color: var(--on-hazard);
+}
+.member[data-tone="emergency"] .member__glyph {
+  background: var(--emergency);
+  color: var(--on-emergency);
+}
+.member[data-tone="muted"] .member__glyph {
+  background: transparent;
+  border: 2px dashed var(--text-muted);
+  color: var(--text-muted);
+}
+.member[data-shape="ring"] .member__glyph {
+  background: transparent;
+  border: 3px double currentColor;
+}
+.member[data-shape="square"] .member__glyph { border-radius: 6px; }
+
+.member__name {
+  font-weight: 650;
+  font-size: var(--type-md);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.member__state {
+  font-size: var(--type-xs);
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+.member[data-tone="attention"] .member__state { color: var(--attention-accent); }
+.member[data-tone="emergency"] .member__state {
+  color: var(--emergency);
+  font-weight: 700;
+}
+
+.member__gap {
+  text-align: right;
+  font-size: var(--type-lg);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Gap suppressed -- off route, stale, or not yet located. The slot is not
+ * blank and is never a stale number: it says why there is no number. */
+.member__gap[data-suppressed="true"] {
+  font-size: var(--type-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  max-width: 11ch;
+  white-space: normal;
+  text-align: right;
+}
+
+.member__gapsub {
+  display: block;
+  font-size: var(--type-xs);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Estimated values are marked, always, in text. */
+.est {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 4px;
+  border-radius: 3px;
+  border: var(--stroke) solid var(--border);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  vertical-align: middle;
+}
+
+/* --- Footer / provenance ----------------------------------------------- */
+
+.footnote {
+  padding: var(--space-3) var(--space-4) var(--space-5);
+  font-size: var(--type-xs);
+  color: var(--text-muted);
+  background: var(--canvas);
+  border-top: var(--stroke) solid var(--hairline);
+}
+.footnote p { margin: 0 0 var(--space-2); }
+
+/* --- Full-page states (loading, no token, dead link) -------------------- */
+
+.state {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-5);
+  background: var(--canvas);
+  text-align: left;
+}
+.state h1 { font-size: var(--type-xl); margin: 0; line-height: 1.15; }
+.state p { margin: 0; color: var(--text-secondary); font-size: var(--type-md); }
+.state__mark {
+  font-size: var(--type-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--protected-accent);
+  font-weight: 700;
+}
+
+.spinner {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 3px solid var(--hairline);
+  border-top-color: var(--protected-accent);
+  animation: spin 900ms linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation: none; }
+  * { transition: none !important; }
+}
+
+/* --- Install prompt ----------------------------------------------------
+ * Never a gate. It is a sheet at the bottom, dismissible, shown only after
+ * the map has rendered and become interactive. It does not block the map,
+ * does not cover the roster header, and does not come back once dismissed. */
+
+.install {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 30;
+  padding: var(--space-4) var(--space-4)
+           calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+  background: var(--surface-1);
+  border-top: 2px solid var(--protected-accent);
+}
+.install__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.install__copy { flex: 1 1 auto; min-width: 0; }
+.install__title { font-weight: 700; font-size: var(--type-md); margin: 0; }
+.install__sub {
+  margin: 2px 0 0;
+  font-size: var(--type-xs);
+  color: var(--text-secondary);
+}
+
+.btn {
+  min-height: var(--glove-target);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--stroke) solid transparent;
+  font-family: inherit;
+  font-size: var(--type-sm);
+  font-weight: 700;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+.btn--primary {
+  background: var(--protected-fill);
+  color: var(--on-hazard);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border);
+  min-width: var(--tap-target);
+  padding: 0 var(--space-3);
+}
+
+/* --- Wide screens ------------------------------------------------------ */
+
+@media (min-width: 860px) {
+  body { height: 100dvh; overflow: hidden; }
+  .stage { flex-direction: row; }
+  .mapwrap { min-height: 0; }
+  .side {
+    flex: 0 0 clamp(340px, 34vw, 440px);
+    border-left: var(--stroke) solid var(--hairline);
+    border-top: 0;
+    overflow-y: auto;
+  }
+  .roster { max-height: none; overflow: visible; }
+  .install { left: auto; width: clamp(340px, 34vw, 440px); }
+}

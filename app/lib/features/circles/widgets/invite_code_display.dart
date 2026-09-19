@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../l10n/l10n.dart';
+
 class InviteCodeDisplay extends StatelessWidget {
   const InviteCodeDisplay({super.key, required this.code, this.onShare});
 
@@ -10,12 +12,16 @@ class InviteCodeDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Text('Invite Code', style: theme.textTheme.labelLarge),
+            Text(
+              l10n.circlesInviteCodeLabel,
+              style: theme.textTheme.labelLarge,
+            ),
             const SizedBox(height: 8),
             SelectableText(
               code.toUpperCase(),
@@ -32,18 +38,18 @@ class InviteCodeDisplay extends StatelessWidget {
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: code));
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Code copied')),
+                      SnackBar(content: Text(l10n.circlesCodeCopiedSnackbar)),
                     );
                   },
                   icon: const Icon(Icons.copy, size: 18),
-                  label: const Text('Copy'),
+                  label: Text(l10n.circlesCopyAction),
                 ),
                 if (onShare != null) ...[
                   const SizedBox(width: 8),
                   FilledButton.icon(
                     onPressed: onShare,
                     icon: const Icon(Icons.share, size: 18),
-                    label: const Text('Share'),
+                    label: Text(l10n.circlesShareAction),
                   ),
                 ],
               ],

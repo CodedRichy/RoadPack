@@ -105,4 +105,85 @@ void main() {
       },
     );
   });
+
+  group('pack share deep link survives sign-in', () {
+    const link = '/pack/join?t=abc123';
+
+    test('a pack join link is resumable; ordinary routes are not', () {
+      expect(isResumableDeepLink(link), isTrue);
+      expect(isResumableDeepLink('/home'), isFalse);
+      expect(isResumableDeepLink('/circles'), isFalse);
+    });
+
+    test('signing in with a pending link lands on the claim screen', () {
+      expect(
+        authRedirect(
+          isAuthenticated: true,
+          isOnboarded: true,
+          location: '/sign-in',
+          pendingLink: link,
+        ),
+        link,
+      );
+    });
+
+    test('onboarding still wins over a pending link', () {
+      expect(
+        authRedirect(
+          isAuthenticated: true,
+          isOnboarded: false,
+          location: '/sign-in',
+          pendingLink: link,
+        ),
+        '/onboarding',
+      );
+    });
+
+    test('the link is handed back after onboarding completes', () {
+      expect(
+        authRedirect(
+          isAuthenticated: true,
+          isOnboarded: true,
+          location: '/onboarding',
+          pendingLink: link,
+        ),
+        link,
+      );
+    });
+
+    test('without a pending link the destination is unchanged', () {
+      expect(
+        authRedirect(
+          isAuthenticated: true,
+          isOnboarded: true,
+          location: '/sign-in',
+        ),
+        '/home',
+      );
+    });
+
+    test('a non-resumable pending location is ignored', () {
+      expect(
+        authRedirect(
+          isAuthenticated: true,
+          isOnboarded: true,
+          location: '/sign-in',
+          pendingLink: '/settings',
+        ),
+        '/home',
+      );
+    });
+
+    test('PendingDeepLink captures only resumable links and consumes once', () {
+      final pending = PendingDeepLink();
+
+      pending.capture('/circles');
+      expect(pending.link, isNull);
+
+      pending.capture(link);
+      expect(pending.link, link);
+      expect(pending.consume(), link);
+      expect(pending.consume(), isNull);
+    });
+  });
 }

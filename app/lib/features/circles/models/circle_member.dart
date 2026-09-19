@@ -1,5 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../l10n/l10n.dart';
+
+// `emergency_contacts` has exactly one model, and it lives in the feature
+// that owns the table. Circles reads the same rows (observers, mirrored
+// family members) rather than keeping a second, thinner copy of the type.
+export '../../emergency_profile/models/emergency_contact.dart'
+    show AlertMethod, EmergencyContact;
+
 part 'circle_member.freezed.dart';
 
 enum CircleRole {
@@ -12,16 +20,13 @@ enum CircleRole {
   static CircleRole fromString(String s) =>
       CircleRole.values.firstWhere((e) => e.name == s);
 
-  String get displayName {
-    switch (this) {
-      case CircleRole.admin:
-        return 'Admin';
-      case CircleRole.member:
-        return 'Member';
-      case CircleRole.observer:
-        return 'Observer';
-    }
-  }
+  // Copy is resolved at render time, not stored on the enum — see
+  // CircleType.displayName in circle.dart for the same pattern.
+  String displayName(AppLocalizations l10n) => switch (this) {
+    CircleRole.admin => l10n.circlesRoleAdmin,
+    CircleRole.member => l10n.circlesRoleMember,
+    CircleRole.observer => l10n.circlesRoleObserver,
+  };
 }
 
 @freezed
@@ -54,45 +59,4 @@ class CircleMember with _$CircleMember {
   }
 
   bool get isAdmin => role == CircleRole.admin;
-}
-
-@freezed
-class EmergencyContact with _$EmergencyContact {
-  const factory EmergencyContact({
-    required String id,
-    required String userId,
-    required String name,
-    required String phone,
-    String? relationship,
-    required int priority,
-    @Default(<String>['push', 'sms']) List<String> alertMethod,
-    @Default(false) bool optedOut,
-    @Default(false) bool isAppUser,
-    String? appUserId,
-    String? circleId,
-  }) = _EmergencyContact;
-
-  factory EmergencyContact.fromJson(Map<String, dynamic> json) {
-    final rawAlert = json['alert_method'];
-    List<String> alertMethod;
-    if (rawAlert is List) {
-      alertMethod = rawAlert.cast<String>();
-    } else {
-      alertMethod = const ['push', 'sms'];
-    }
-
-    return EmergencyContact(
-      id: json['id'] as String,
-      userId: json['user_id'] as String,
-      name: json['name'] as String,
-      phone: json['phone'] as String,
-      relationship: json['relationship'] as String?,
-      priority: json['priority'] as int,
-      alertMethod: alertMethod,
-      optedOut: json['opted_out'] as bool? ?? false,
-      isAppUser: json['is_app_user'] as bool? ?? false,
-      appUserId: json['app_user_id'] as String?,
-      circleId: json['circle_id'] as String?,
-    );
-  }
 }

@@ -49,6 +49,14 @@ dependencies:
   firebase_core: ^3.13.0
   firebase_messaging: ^15.2.5
 
+  # QR — bystander ICE card, rendered offline from a locally held payload.
+  qr_flutter: ^4.1.0
+
+  # Local notifications. The bystander screen is opened from an incident
+  # notification action (FR-090, Phase 1 variant); without a real OS
+  # notification there is no path to it at all.
+  flutter_local_notifications: ^18.0.1
+
   # Utilities
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
@@ -73,3 +81,27 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+
+  # Bundled, not fetched: this app has to render on a dead network at the
+  # roadside. Both families are OFL (licences in assets/fonts/).
+  fonts:
+    # Display and readouts. Variable wght axis driven via FontVariation.
+    - family: SpaceGrotesk
+      fonts:
+        - asset: assets/fonts/SpaceGrotesk-Variable.ttf
+    # Body and UI.
+    - family: IBMPlexSans
+      fonts:
+        - asset: assets/fonts/IBMPlexSans-Variable.ttf
+    # Devanagari fallback so Hindi renders instead of tofu before i18n lands.
+    - family: IBMPlexSansDevanagari
+      fonts:
+        - asset: assets/fonts/IBMPlexSansDevanagari-Regular.ttf
+        - asset: assets/fonts/IBMPlexSansDevanagari-SemiBold.ttf
+          weight: 600
+    # Malayalam fallback. IBM Plex has no Malayalam cut, and Malayalam is the
+    # primary language of the Ernakulam pilot -- it cannot render as tofu on the
+    # bystander screen. Noto Sans Malayalam is OFL (licence in assets/fonts/).
+    - family: NotoSansMalayalam
+      fonts:
+        - asset: assets/fonts/NotoSansMalayalam-Variable.ttf

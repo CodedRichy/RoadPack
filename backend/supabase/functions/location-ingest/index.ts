@@ -1,6 +1,8 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { verifyClerkJwt } from '../_shared/jwt.ts'
+// Pack Mode route-relative projection. Additive: no-ops for non-pack users.
+import { projectPackPositions } from '../pack-tick/pack_position.ts'
 
 interface LocationRecord {
   timestamp: string
@@ -99,6 +101,27 @@ serve(async (req) => {
         headers: JSON_HEADERS,
       })
     }
+
+    // --- Pack Mode projection (TRD 6.3) -----------------------------------
+    // Additive: a user in no active pack ride costs one indexed lookup and
+    // nothing about their ingest changes. projectPackPositions never throws;
+    // the try/catch is a second boundary, because a pack failure must never
+    // turn a successful position write into a 500 that makes the device
+    // retry the batch.
+    try {
+      await projectPackPositions(
+        supabase,
+        userId,
+        gpsLocations.map((loc) => ({
+          lat: loc.coords.latitude,
+          lng: loc.coords.longitude,
+          at: loc.timestamp,
+        })),
+      )
+    } catch (err) {
+      console.error('pack projection failed (non-fatal):', String(err))
+    }
+    // --- end Pack Mode projection -----------------------------------------
   }
 
   // Update device heartbeat

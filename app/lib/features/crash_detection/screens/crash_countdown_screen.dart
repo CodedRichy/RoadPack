@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/l10n.dart';
 import '../providers/crash_detection_provider.dart';
 import '../widgets/crash_reason_picker.dart';
 
@@ -11,6 +12,7 @@ class CrashCountdownScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(crashDetectionProvider);
+    final l10n = context.l10n;
 
     return Material(
       color: Colors.black.withValues(alpha: 0.95),
@@ -18,9 +20,9 @@ class CrashCountdownScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'CRASH DETECTED',
-              style: TextStyle(
+            Text(
+              l10n.crashDetectedTitle,
+              style: const TextStyle(
                 color: Colors.red,
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -28,8 +30,7 @@ class CrashCountdownScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Alerting your emergency contacts in '
-              '${state.countdownRemaining} seconds',
+              l10n.crashCountdownBody(state.countdownRemaining),
               style: const TextStyle(color: Colors.white70, fontSize: 16),
               textAlign: TextAlign.center,
             ),
@@ -67,7 +68,7 @@ class CrashCountdownScreen extends ConsumerWidget {
                     }
                   });
                 },
-                child: const Text("I'M OKAY"),
+                child: Text(l10n.commonImOkay),
               ),
             ),
             if (state.errorMessage != null) ...[

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copy this file to app/src/main/res/values/google_maps_api.xml and paste in a real key.
+
+  google_maps_api.xml is gitignored: a Maps key committed to a public repo is
+  billed to whoever finds it. Restrict the key to this app's package name and
+  signing certificate in the Google Cloud console.
+
+  Without a key the map renders blank and logs nothing obvious.
+-->
+<resources>
+    <string name="google_maps_api_key" translatable="false">YOUR_ANDROID_MAPS_API_KEY</string>
+</resources>

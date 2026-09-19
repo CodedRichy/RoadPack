@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../l10n/l10n.dart';
+
 part 'circle.freezed.dart';
 
 enum CircleType {
@@ -13,44 +15,30 @@ enum CircleType {
   static CircleType fromString(String s) =>
       CircleType.values.firstWhere((e) => e.name == s);
 
-  String get displayName {
-    switch (this) {
-      case CircleType.family:
-        return 'Family';
-      case CircleType.friends:
-        return 'Friends';
-      case CircleType.commute:
-        return 'Commute Group';
-      case CircleType.convoy:
-        return 'Convoy';
-    }
-  }
+  // Copy is resolved at render time rather than stored on the enum: the type
+  // is a fact about the circle, and that fact does not change when the
+  // phone changes language. See ProtectionGap in home_screen.dart for the
+  // same pattern.
+  String displayName(AppLocalizations l10n) => switch (this) {
+    CircleType.family => l10n.circlesTypeFamily,
+    CircleType.friends => l10n.circlesTypeFriends,
+    CircleType.commute => l10n.circlesTypeCommute,
+    CircleType.convoy => l10n.circlesTypeConvoy,
+  };
 
-  String get defaultName {
-    switch (this) {
-      case CircleType.family:
-        return 'My Family';
-      case CircleType.friends:
-        return 'Friends';
-      case CircleType.commute:
-        return 'Commute Group';
-      case CircleType.convoy:
-        return 'Convoy';
-    }
-  }
+  String defaultName(AppLocalizations l10n) => switch (this) {
+    CircleType.family => l10n.circlesTypeFamilyDefaultName,
+    CircleType.friends => l10n.circlesTypeFriendsDefaultName,
+    CircleType.commute => l10n.circlesTypeCommuteDefaultName,
+    CircleType.convoy => l10n.circlesTypeConvoyDefaultName,
+  };
 
-  String get description {
-    switch (this) {
-      case CircleType.family:
-        return 'Your closest people. Members are automatically added as emergency contacts.';
-      case CircleType.friends:
-        return 'Friends who ride or commute. Add specific members as emergency contacts.';
-      case CircleType.commute:
-        return 'Regular commute group.';
-      case CircleType.convoy:
-        return 'Temporary group ride. Set a duration.';
-    }
-  }
+  String description(AppLocalizations l10n) => switch (this) {
+    CircleType.family => l10n.circlesTypeFamilyDescription,
+    CircleType.friends => l10n.circlesTypeFriendsDescription,
+    CircleType.commute => l10n.circlesTypeCommuteDescription,
+    CircleType.convoy => l10n.circlesTypeConvoyDescription,
+  };
 }
 
 @freezed

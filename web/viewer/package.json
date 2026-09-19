@@ -1,0 +1,12 @@
+{
+  "name": "roadpack-pack-viewer",
+  "private": true,
+  "version": "0.1.0",
+  "description": "No-install web viewer for a RoadPack pack ride. Static files only -- there is no build step and no runtime dependency to install. This file exists so Node treats the modules as ESM for `node --test`.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/format.test.mjs test/beacon.test.mjs",
+    "check": "node --check js/main.js && node --check js/map.js && node --check js/ui.js && node --check js/format.js && node --check js/snapshot.js && node --check js/polyline.js && node --check js/config.js && node --check js/analytics.js && node --check js/devfixtures.js && node --check js/beacon.js",
+    "dev": "python -m http.server 8080"
+  }
+}

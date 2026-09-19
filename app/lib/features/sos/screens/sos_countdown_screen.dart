@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/l10n.dart';
 import '../providers/sos_state_provider.dart';
 
 class SosCountdownScreen extends ConsumerWidget {
@@ -9,6 +10,7 @@ class SosCountdownScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(sosStateProvider);
+    final l10n = context.l10n;
 
     return Material(
       color: Colors.black.withValues(alpha: 0.95),
@@ -16,18 +18,18 @@ class SosCountdownScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'SOS ALERT',
-              style: TextStyle(
+            Text(
+              l10n.sosAlertTitle,
+              style: const TextStyle(
                 color: Colors.red,
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Emergency alerts will be sent to your contacts',
-              style: TextStyle(color: Colors.white70, fontSize: 16),
+            Text(
+              l10n.sosCountdownBody,
+              style: const TextStyle(color: Colors.white70, fontSize: 16),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 48),
@@ -55,7 +57,7 @@ class SosCountdownScreen extends ConsumerWidget {
                 onPressed: () {
                   ref.read(sosStateProvider.notifier).cancel();
                 },
-                child: const Text('CANCEL'),
+                child: Text(l10n.commonCancel),
               ),
             ),
           ],

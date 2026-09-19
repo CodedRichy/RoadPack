@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../core/theme/theme.dart';
+import '../../../l10n/l10n.dart';
 import '../../auth/providers/clerk_auth_provider.dart';
 import '../../auth/providers/user_profile_provider.dart';
+import '../../emergency_profile/providers/emergency_contacts_provider.dart';
+import '../../emergency_profile/providers/ice_gate_provider.dart';
+import 'bystander_preview_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
+
+  /// The FR-094 commute-exposure opt-in, keyed so its fail-closed default can
+  /// be asserted without depending on where it sits in the list.
+  static const iceExposureToggleKey = ValueKey('ice-commute-exposure-toggle');
+
+  /// The FR-005 language picker, keyed for the same reason.
+  static const languagePickerKey = ValueKey('language-picker');
 
   @override
   ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
@@ -57,24 +70,28 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final profileAsync = ref.watch(userProfileProvider);
+    final l10n = context.l10n;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text(l10n.commonSettings)),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text(l10n.commonError('$e'))),
         data: (profile) {
           if (profile == null) {
-            return const Center(child: Text('Not signed in'));
+            return Center(child: Text(l10n.commonNotSignedIn));
           }
           _initFromProfile(profile);
           return ListView(
             padding: const EdgeInsets.symmetric(vertical: 8),
             children: [
-              _buildSafetySection(profile),
-              _buildTrackingSection(profile),
-              _buildEmergencyProfileSection(profile),
-              _buildAccountSection(profile),
+              _buildSafetySection(profile, l10n),
+              _buildTrackingSection(profile, l10n),
+              _buildEmergencySection(l10n),
+              _buildEmergencyProfileSection(profile, l10n),
+              _buildMapsSection(l10n),
+              _buildLanguageSection(l10n),
+              _buildAccountSection(profile, l10n),
             ],
           );
         },
@@ -82,24 +99,84 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  Widget _buildSafetySection(UserProfile profile) {
+  /// FR-005. The language a rider reads an emergency screen in is a safety
+  /// setting, not a cosmetic one, so it sits in the list rather than behind a
+  /// separate screen. "Match my phone" is the default and stays selectable —
+  /// a rider who changes their handset language should not have to come back
+  /// here to keep the two in step.
+  Widget _buildLanguageSection(AppLocalizations l10n) {
+    final selected = ref.watch(appLocaleProvider)?.languageCode;
+
+    return _Section(
+      title: l10n.settingsSectionLanguage,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+          child: Text(
+            l10n.settingsLanguageSub,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
+        RadioGroup<String?>(
+          key: SettingsScreen.languagePickerKey,
+          groupValue: selected,
+          onChanged: (value) =>
+              ref.read(appLocaleProvider.notifier).set(
+                value == null ? null : Locale(value),
+              ),
+          child: Column(
+            children: [
+              for (final option in _languageOptions(l10n))
+                RadioListTile<String?>(
+                  key: ValueKey('language-${option.$1 ?? 'system'}'),
+                  // Malayalam and Hindi labels run longer than English.
+                  // A three-line title on a glove-sized row is fine; a
+                  // clipped one is not.
+                  title: Text(option.$2),
+                  value: option.$1,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<(String?, String)> _languageOptions(AppLocalizations l10n) => [
+    (null, l10n.languageSystemDefault),
+    ('en', l10n.languageEnglish),
+    ('hi', l10n.languageHindi),
+    ('ml', l10n.languageMalayalam),
+  ];
+
+  Widget _buildSafetySection(UserProfile profile, AppLocalizations l10n) {
     final sensitivity = profile.crashSensitivity ?? 'medium';
     final mount = profile.phoneMountType ?? 'unknown';
 
     return _Section(
-      title: 'Safety',
+      title: l10n.settingsSectionSafety,
       children: [
         ListTile(
-          title: const Text('Crash Sensitivity'),
-          subtitle: Text(_sensitivityLabel(sensitivity)),
+          title: Text(l10n.settingsCrashSensitivity),
+          subtitle: Text(_sensitivityLabel(sensitivity, l10n)),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SegmentedButton<String>(
-            segments: const [
-              ButtonSegment(value: 'high', label: Text('High')),
-              ButtonSegment(value: 'medium', label: Text('Medium')),
-              ButtonSegment(value: 'low', label: Text('Low')),
+            segments: [
+              ButtonSegment(
+                value: 'high',
+                label: Text(l10n.settingsSensitivityHigh),
+              ),
+              ButtonSegment(
+                value: 'medium',
+                label: Text(l10n.settingsSensitivityMedium),
+              ),
+              ButtonSegment(
+                value: 'low',
+                label: Text(l10n.settingsSensitivityLow),
+              ),
             ],
             selected: {sensitivity},
             onSelectionChanged: (values) {
@@ -114,17 +191,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         ),
         const SizedBox(height: 16),
         ListTile(
-          title: const Text('Phone Mount'),
-          subtitle: Text(_mountLabel(mount)),
+          title: Text(l10n.settingsPhoneMount),
+          subtitle: Text(_mountLabel(mount, l10n)),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SegmentedButton<String>(
-            segments: const [
-              ButtonSegment(value: 'handlebar', label: Text('Bar')),
-              ButtonSegment(value: 'pocket', label: Text('Pocket')),
-              ButtonSegment(value: 'bag', label: Text('Bag')),
-              ButtonSegment(value: 'unknown', label: Text('Other')),
+            segments: [
+              ButtonSegment(
+                value: 'handlebar',
+                label: Text(l10n.settingsMountBar),
+              ),
+              ButtonSegment(
+                value: 'pocket',
+                label: Text(l10n.settingsMountPocket),
+              ),
+              ButtonSegment(value: 'bag', label: Text(l10n.settingsMountBag)),
+              ButtonSegment(
+                value: 'unknown',
+                label: Text(l10n.settingsMountOther),
+              ),
             ],
             selected: {mount},
             onSelectionChanged: (values) {
@@ -142,16 +228,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  Widget _buildTrackingSection(UserProfile profile) {
+  Widget _buildTrackingSection(UserProfile profile, AppLocalizations l10n) {
     final enabled = profile.nonArrivalEnabled ?? true;
     final delayMin = profile.nonArrivalDelayMin ?? 15;
 
     return _Section(
-      title: 'Tracking',
+      title: l10n.settingsSectionTracking,
       children: [
         SwitchListTile(
-          title: const Text('Non-Arrival Alerts'),
-          subtitle: const Text('Alert contacts if you don\'t arrive'),
+          title: Text(l10n.settingsNonArrivalAlerts),
+          subtitle: Text(l10n.settingsNonArrivalAlertsSub),
           value: enabled,
           onChanged: (value) {
             ref
@@ -161,16 +247,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         ),
         if (enabled)
           ListTile(
-            title: const Text('Alert Delay'),
-            subtitle: Text('$delayMin minutes after expected arrival'),
+            title: Text(l10n.settingsAlertDelay),
+            subtitle: Text(l10n.settingsAlertDelaySub(delayMin)),
             trailing: DropdownButton<int>(
               value: delayMin,
-              items: const [
-                DropdownMenuItem(value: 5, child: Text('5 min')),
-                DropdownMenuItem(value: 10, child: Text('10 min')),
-                DropdownMenuItem(value: 15, child: Text('15 min')),
-                DropdownMenuItem(value: 20, child: Text('20 min')),
-                DropdownMenuItem(value: 30, child: Text('30 min')),
+              items: [
+                for (final m in const [5, 10, 15, 20, 30])
+                  DropdownMenuItem(value: m, child: Text(l10n.minutesShort(m))),
               ],
               onChanged: (value) {
                 if (value != null) {
@@ -184,21 +267,86 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               },
             ),
           ),
+        _NavTile(
+          title: l10n.settingsCommuteRoutes,
+          subtitle: l10n.settingsCommuteRoutesSub,
+          route: '/commute',
+        ),
       ],
     );
   }
 
-  Widget _buildEmergencyProfileSection(UserProfile profile) {
+  /// The people and the card that make the cascade mean something.
+  Widget _buildEmergencySection(AppLocalizations l10n) {
+    final ready = ref.watch(emergencyProfileReadyProvider);
+    final optIn = ref.watch(iceCommuteExposureOptInProvider);
+
+    return _Section(
+      title: l10n.settingsSectionEmergency,
+      children: [
+        _NavTile(
+          title: l10n.settingsEmergencyContacts,
+          // Never dress an empty contact list up as configured.
+          subtitle: ready
+              ? l10n.settingsEmergencyContactsReady
+              : l10n.settingsEmergencyContactsEmpty,
+          route: '/emergency-contacts',
+        ),
+        _NavTile(
+          title: l10n.settingsIceCard,
+          subtitle: l10n.settingsIceCardSub,
+          route: '/ice',
+        ),
+        _NavTile(
+          title: l10n.settingsBystanderPreview,
+          subtitle: l10n.settingsBystanderPreviewSub,
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => const BystanderPreviewScreen(),
+            ),
+          ),
+        ),
+        SwitchListTile(
+          key: SettingsScreen.iceExposureToggleKey,
+          minTileHeight: AppSpace.gloveTarget,
+          title: Text(l10n.settingsIceCommuteToggle),
+          subtitle: Text(l10n.settingsIceCommuteToggleSub),
+          value: optIn,
+          onChanged: (value) {
+            ref.read(iceCommuteExposurePrefProvider.notifier).set(value);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMapsSection(AppLocalizations l10n) {
+    return _Section(
+      title: l10n.settingsSectionMaps,
+      children: [
+        _NavTile(
+          title: l10n.settingsOfflineMaps,
+          subtitle: l10n.settingsOfflineMapsSub,
+          route: '/settings/offline-maps',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmergencyProfileSection(
+    UserProfile profile,
+    AppLocalizations l10n,
+  ) {
     final bloodGroup = profile.bloodGroup;
 
     return _Section(
-      title: 'Emergency Profile',
+      title: l10n.settingsSectionEmergencyProfile,
       children: [
         ListTile(
-          title: const Text('Blood Group'),
+          title: Text(l10n.settingsBloodGroup),
           trailing: DropdownButton<String>(
             value: bloodGroup,
-            hint: const Text('Select'),
+            hint: Text(l10n.commonSelect),
             items: const [
               DropdownMenuItem(value: 'A+', child: Text('A+')),
               DropdownMenuItem(value: 'A-', child: Text('A-')),
@@ -224,10 +372,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           child: TextField(
             controller: _medicalNotesController,
             focusNode: _medicalNotesFocusNode,
-            decoration: const InputDecoration(
-              labelText: 'Medical Notes',
-              hintText: 'Allergies, conditions, medications...',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.settingsMedicalNotes,
+              hintText: l10n.settingsMedicalNotesHint,
+              border: const OutlineInputBorder(),
             ),
             maxLines: 3,
             textInputAction: TextInputAction.done,
@@ -246,17 +394,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  Widget _buildAccountSection(UserProfile profile) {
+  Widget _buildAccountSection(UserProfile profile, AppLocalizations l10n) {
     return _Section(
-      title: 'Account',
+      title: l10n.settingsSectionAccount,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: TextField(
             controller: _nameController,
-            decoration: const InputDecoration(
-              labelText: 'Name',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.commonName,
+              border: const OutlineInputBorder(),
             ),
             onSubmitted: (value) {
               ref.read(userProfileProvider.notifier).updateName(value);
@@ -265,7 +413,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         ),
         const SizedBox(height: 8),
         ListTile(
-          title: const Text('Vehicle'),
+          title: Text(l10n.settingsVehicle),
           subtitle: Text(
             [
               profile.vehicleType,
@@ -279,11 +427,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           child: SizedBox(
             width: double.infinity,
             child: OutlinedButton(
-              style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
+              // Destructive, but not an incident: the emergency tier stays
+              // reserved for a live crash or SOS.
+              style: OutlinedButton.styleFrom(
+                foregroundColor: context.semantics.attentionAccent,
+                minimumSize: const Size.fromHeight(AppSpace.gloveTarget),
+              ),
               onPressed: () {
                 ref.read(clerkAuthProvider.notifier).signOut();
               },
-              child: const Text('Sign Out'),
+              child: Text(l10n.settingsSignOut),
             ),
           ),
         ),
@@ -292,21 +445,56 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  String _sensitivityLabel(String sensitivity) {
+  String _sensitivityLabel(String sensitivity, AppLocalizations l10n) {
     return switch (sensitivity) {
-      'high' => 'High - More sensitive, may have more false alerts',
-      'low' => 'Low - Less sensitive, fewer false alerts',
-      _ => 'Medium - Balanced (recommended)',
+      'high' => l10n.settingsSensitivityHighDetail,
+      'low' => l10n.settingsSensitivityLowDetail,
+      _ => l10n.settingsSensitivityMediumDetail,
     };
   }
 
-  String _mountLabel(String mount) {
+  String _mountLabel(String mount, AppLocalizations l10n) {
     return switch (mount) {
-      'handlebar' => 'Handlebar mount (most sensitive)',
-      'pocket' => 'In pocket',
-      'bag' => 'In bag (least sensitive)',
-      _ => 'Other / Unknown',
+      'handlebar' => l10n.settingsMountBarDetail,
+      'pocket' => l10n.settingsMountPocketDetail,
+      'bag' => l10n.settingsMountBagDetail,
+      _ => l10n.settingsMountUnknownDetail,
     };
+  }
+}
+
+/// A settings row that goes somewhere. Glove-sized, because settings get
+/// changed at the roadside as often as at the kitchen table.
+class _NavTile extends StatelessWidget {
+  const _NavTile({
+    required this.title,
+    required this.subtitle,
+    this.route,
+    this.onTap,
+  }) : assert(
+         (route == null) != (onTap == null),
+         'a nav tile goes to exactly one place',
+       );
+
+  final String title;
+  final String subtitle;
+
+  /// A registered go_router path.
+  final String? route;
+
+  /// For destinations that are not routes — the bystander preview needs a
+  /// scoped override the route table cannot supply.
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      minTileHeight: AppSpace.gloveTarget,
+      title: Text(title),
+      subtitle: Text(subtitle),
+      trailing: const Icon(Icons.arrow_forward, size: 18),
+      onTap: onTap ?? () => context.push(route!),
+    );
   }
 }
 

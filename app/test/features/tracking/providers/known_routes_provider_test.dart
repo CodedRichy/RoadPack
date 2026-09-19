@@ -32,14 +32,14 @@ void main() {
     );
 
     await db.updateKnownRoute(
-      KnownRoutesLocalCompanion(
-        id: const Value('r1'),
-        originLat: const Value(9.93),
-        originLng: const Value(76.26),
-        destLat: const Value(10.0),
-        destLng: const Value(76.3),
-        daysActive: const Value('[1,2,3,4,5]'),
-        nonArrivalEnabled: const Value(false),
+      const KnownRoutesLocalCompanion(
+        id: Value('r1'),
+        originLat: Value(9.93),
+        originLng: Value(76.26),
+        destLat: Value(10.0),
+        destLng: Value(76.3),
+        daysActive: Value('[1,2,3,4,5]'),
+        nonArrivalEnabled: Value(false),
       ),
     );
 

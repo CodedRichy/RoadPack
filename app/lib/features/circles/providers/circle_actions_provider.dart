@@ -19,9 +19,13 @@ class CircleActions {
   CircleRepository? get _repo => _ref.read(circleRepositoryProvider);
   String? get _userId => _ref.read(clerkAuthProvider).valueOrNull?.userId;
 
+  /// [locationSharing] has no default on purpose. Whether a group can watch
+  /// your live position is a consent decision (SG-01), and a default here
+  /// would be that decision being made for the user by the code.
   Future<Circle> createCircle({
     required String name,
     required CircleType type,
+    required bool locationSharing,
     int? maxMembers,
     DateTime? expiresAt,
   }) async {
@@ -42,6 +46,7 @@ class CircleActions {
       name: name,
       type: type,
       userId: userId,
+      locationSharing: locationSharing,
       maxMembers: maxMembers,
       expiresAt: expiresAt,
     );

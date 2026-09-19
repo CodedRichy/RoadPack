@@ -1,0 +1,51 @@
+{
+  "ride_id": "9f2a5c1e-0000-0000-0000-000000000002",
+  "name": "Kochi → Muvattupuzha",
+  "status": "ended",
+  "generated_at": "STALE_22M",
+  "stale_threshold_s": 90,
+  "route": {
+    "polyline": "_p|{@kiupMffAcbDn|CohCwcAowHgbC_dIgY_kHnF_gEbB_gEcBooB",
+    "length_m": 38400
+  },
+  "members": [
+    {
+      "member_key": "Rk3Zq7Xa2Lmp",
+      "display_name": "Ravi",
+      "chainage_m": 38400,
+      "position": [
+        9.98,
+        76.58
+      ],
+      "precision_m": 50,
+      "gap_from_leader_m": 0,
+      "gap_from_leader_s": 0,
+      "status": "done",
+      "status_auto": false,
+      "stale": true,
+      "off_route": false,
+      "updated_at": "STALE_22M",
+      "role": "leader",
+      "display_state": "stale"
+    },
+    {
+      "member_key": "Bt9Ye1Cv8Qsd",
+      "display_name": "Anjali",
+      "chainage_m": 38400,
+      "position": [
+        9.98,
+        76.58
+      ],
+      "precision_m": 50,
+      "gap_from_leader_m": 0,
+      "gap_from_leader_s": 0,
+      "status": "done",
+      "status_auto": false,
+      "stale": true,
+      "off_route": false,
+      "updated_at": "STALE_24M",
+      "role": "rider",
+      "display_state": "stale"
+    }
+  ]
+}

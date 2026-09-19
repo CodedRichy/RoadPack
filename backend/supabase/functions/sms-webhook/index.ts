@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { verifyWebhookSecret } from '../_shared/webhook_auth.ts'
+import { isOptOut } from '../emergency-contact-notice/optout.ts'
 
 serve(async (req) => {
   if (req.method !== 'POST') {
@@ -42,6 +43,33 @@ serve(async (req) => {
   if (body.type === 'inbound_sms') {
     const { sender_phone, message } = body
     const normalizedMessage = String(message ?? '').trim().toUpperCase()
+
+    // Opt-out (FR-024). Additive: this branch only fires on an exact opt-out
+    // keyword, so every other inbound message — including 'OK' — still reaches
+    // the acknowledgement path below completely unchanged.
+    if (isOptOut(message)) {
+      const { data: optOutContacts } = await supabase
+        .from('emergency_contacts')
+        .select('id')
+        .eq('phone', sender_phone)
+
+      if (!optOutContacts || optOutContacts.length === 0) {
+        return new Response(JSON.stringify({ status: 'unknown_sender' }), {
+          headers: { 'Content-Type': 'application/json' },
+        })
+      }
+
+      const optOutIds = optOutContacts.map((c: { id: string }) => c.id)
+      await supabase
+        .from('emergency_contacts')
+        .update({ opted_out: true })
+        .in('id', optOutIds)
+
+      return new Response(
+        JSON.stringify({ status: 'opted_out', count: optOutIds.length }),
+        { headers: { 'Content-Type': 'application/json' } },
+      )
+    }
 
     if (normalizedMessage !== 'OK') {
       return new Response(JSON.stringify({ status: 'ignored' }), {

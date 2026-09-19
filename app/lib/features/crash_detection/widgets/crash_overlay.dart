@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/providers/clerk_auth_provider.dart';
+import '../../../l10n/l10n.dart';
 import '../models/crash_state.dart';
 import '../providers/crash_detection_provider.dart';
 import '../screens/crash_countdown_screen.dart';
@@ -41,6 +42,7 @@ class _CrashActiveScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(crashDetectionProvider);
     final isResolved = state.status == CrashDetectionStatus.resolved;
+    final l10n = context.l10n;
 
     return Material(
       color: Colors.black.withValues(alpha: 0.95),
@@ -57,7 +59,9 @@ class _CrashActiveScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                isResolved ? 'Incident Resolved' : 'CRASH ALERT SENT',
+                isResolved
+                    ? l10n.incidentResolvedTitle
+                    : l10n.crashAlertSentTitle,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -67,15 +71,17 @@ class _CrashActiveScreen extends ConsumerWidget {
               const SizedBox(height: 12),
               Text(
                 isResolved
-                    ? 'Your contacts have been notified that you are safe.'
-                    : 'Your emergency contacts have been notified of a possible crash.',
+                    ? l10n.incidentResolvedBody
+                    : l10n.crashAlertSentBody,
                 style: const TextStyle(color: Colors.white70, fontSize: 16),
                 textAlign: TextAlign.center,
               ),
               if (state.activeIncident != null) ...[
                 const SizedBox(height: 24),
                 Text(
-                  'Incident: ${state.activeIncident!.id.substring(0, 8)}...',
+                  l10n.incidentRef(
+                    '${state.activeIncident!.id.substring(0, 8)}...',
+                  ),
                   style: const TextStyle(color: Colors.white38, fontSize: 12),
                 ),
               ],
@@ -96,7 +102,7 @@ class _CrashActiveScreen extends ConsumerWidget {
                     onPressed: () {
                       ref.read(crashDetectionProvider.notifier).resolve();
                     },
-                    child: const Text("I'M OKAY"),
+                    child: Text(l10n.commonImOkay),
                   ),
                 ),
               if (isResolved)
@@ -111,7 +117,7 @@ class _CrashActiveScreen extends ConsumerWidget {
                     onPressed: () {
                       ref.read(crashDetectionProvider.notifier).reset();
                     },
-                    child: const Text('CLOSE'),
+                    child: Text(l10n.commonClose),
                   ),
                 ),
               if (state.errorMessage != null) ...[

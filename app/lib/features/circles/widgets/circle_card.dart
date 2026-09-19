@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/l10n.dart';
 import '../models/circle.dart';
 import '../models/circle_member.dart';
 
@@ -33,6 +34,7 @@ class CircleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     return Card(
       child: ListTile(
         leading: CircleAvatar(
@@ -43,14 +45,16 @@ class CircleCard extends StatelessWidget {
           ),
         ),
         title: Text(circle.name),
-        subtitle: Text('${circle.type.displayName} -- $memberCount members'),
+        subtitle: Text(
+          l10n.circlesCardSubtitle(circle.type.displayName(l10n), memberCount),
+        ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (circle.isExpired)
               Chip(
                 label: Text(
-                  'Expired',
+                  l10n.circlesExpiredTag,
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: theme.colorScheme.error,
                   ),
@@ -59,7 +63,7 @@ class CircleCard extends StatelessWidget {
             if (circle.isExpired) const SizedBox(width: 4),
             Chip(
               label: Text(
-                userRole.displayName,
+                userRole.displayName(l10n),
                 style: theme.textTheme.labelSmall,
               ),
             ),

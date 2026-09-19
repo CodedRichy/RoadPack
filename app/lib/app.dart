@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/core.dart';
 import 'features/crash_detection/widgets/crash_overlay.dart';
 import 'features/sos/widgets/sos_overlay.dart';
+import 'l10n/l10n.dart';
 
 class App extends ConsumerWidget {
   const App({super.key});
@@ -17,14 +18,18 @@ class App extends ConsumerWidget {
       title: AppConstants.appName,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.dark,
+      themeMode: ref.watch(appThemeModeProvider),
+      themeAnimationDuration: AppTheme.themeSwitch,
+      themeAnimationCurve: AppMotion.mechanical,
       routerConfig: router,
+      locale: ref.watch(appLocaleProvider),
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [Locale('en'), Locale('hi'), Locale('ml')],
+      supportedLocales: kSupportedLocales,
       builder: (context, child) => CrashOverlay(
         child: SosOverlay(child: child ?? const SizedBox.shrink()),
       ),

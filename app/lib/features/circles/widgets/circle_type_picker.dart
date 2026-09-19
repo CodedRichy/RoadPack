@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/l10n.dart';
 import '../models/circle.dart';
 
 class CircleTypePicker extends StatelessWidget {
@@ -24,6 +25,7 @@ class CircleTypePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     return GridView.count(
       crossAxisCount: 2,
       shrinkWrap: true,
@@ -55,13 +57,13 @@ class CircleTypePicker extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    type.displayName,
+                    type.displayName(l10n),
                     style: theme.textTheme.titleSmall,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    type.description,
+                    type.description(l10n),
                     style: theme.textTheme.bodySmall,
                     textAlign: TextAlign.center,
                     maxLines: 2,

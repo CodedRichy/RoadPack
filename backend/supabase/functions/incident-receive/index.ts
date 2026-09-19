@@ -1,6 +1,9 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { verifyClerkJwt } from '../_shared/jwt.ts'
+// Pack Mode (TRD 5.2, PM-40/PM-42). Fire-and-forget, its own error boundary,
+// and it cannot be awaited: firePackIncidentPush returns void by design.
+import { firePackIncidentPush } from '../pack-tick/pack_notify.ts'
 
 interface IncidentPacket {
   type: string
@@ -165,6 +168,25 @@ serve(async (req) => {
   }
 
   const incidentId = incident.id
+
+  // --- Pack Mode side effect (TRD 5.2, PM-40 / PM-42) -----------------------
+  // The member's status was already written by the database trigger that fires
+  // on the insert above. This only asks pack-tick to broadcast NOW rather than
+  // up to 5 s from now, because the pack must be told inside the 30 s
+  // cancellable countdown -- they are the nearest possible responders.
+  //
+  // Placed here, before the contact fetch, so it fires even for a rider with
+  // no emergency contacts (which returns early below). It returns void, so
+  // nothing downstream can await it, and every failure inside it is swallowed.
+  // If it does nothing at all, the next tick still carries the status.
+  firePackIncidentPush({
+    supabaseUrl,
+    serviceRoleKey,
+    userId,
+    incidentId,
+    reason: 'incident',
+  })
+  // --- end Pack Mode side effect -------------------------------------------
 
   // Fetch emergency contacts
   const { data: contacts, error: contactsError } = await serviceClient
